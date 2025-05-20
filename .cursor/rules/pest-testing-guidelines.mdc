@@ -1,0 +1,418 @@
+---
+description: PEST PHP Guidelines
+globs: 
+alwaysApply: false
+---
+# Pest PHP Testing Guidelines
+
+## Introduction
+
+This document outlines our testing standards and best practices using Pest PHP 3.8+ in Laravel applications. Pest is our preferred testing framework for its expressive syntax, powerful expectations, and architectural testing capabilities.
+
+## Test Organization
+
+### Directory Structure
+
+Organize tests according to this structure:
+
+- `tests/Feature/` - External-facing feature tests
+  - `tests/Feature/Http/` - API/HTTP endpoint tests
+  - `tests/Feature/Console/` - Artisan command tests
+- `tests/Unit/` - Internal implementation tests
+  - `tests/Unit/Actions/` - Business logic unit tests
+  - `tests/Unit/Models/` - Eloquent model tests
+  - `tests/Unit/Jobs/` - Queue job tests
+- `tests/Datasets/` - Shared datasets
+- `tests/Arch/` - Architectural tests
+
+### Naming Conventions
+
+- Test files should end with `Test.php`
+- Test files should be named after the class or feature they test
+- Use descriptive test names starting with "it" or "test"
+
+```php
+// Good
+it('creates a new user when valid data is provided', function () {
+    // ...
+});
+
+// Avoid
+it('works', function () {
+    // ...
+});
+```
+
+### Test Grouping
+
+Use `describe()` to group related tests:
+
+```php
+describe('UserController', function () {
+    it('lists all users', function () {
+        // ...
+    });
+    
+    it('shows user details', function () {
+        // ...
+    });
+});
+```
+
+For logical grouping in CI pipelines, use the `group()` method:
+
+```php
+it('creates a user', function () {
+    // ...
+})->group('user-management');
+```
+
+## Test Patterns
+
+### Arrange-Act-Assert
+
+Structure tests using the AAA pattern:
+
+```php
+it('updates a user profile', function () {
+    // Arrange
+    $user = User::factory()->create([
+        'name' => 'Original Name'
+    ]);
+    
+    // Act
+    $response = $this->actingAs($user)
+        ->patch('/profile', ['name' => 'Updated Name']);
+    
+    // Assert
+    $response->assertRedirect('/profile');
+    expect($user->fresh()->name)->toBe('Updated Name');
+});
+```
+
+### Using Factories
+
+Always use factories for test data:
+
+```php
+// Good
+$user = User::factory()->create();
+
+// Avoid
+$user = new User();
+$user->name = 'Test User';
+$user->email = 'test@example.com';
+$user->save();
+```
+
+Create factory states for common scenarios:
+
+```php
+// UserFactory.php
+public function definition(): array
+{
+    return [
+        'name' => fake()->name(),
+        'email' => fake()->unique()->safeEmail(),
+        'password' => Hash::make('password'),
+    ];
+}
+
+public function admin(): static
+{
+    return $this->state(fn (array $attributes) => [
+        'role' => 'admin',
+    ]);
+}
+```
+
+### Test Isolation
+
+Ensure tests don't affect each other:
+
+```php
+// tests/Pest.php
+uses(RefreshDatabase::class)->in('Feature');
+```
+
+## Expectations
+
+Use Pest's expressive expectation API:
+
+```php
+// Object state
+expect($user->isAdmin())->toBeTrue();
+expect($user->posts)->toHaveCount(3);
+
+// Collections
+expect($users)->each->toBeInstanceOf(User::class);
+expect($users)->sequence(
+    fn ($user) => $user->id->toBe(1),
+    fn ($user) => $user->id->toBe(2)
+);
+
+// Arrays
+expect($response->json())->toHaveKeys(['id', 'name', 'email']);
+
+// Exceptions
+expect(fn () => $service->process($invalidData))
+    ->toThrow(ValidationException::class);
+```
+
+Chain expectations for related assertions:
+
+```php
+expect($user)
+    ->toBeInstanceOf(User::class)
+    ->and($user->email)->toContain('@example.com')
+    ->and($user->posts)->toHaveCount(3);
+```
+
+## Feature Tests
+
+### HTTP Tests
+
+For API endpoints:
+
+```php
+it('returns a list of users', function () {
+    // Create test data
+    User::factory()->count(3)->create();
+    
+    // Make request
+    $response = $this->getJson('/api/users');
+    
+    // Assert response
+    $response->assertStatus(200);
+    $response->assertJsonCount(3, 'data');
+    $response->assertJsonStructure([
+        'data' => [
+            '*' => ['id', 'name', 'email']
+        ]
+    ]);
+});
+```
+
+For form submissions:
+
+```php
+it('creates a new post', function () {
+    $user = User::factory()->create();
+    
+    $response = $this->actingAs($user)
+        ->post('/posts', [
+            'title' => 'New Post',
+            'content' => 'Post content'
+        ]);
+    
+    $response->assertRedirect('/posts');
+    $this->assertDatabaseHas('posts', [
+        'title' => 'New Post',
+        'user_id' => $user->id
+    ]);
+});
+```
+
+### Authentication
+
+Test both authenticated and unauthenticated scenarios:
+
+```php
+it('requires authentication', function () {
+    $this->get('/dashboard')->assertRedirect('/login');
+});
+
+it('allows access when authenticated', function () {
+    $user = User::factory()->create();
+    
+    $this->actingAs($user)
+        ->get('/dashboard')
+        ->assertStatus(200);
+});
+```
+
+## Unit Tests
+
+Focus on testing business logic in isolation:
+
+```php
+it('calculates order total with discount', function () {
+    // Arrange
+    $action = new CalculateOrderTotalAction();
+    $items = [
+        ['price' => 100, 'quantity' => 2],
+        ['price' => 50, 'quantity' => 1]
+    ];
+    
+    // Act
+    $result = $action->handle($items, 10); // 10% discount
+    
+    // Assert
+    expect($result)->toBe(225.0); // (100*2 + 50) * 0.9
+});
+```
+
+## Mocking
+
+Use Mockery for external dependencies:
+
+```php
+it('sends a welcome email', function () {
+    // Arrange
+    $mailer = Mockery::mock(Mailer::class);
+    $mailer->shouldReceive('send')
+        ->once()
+        ->with(Mockery::on(function ($mail) {
+            return $mail->to === 'user@example.com' &&
+                   str_contains($mail->subject, 'Welcome');
+        }));
+    
+    $action = new RegisterUserAction($mailer);
+    
+    // Act
+    $action->handle([
+        'name' => 'John Doe',
+        'email' => 'user@example.com',
+        'password' => 'password'
+    ]);
+});
+```
+
+## Datasets
+
+Use datasets for multiple test cases:
+
+```php
+it('validates email formats', function (string $email, bool $valid) {
+    $validator = new EmailValidator();
+    expect($validator->isValid($email))->toBe($valid);
+})->with([
+    ['john@example.com', true],
+    ['invalid-email', false],
+    ['john@localhost', true],
+    ['@example.com', false]
+]);
+```
+
+For complex datasets, use separate files:
+
+```php
+// tests/Datasets/Emails.php
+dataset('emails', [
+    'valid email' => ['john@example.com', true],
+    'invalid email' => ['invalid-email', false],
+    'local domain' => ['john@localhost', true],
+    'missing username' => ['@example.com', false]
+]);
+
+// tests/Unit/EmailValidatorTest.php
+it('validates email formats', function (string $email, bool $valid) {
+    // ...
+})->with('emails');
+```
+
+## Architecture Testing
+
+Enforce architectural rules:
+
+```php
+// tests/Pest.php
+uses()->afterAll(function () {
+    arch()->preset()->laravel();
+    arch()->preset()->php();
+});
+
+// tests/Arch/ArchitectureTest.php
+test('architecture', function () {
+    arch('controllers')
+        ->expect('App\Http\Controllers')
+        ->toUseStrictTypes()
+        ->toHaveSuffix('Controller')
+        ->not->toUse('DB');
+        
+    arch('models')
+        ->expect('App\Models')
+        ->toExtend('Illuminate\Database\Eloquent\Model')
+        ->toUseTrait('Illuminate\Database\Eloquent\Factories\HasFactory');
+        
+    arch('actions')
+        ->expect('App\Actions')
+        ->toUseStrictTypes()
+        ->toBeClasses()
+        ->classes()
+            ->toHaveMethod('handle')
+            ->not->toUse('Illuminate\Support\Facades\DB');
+});
+```
+
+## Team Management
+
+Use todo features for test planning:
+
+```php
+it('sends a notification when order status changes', function () {
+    // Implementation pending
+})->todo(assignee: 'john@example.com', issue: 123);
+```
+
+## Performance
+
+Optimize test speed:
+
+```bash
+# Run tests in parallel
+./vendor/bin/pest --parallel
+
+# Optimize for CI
+./vendor/bin/pest --parallel --ci
+```
+
+Configure compact output in `tests/Pest.php`:
+
+```php
+pest()->printer()->compact();
+```
+
+## CI/CD Integration
+
+GitHub Actions configuration:
+
+```yaml
+name: Tests
+
+on: ['push', 'pull_request']
+
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+        
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: 8.2
+          tools: composer:v2
+          coverage: xdebug
+          
+      - name: Install dependencies
+        run: composer install --no-interaction --prefer-dist
+        
+      - name: Run tests
+        run: vendor/bin/pest --parallel --ci
+```
+
+## Best Practices
+
+1. **Always write tests for new code** - Aim for high coverage
+2. **Test behavior, not implementation** - Focus on inputs and outputs
+3. **Keep tests simple** - One assertion per test when possible
+4. **Use descriptive test names** - They should read like documentation
+5. **Maintain test independence** - Tests should not depend on each other
+6. **Set up CI early** - Tests should run on every commit
+7. **Use architecture testing** - Enforce coding standards
+8. **Refactor tests** - Eliminate duplication and improve readability
+9. **Run tests before committing** - Avoid breaking the build
+10. **Use mutation testing** for critical code - Ensure tests are effective

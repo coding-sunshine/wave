@@ -1,0 +1,604 @@
+---
+description: Livewire Volt Filament Guidelines
+globs: 
+alwaysApply: false
+---
+# Livewire, Volt, and Filament Guidelines
+
+## Introduction
+
+This document outlines the conventions and best practices for using Livewire 3.6.3, Volt, and Filament in our Laravel application. These technologies enable building interactive UIs with PHP.
+
+## Livewire Components
+
+### Component Structure
+
+Livewire components consist of two parts:
+1. A PHP class (stored in `app/Livewire/`)
+2. A Blade view (stored in `resources/views/livewire/`)
+
+```bash
+php artisan livewire:make CreatePost
+```
+
+This will generate:
+- `app/Livewire/CreatePost.php`
+- `resources/views/livewire/create-post.blade.php`
+
+### Basic Component Implementation
+
+```php
+<?php
+
+namespace App\Livewire;
+
+use App\Models\Post;
+use Illuminate\Support\Facades\Auth;
+use Livewire\Component;
+use Livewire\WithFileUploads;
+use Livewire\Attributes\Validate;
+
+class CreatePost extends Component
+{
+    use WithFileUploads;
+    
+    #[Validate('required|min:5')]
+    public string $title = '';
+    
+    #[Validate('required|min:10')]
+    public string $content = '';
+    
+    public $image;
+    
+    public function save()
+    {
+        $this->validate([
+            'image' => 'image|max:1024', // 1MB Max
+        ]);
+        
+        $post = Post::create([
+            'title' => $this->title,
+            'content' => $this->content,
+            'user_id' => Auth::id(),
+        ]);
+        
+        if ($this->image) {
+            $post->image_path = $this->image->store('images', 'public');
+            $post->save();
+        }
+        
+        session()->flash('message', 'Post created successfully!');
+        
+        return $this->redirect(route('posts.index'));
+    }
+
+    public function render()
+    {
+        return view('livewire.create-post');
+    }
+}
+```
+
+Corresponding Blade view:
+
+```html
+<div>
+    <form wire:submit="save">
+        @if (session()->has('message'))
+            <div class="alert alert-success">
+                {{ session('message') }}
+            </div>
+        @endif
+        
+        <div>
+            <label for="title">Title</label>
+            <input type="text" id="title" wire:model="title">
+            @error('title') <span class="error">{{ $message }}</span> @enderror
+        </div>
+        
+        <div>
+            <label for="content">Content</label>
+            <textarea id="content" wire:model="content"></textarea>
+            @error('content') <span class="error">{{ $message }}</span> @enderror
+        </div>
+        
+        <div>
+            <label for="image">Image</label>
+            <input type="file" id="image" wire:model="image">
+            @error('image') <span class="error">{{ $message }}</span> @enderror
+            
+            <!-- Image preview -->
+            @if ($image)
+                <img src="{{ $image->temporaryUrl() }}">
+            @endif
+        </div>
+        
+        <button type="submit">Save Post</button>
+    </form>
+</div>
+```
+
+### Key Livewire Directives
+
+#### Data Binding
+
+- `wire:model` - Two-way data binding (input → property and property → input)
+- `wire:model.live` - Real-time updates on every keystroke
+- `wire:model.blur` - Updates only when element loses focus
+- `wire:model.debounce.500ms` - Updates after 500ms of inactivity
+
+#### Actions
+
+- `wire:submit` - Form submission (without page reload)
+- `wire:click` - Click events
+- `wire:keydown.enter` - Keyboard events with modifiers
+
+#### Loading States
+
+- `wire:loading` - Shows element during loading
+- `wire:loading.delay` - Shows element after a brief delay
+- `wire:loading.class` - Adds class during loading
+- `wire:loading.attr` - Adds attributes during loading
+- `wire:target` - Targets specific actions
+
+Example:
+
+```html
+<button wire:click="save">
+    Save
+    <span wire:loading wire:target="save">Processing...</span>
+</button>
+
+<div wire:loading.delay.class="opacity-50" wire:target="save">
+    <!-- Content that dims during save -->
+</div>
+```
+
+### Performance Considerations
+
+1. **Lazy Loading**: Use `#[LazyLoad]` attribute for components not immediately needed
+   ```php
+   #[LazyLoad]
+   class HeavyComponent extends Component
+   {
+       // ...
+   }
+   ```
+
+2. **Deferred Updates**: Use `wire:model.defer` to batch updates
+   ```html
+   <form wire:submit="save">
+       <input wire:model.defer="name">
+       <input wire:model.defer="email">
+       <button>Submit</button>
+   </form>
+   ```
+
+3. **Computed Properties**: Cache expensive operations
+   ```php
+   #[Computed] 
+   public function expensiveOperation()
+   {
+       return $this->someComplexLogic();
+   }
+   ```
+
+4. **Pagination**: For large data sets
+   ```php
+   use Livewire\WithPagination;
+   
+   class ShowPosts extends Component
+   {
+       use WithPagination;
+       
+       public function render()
+       {
+           return view('livewire.show-posts', [
+               'posts' => Post::paginate(10)
+           ]);
+       }
+   }
+   ```
+
+### Validation Methods
+
+#### Method 1: Using validate() method
+
+```php
+public function save()
+{
+    $validated = $this->validate([
+        'title' => 'required|min:5',
+        'content' => 'required|min:10',
+    ]);
+    
+    Post::create($validated);
+}
+```
+
+#### Method 2: Using #[Validate] attribute
+
+```php
+#[Validate('required|min:5')]
+public string $title = '';
+
+#[Validate('required|min:10')]
+public string $content = '';
+
+public function save()
+{
+    $this->validate(); // Validates based on attributes
+    
+    Post::create([
+        'title' => $this->title,
+        'content' => $this->content,
+    ]);
+}
+```
+
+#### Method 3: Using rules() method (for complex rules)
+
+```php
+public function rules()
+{
+    return [
+        'title' => ['required', 'min:5', Rule::unique('posts')->ignore($this->post)],
+        'content' => ['required', 'min:10'],
+    ];
+}
+
+public function save()
+{
+    $validated = $this->validate();
+    // ...
+}
+```
+
+### Security Best Practices
+
+1. **Use `#[Locked]` attribute** for properties that should not be modified from the frontend:
+   ```php
+   #[Locked]
+   public $userId;
+   ```
+
+2. **Use Laravel's authorization system** for actions:
+   ```php
+   public function delete()
+   {
+       $post = Post::find($this->postId);
+       $this->authorize('delete', $post);
+       $post->delete();
+   }
+   ```
+
+3. **Validate all inputs** before using them:
+   ```php
+   public function save()
+   {
+       $this->validate([
+           'title' => 'required|string|max:255',
+           'content' => 'required|string',
+       ]);
+       
+       // Now safe to use $this->title and $this->content
+   }
+   ```
+
+### Testing Livewire Components
+
+Using Pest PHP:
+
+```php
+use App\Livewire\CreatePost;
+use Livewire\Livewire;
+use App\Models\User;
+use App\Models\Post;
+
+test('can create a post', function () {
+    $user = User::factory()->create();
+    
+    $this->actingAs($user);
+    
+    Livewire::test(CreatePost::class)
+        ->set('title', 'My First Post')
+        ->set('content', 'This is the content of my first post.')
+        ->call('save')
+        ->assertHasNoErrors()
+        ->assertRedirect(route('posts.index'));
+    
+    $this->assertDatabaseHas('posts', [
+        'title' => 'My First Post',
+        'content' => 'This is the content of my first post.',
+        'user_id' => $user->id,
+    ]);
+});
+
+test('validates post requirements', function () {
+    $user = User::factory()->create();
+    
+    $this->actingAs($user);
+    
+    Livewire::test(CreatePost::class)
+        ->set('title', 'Hi')  // Too short
+        ->set('content', 'Too short')
+        ->call('save')
+        ->assertHasErrors(['title', 'content']);
+});
+```
+
+## Volt Components
+
+Volt is a functional API for Livewire that provides a more concise syntax. Instead of separate class files, you define your component directly in a `.blade.php` file.
+
+### Basic Volt Component
+
+```php
+<?php
+
+use function Livewire\Volt\{state, computed, rules};
+
+state(['title' => '', 'content' => '']);
+
+rules(['title' => 'required|min:5', 'content' => 'required|min:10']);
+
+$save = function() {
+    $this->validate();
+    
+    Post::create([
+        'title' => $this->title,
+        'content' => $this->content,
+        'user_id' => auth()->id(),
+    ]);
+    
+    session()->flash('message', 'Post created successfully!');
+    
+    $this->redirect(route('posts.index'));
+};
+
+$resetForm = fn() => $this->reset('title', 'content');
+
+?>
+
+<div>
+    <form wire:submit="save">
+        @if (session()->has('message'))
+            <div class="alert alert-success">{{ session('message') }}</div>
+        @endif
+        
+        <div>
+            <label for="title">Title</label>
+            <input type="text" id="title" wire:model="title">
+            @error('title') <span class="error">{{ $message }}</span> @enderror
+        </div>
+        
+        <div>
+            <label for="content">Content</label>
+            <textarea id="content" wire:model="content"></textarea>
+            @error('content') <span class="error">{{ $message }}</span> @enderror
+        </div>
+        
+        <button type="submit">Save Post</button>
+        <button type="button" wire:click="resetForm">Reset</button>
+    </form>
+</div>
+```
+
+### Differences from Standard Livewire
+
+1. **State Declaration**: Use `state()` instead of public properties
+2. **Rules Declaration**: Use `rules()` instead of validation methods
+3. **Methods**: Defined as anonymous functions
+4. **Computed Properties**: Use `computed()` function
+5. **Single File**: Everything is in one `.blade.php` file
+
+## Filament
+
+Filament is a collection of tools for building admin panels, forms, and tables for Laravel.
+
+### Creating a Resource
+
+To manage a model with Filament, create a resource:
+
+```bash
+php artisan make:filament-resource Post
+```
+
+This generates multiple files in `app/Filament/Resources/PostResource/`:
+- `PostResource.php` - Main resource configuration
+- `Pages/CreatePost.php`, `Pages/EditPost.php`, `Pages/ListPosts.php` - Pages for CRUD operations
+
+### Defining Forms and Tables
+
+```php
+<?php
+
+namespace App\Filament\Resources;
+
+use App\Filament\Resources\PostResource\Pages;
+use App\Models\Post;
+use Filament\Forms;
+use Filament\Forms\Form;
+use Filament\Resources\Resource;
+use Filament\Tables;
+use Filament\Tables\Table;
+
+class PostResource extends Resource
+{
+    protected static ?string $model = Post::class;
+
+    protected static ?string $navigationIcon = 'heroicon-o-document-text';
+
+    public static function form(Form $form): Form
+    {
+        return $form
+            ->schema([
+                Forms\Components\TextInput::make('title')
+                    ->required()
+                    ->maxLength(255),
+                Forms\Components\RichEditor::make('content')
+                    ->required()
+                    ->columnSpan(2),
+                Forms\Components\FileUpload::make('image')
+                    ->image()
+                    ->directory('posts'),
+                Forms\Components\Select::make('category_id')
+                    ->relationship('category', 'name')
+                    ->searchable()
+                    ->preload(),
+                Forms\Components\TagsInput::make('tags')
+                    ->separator(','),
+            ]);
+    }
+
+    public static function table(Table $table): Table
+    {
+        return $table
+            ->columns([
+                Tables\Columns\TextColumn::make('title')
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('category.name')
+                    ->sortable(),
+                Tables\Columns\ImageColumn::make('image'),
+                Tables\Columns\TextColumn::make('created_at')
+                    ->dateTime()
+                    ->sortable(),
+            ])
+            ->filters([
+                Tables\Filters\SelectFilter::make('category')
+                    ->relationship('category', 'name'),
+            ])
+            ->actions([
+                Tables\Actions\EditAction::make(),
+                Tables\Actions\DeleteAction::make(),
+            ])
+            ->bulkActions([
+                Tables\Actions\BulkActionGroup::make([
+                    Tables\Actions\DeleteBulkAction::make(),
+                ]),
+            ]);
+    }
+
+    public static function getRelations(): array
+    {
+        return [
+            RelationManagers\CommentsRelationManager::class,
+        ];
+    }
+
+    public static function getPages(): array
+    {
+        return [
+            'index' => Pages\ListPosts::route('/'),
+            'create' => Pages\CreatePost::route('/create'),
+            'edit' => Pages\EditPost::route('/{record}/edit'),
+        ];
+    }
+}
+```
+
+### Form Components
+
+Filament offers various form components:
+
+```php
+Forms\Components\TextInput::make('title')
+    ->required()
+    ->maxLength(255),
+    
+Forms\Components\Select::make('status')
+    ->options([
+        'draft' => 'Draft',
+        'published' => 'Published',
+        'archived' => 'Archived',
+    ])
+    ->default('draft'),
+    
+Forms\Components\DateTimePicker::make('published_at'),
+
+Forms\Components\FileUpload::make('attachments')
+    ->multiple()
+    ->directory('attachments')
+    ->maxFiles(5),
+```
+
+### Layout Components
+
+Organize forms with layout components:
+
+```php
+Forms\Components\Card::make()
+    ->schema([
+        Forms\Components\TextInput::make('title'),
+        Forms\Components\RichEditor::make('content'),
+    ]),
+    
+Forms\Components\Grid::make()
+    ->schema([
+        Forms\Components\Select::make('category_id')
+            ->columnSpan(1),
+        Forms\Components\DateTimePicker::make('published_at')
+            ->columnSpan(1),
+    ])
+    ->columns(2),
+    
+Forms\Components\Tabs::make('Tabs')
+    ->tabs([
+        Forms\Components\Tabs\Tab::make('Content')
+            ->schema([
+                Forms\Components\TextInput::make('title'),
+                Forms\Components\RichEditor::make('content'),
+            ]),
+        Forms\Components\Tabs\Tab::make('SEO')
+            ->schema([
+                Forms\Components\TextInput::make('meta_title'),
+                Forms\Components\Textarea::make('meta_description'),
+            ]),
+    ]),
+```
+
+### Conditional Fields
+
+Show or hide fields based on conditions:
+
+```php
+Forms\Components\TextInput::make('title')
+    ->required(),
+    
+Forms\Components\Checkbox::make('has_excerpt')
+    ->label('Add custom excerpt?'),
+    
+Forms\Components\Textarea::make('excerpt')
+    ->visible(fn (callable $get) => $get('has_excerpt')),
+```
+
+### Security Considerations
+
+1. **Authorization**: Define policies for your models
+   ```php
+   protected static function getNavigationBadge(): ?string
+   {
+       return static::getModel()::whereHas('status', fn($query) => $query->where('name', 'pending'))
+           ->count();
+   }
+   ```
+
+2. **Prevent sensitive data exposure**: Hide certain fields
+   ```php
+   public static function table(Table $table): Table
+   {
+       return $table
+           ->columns([
+               // Only display safe fields
+           ]);
+   }
+   ```
+
+3. **Form validation**: Define strict validation rules
+   ```php
+   Forms\Components\TextInput::make('email')
+       ->email()
+       ->required()
+       ->maxLength(255)
+       ->unique(ignoreRecord: true),
+   ```

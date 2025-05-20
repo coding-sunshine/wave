@@ -71,6 +71,12 @@
             "@php artisan migrate --graceful --ansi",
             "@php artisan db:seed"
         ],
+        "post-update-cmd": [
+            "@php artisan filament:upgrade",
+            "@php artisan livewire:publish --assets",
+            "@php artisan optimize",
+            "@php artisan filament:optimize"
+        ],
         "post-autoload-dump": [
             "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
             "@php artisan package:discover",

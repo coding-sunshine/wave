@@ -1,0 +1,436 @@
+---
+description: 
+globs: *.php
+alwaysApply: false
+---
+# Laravel 12 Project Guidelines
+
+## Introduction
+
+This rule provides a comprehensive guide for Laravel 12 development, ensuring consistency, maintainability, and adherence to project standards. Laravel follows the MVC (Model-View-Controller) pattern and emphasizes elegant syntax, convention over configuration, and developer experience.
+
+## PHP Version and Standards
+
+- Use PHP v8.4 features where applicable and beneficial
+- Strictly adhere to PSR-12 coding standards
+- Always use strict types: `declare(strict_types=1);`
+- Run `composer lint` to format code according to project standards
+- Employ PHPStan for static analysis, including array shapes where appropriate
+
+## Project Structure
+
+Laravel 12 has a specific directory structure. Key directories include:
+
+- `app/` - Application code (Models, Controllers, etc.)
+- `config/` - Configuration files
+- `database/` - Migrations, seeds, and factories
+- `public/` - Web server entry point
+- `resources/` - Views, uncompiled assets (CSS, JS)
+- `routes/` - Route definitions
+- `storage/` - Generated files, logs, caches
+- `tests/` - Test files
+
+### Directory Conventions
+
+- **`app/Http/Controllers`**: Controllers should be lean, primarily orchestrating requests, responses, and calls to other services (like Actions)
+  - No abstract/base controllers
+  
+- **`app/Http/Requests`**: Use Form Requests for validation and authorization logic
+  - Name descriptively with action verbs (e.g., `CreateUserRequest`)
+  
+- **`app/Actions`**: Encapsulate business logic units into Action classes
+  - Use verbs in naming (e.g., `CreateUserAction`)
+  - Inject Actions into Controllers
+  
+- **`app/Models`**: Eloquent models representing database tables
+  - Avoid using `$fillable`. Prefer explicit mass assignment after validation
+  
+- **`database/migrations`**: Database schema definitions
+  - Omit the `down()` method in new migrations unless absolutely necessary
+
+## Routing
+
+Create separate route files per logical feature. Register these in `routes/web.php` or `routes/api.php`:
+
+```php
+<?php
+
+declare(strict_types=1);
+
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\UserController;
+
+// Route pointing to controller method
+Route::get('/users', [UserController::class, 'index'])->name('users.index');
+
+// Resource controller routes
+Route::resource('photos', PhotoController::class);
+
+// Route groups
+Route::middleware(['auth'])->group(function () {
+    Route::get('/dashboard', function () {
+        // Uses auth middleware
+    });
+});
+```
+
+- Use named routes for URL generation
+- Group related routes logically
+
+## Controllers
+
+Controllers should be focused, handling a related group of actions:
+
+- Place in `app/Http/Controllers/` namespace
+- Use singular, PascalCase names followed by "Controller" (e.g., `UserController`)
+- Keep controllers lean, delegating business logic to Actions
+- Use type hints for dependencies and return types
+- Prefer resource controllers for CRUD operations
+
+```php
+<?php
+
+declare(strict_types=1);
+
+namespace App\Http\Controllers;
+
+use App\Actions\CreateUserAction;
+use App\Http\Requests\CreateUserRequest;
+use App\Models\User;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\View\View;
+
+class UserController extends Controller
+{
+    /**
+     * Display a listing of users.
+     */
+    public function index(): View
+    {
+        $users = User::query()->latest()->get();
+        
+        return view('users.index', ['users' => $users]);
+    }
+    
+    /**
+     * Store a new user.
+     */
+    public function store(CreateUserRequest $request, CreateUserAction $action): RedirectResponse
+    {
+        $user = $action->handle($request->validated());
+        
+        return redirect()->route('users.index');
+    }
+}
+```
+
+## Models and Eloquent
+
+Models represent database tables and handle data retrieval/manipulation:
+
+- Place in `app/Models/` namespace
+- Use singular, PascalCase names (e.g., `User`, `Post`)
+- **Avoid** using `$fillable` - prefer explicit mass assignment in Actions
+- Explicitly define relationships with proper return type hinting
+- Consider using casting for non-string attributes
+- **Avoid direct `DB::` facade usage**. Use Eloquent models and query builder exclusively (`Model::query()`)
+
+```php
+<?php
+
+declare(strict_types=1);
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+
+class Post extends Model
+{
+    use HasFactory;
+    
+    /**
+     * The attributes that should be cast.
+     *
+     * @var array<string, string>
+     */
+    protected $casts = [
+        'published_at' => 'datetime',
+    ];
+    
+    /**
+     * Get the comments for the blog post.
+     */
+    public function comments(): HasMany
+    {
+        return $this->hasMany(Comment::class);
+    }
+    
+    /**
+     * Proper query usage example
+     */
+    public static function getRecentPublished(int $limit = 10): mixed
+    {
+        return self::query()
+            ->where('is_published', true)
+            ->whereNotNull('published_at')
+            ->latest('published_at')
+            ->limit($limit)
+            ->get();
+    }
+}
+```
+
+## Actions
+
+Actions encapsulate business logic into dedicated classes:
+
+```php
+<?php
+
+declare(strict_types=1);
+
+namespace App\Actions;
+
+use App\Models\User;
+
+class CreateUserAction
+{
+    public function handle(array $data): User
+    {
+        $user = new User();
+        $user->name = $data['name'];
+        $user->email = $data['email'];
+        $user->password = bcrypt($data['password']);
+        $user->save();
+        
+        return $user;
+    }
+}
+```
+
+## Validation
+
+Use Form Request classes for validation:
+
+```php
+<?php
+
+declare(strict_types=1);
+
+namespace App\Http\Requests;
+
+use Illuminate\Foundation\Http\FormRequest;
+
+class CreateUserRequest extends FormRequest
+{
+    /**
+     * Determine if the user is authorized to make this request.
+     */
+    public function authorize(): bool
+    {
+        return true;
+    }
+
+    /**
+     * Get the validation rules that apply to the request.
+     *
+     * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
+     */
+    public function rules(): array
+    {
+        return [
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'email', 'unique:users', 'max:255'],
+            'password' => ['required', 'min:8', 'confirmed'],
+        ];
+    }
+}
+```
+
+## API Responses
+
+Use API Resources for formatting responses:
+
+```php
+<?php
+
+declare(strict_types=1);
+
+namespace App\Http\Resources;
+
+use Illuminate\Http\Request;
+use Illuminate\Http\Resources\Json\JsonResource;
+
+class UserResource extends JsonResource
+{
+    /**
+     * Transform the resource into an array.
+     *
+     * @return array<string, mixed>
+     */
+    public function toArray(Request $request): array
+    {
+        return [
+            'id' => $this->id,
+            'name' => $this->name,
+            'email' => $this->email,
+            'created_at' => $this->created_at,
+        ];
+    }
+}
+```
+
+## Middleware
+
+Middleware provides a mechanism to filter HTTP requests:
+
+- Be placed in `app/Http/Middleware/`
+- Have a descriptive name ending with "Middleware"
+- Be registered in `app/Http/Kernel.php`
+
+```php
+<?php
+
+declare(strict_types=1);
+
+namespace App\Http\Middleware;
+
+use Closure;
+use Illuminate\Http\Request;
+use Symfony\Component\HttpFoundation\Response;
+
+class EnsureUserHasRole
+{
+    /**
+     * Handle an incoming request.
+     */
+    public function handle(Request $request, Closure $next, string $role): Response
+    {
+        if (!$request->user() || !$request->user()->hasRole($role)) {
+            return redirect('home');
+        }
+
+        return $next($request);
+    }
+}
+```
+
+## Migrations
+
+Migrations define database structure changes:
+
+- Use timestamp prefix (automatically added with `make:migration`)
+- Use descriptive names
+- Define `up()` method (omit `down()` unless absolutely necessary)
+- Be explicit with column types and modifiers
+
+```php
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    /**
+     * Run the migrations.
+     */
+    public function up(): void
+    {
+        Schema::create('posts', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
+            $table->string('title');
+            $table->text('content');
+            $table->timestamp('published_at')->nullable();
+            $table->timestamps();
+        });
+    }
+};
+```
+
+## Service Providers
+
+Service providers are the central place for application bootstrapping:
+
+- Place in `app/Providers/`
+- Register bindings in the container
+- Use `register()` for bindings, `boot()` for using registered services
+
+## Authentication
+
+Laravel provides authentication scaffolding:
+
+- Use Laravel's built-in auth mechanisms
+- Protect routes with middleware
+- Use policies for authorization
+
+## Testing
+
+Use Pest PHP for all tests:
+
+- Run `composer test` before finalizing work
+- All new code must be accompanied by relevant tests
+- Generate a corresponding `{Model}Factory` with each new Eloquent model
+
+### Test Directory Structure
+
+- Feature Tests: `tests/Feature/Http`
+- Unit Tests: 
+  - Actions: `tests/Unit/Actions`
+  - Models: `tests/Unit/Models`
+  - Jobs: `tests/Unit/Jobs`
+
+### Example Pest Test
+
+```php
+<?php
+
+use App\Models\User;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+
+uses(RefreshDatabase::class);
+
+it('displays list of users', function () {
+    // Arrange
+    $user = User::factory()->create();
+    
+    // Act
+    $response = $this->actingAs($user)
+                     ->get(route('users.index'));
+    
+    // Assert
+    $response->assertStatus(200);
+    $response->assertSee($user->name);
+});
+```
+
+## Error Handling
+
+- Utilize Laravel's exception handling and logging features
+- Create custom exceptions for domain-specific errors
+- Use `try-catch` blocks for expected exceptions that require specific handling
+
+## Performance
+
+- Cache expensive operations
+- Use eager loading to avoid N+1 query problems
+- Consider chunking large datasets
+- Use Laravel Telescope during development
+- Use Laravel Horizon for managing background queues
+
+## Best Practices
+
+- Follow PSR-12 coding standards
+- Use dependency injection whenever possible
+- Keep controllers thin, move business logic to Actions
+- Use environment variables for configuration
+- Prefer named routes over hardcoded URLs
+- Use database transactions for multi-step operations
+- Implement proper error handling
+- Follow single responsibility principle
+- Create factories and Pest tests for critical functionality
+- Avoid direct `DB::` facade usage
