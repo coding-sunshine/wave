@@ -1,12 +1,24 @@
 # Fusion CRM V4 - Technical Stack
 
-This document outlines the complete technical stack for Fusion CRM V4, including core technologies, packages, architectural patterns, and development tools. All components have been selected to ensure compatibility with Laravel 12 and to support a modern, scalable, and maintainable codebase.
+This document outlines the complete technical stack for Fusion CRM V4, including core technologies, packages, architectural patterns, and development tools. All components have been selected to ensure compatibility with PHP 8.4 and to support a modern, scalable, and maintainable codebase.
+
+## Wave Kit Foundation
+
+Fusion CRM V4 will be built using Wave Kit as the starting foundation:
+
+- **Wave Kit** ([Documentation](https://devdojo.com/wave/docs/getting-started))
+  - User authentication and management
+  - Team/organization structure
+  - Subscription and billing system
+  - API scaffolding and token management
+  - Starter UI components and layouts
 
 ## Core Technologies
 
 ### Backend Framework
-- **Laravel 12** ([Documentation](https://laravel.com/docs))
-  - Latest stable version with long-term support
+- **Laravel** ([Documentation](https://laravel.com/docs))
+  - Starting with Wave Kit's Laravel version
+  - Upgrade path to utilize PHP 8.4 features
   - Modern PHP features and optimizations
   - Enhanced performance over Laravel 8 (V3)
   - Robust foundation for enterprise applications
@@ -26,7 +38,7 @@ This document outlines the complete technical stack for Fusion CRM V4, including
   - Modern reactivity system
 
 ### CSS Framework
-- **Tailwind CSS 4** ([Documentation](https://tailwindcss.com/))
+- **Tailwind CSS** ([Documentation](https://tailwindcss.com/))
   - Utility-first CSS framework
   - Modern CSS features (container queries, cascade layers)
   - Built-in dark mode support
@@ -243,7 +255,7 @@ This document outlines the complete technical stack for Fusion CRM V4, including
 
 This technical stack was selected based on the following criteria:
 
-1. **Laravel 12 Compatibility**: All packages are compatible with Laravel 12 or have clear upgrade paths
+1. **PHP 8.4 Compatibility**: All packages are compatible with PHP 8.4 or have clear upgrade paths
 2. **Modern Technologies**: Utilizing the latest stable versions of all core technologies
 3. **Active Maintenance**: All packages have active maintenance and community support
 4. **Performance Optimization**: Technologies chosen with performance in mind
@@ -252,4 +264,4 @@ This technical stack was selected based on the following criteria:
 7. **Scalability**: Architecture designed to scale with growing user base and data
 8. **Security**: Robust security practices and tools included by default
 
-This comprehensive stack provides all the necessary tools and technologies to successfully build Fusion CRM V4 with a modern, maintainable, and scalable architecture. 
+This comprehensive stack provides all the necessary tools and technologies to successfully build Fusion CRM V4 with a modern, maintainable, and scalable architecture.

@@ -1,10 +1,9 @@
-# Sprint 8: Xero Integration
+# Sprint 8: Xero Integration & Lead Management
 
 ## 📅 Timeline
 - **Duration**: 2 weeks  
-- **Sprint Goal**: Implement Xero core integration
-- **Priority Adjustment**: Advanced sync features in phase 2
 - **Sprint Goal**: Implement Xero accounting integration with OAuth2, contacts, and invoices
+- **Sprint Goal**: Implement structured lead data management and Xero integration
 
 ## 🏆 Epics
 
@@ -58,6 +57,40 @@
 **Suggested Packages**:
 - `xeroapi/xero-php-oauth2 ^3.5` - [Xero PHP OAuth2](https://github.com/XeroAPI/xero-php-oauth2) - Official Xero PHP SDK
 - `league/fractal ^0.20` - [Fractal](https://github.com/thephpleague/fractal) - API data transformation
+
+### Epic 4: Lead Management Infrastructure
+**Description**: Build lead management system using Spatie Laravel-Data
+
+#### Tasks
+
+| Task | Priority | Effort (Hours) | Dependencies | Description |
+|------|----------|----------------|--------------|-------------|
+| 4.1 Create lead data objects and validation | High | 8 | Sprint 1: 2.2 | Implement lead data structure using Laravel-Data |
+| 4.2 Develop lead management service | High | 10 | 4.1 | Create service layer for lead operations |
+| 4.3 Implement lead scoring system | Medium | 6 | 4.1, 4.2 | Build scoring logic for lead qualification |
+| 4.4 Create lead assignment rules | Medium | 8 | 4.1, 4.2 | Implement rule-based lead assignment |
+| 4.5 Develop lead source tracking | Medium | 6 | 4.1 | Create source attribution for leads |
+
+**Suggested Packages**:
+- `spatie/laravel-data ^4.2` - [Laravel Data](https://github.com/spatie/laravel-data) - Typed data objects
+- `spatie/laravel-query-builder ^5.6` - [Laravel Query Builder](https://github.com/spatie/laravel-query-builder) - API query building
+
+### Epic 5: Lead UI Components
+**Description**: Create user interface for lead management
+
+#### Tasks
+
+| Task | Priority | Effort (Hours) | Dependencies | Description |
+|------|----------|----------------|--------------|-------------|
+| 5.1 Create lead list and filtering UI | High | 8 | 4.1, 4.2 | Implement interface for viewing and filtering leads |
+| 5.2 Develop lead detail view | High | 6 | 4.1, 4.2 | Create detailed lead view with actions |
+| 5.3 Implement lead conversion workflow | Medium | 10 | 4.2, 5.2 | Create UI for converting leads to contacts or deals |
+| 5.4 Create lead import/export tools | Medium | 8 | 4.1, 4.2 | Implement tools for bulk lead management |
+| 5.5 Develop lead dashboard | Medium | 8 | 4.3, 4.5, 5.1 | Create analytics dashboard for lead performance |
+
+**Suggested Packages**:
+- `livewire/livewire ^3.3` - [Livewire](https://github.com/livewire/livewire) - Interactive UI components
+- `maatwebsite/excel ^3.1` - [Laravel Excel](https://github.com/SpartnerNL/Laravel-Excel) - Excel import/export
 
 ## 🧩 Cursor IDE-Ready Prompts (MCPs)
 
@@ -208,4 +241,168 @@ Create a sophisticated XeroInvoiceService for Fusion CRM V4 that handles invoice
 Focus on creating a robust service that handles the complexities of invoice
 management while providing a clean interface for other components to use.
 Ensure all operations are properly logged for audit purposes and error recovery.
+```
+
+### MCP 4.1: Create Lead Data Objects and Validation
+```
+Implement lead data structure using Spatie Laravel-Data for Fusion CRM V4:
+
+1. Install spatie/laravel-data ^4.2:
+   - Add to composer.json
+   - Configure package settings
+
+2. Create base LeadData class:
+   - Extend Spatie\LaravelData\Data
+   - Define typed properties with validation rules:
+     - id: int|null
+     - tenant_id: int
+     - first_name: string
+     - last_name: string
+     - email: string (with email validation)
+     - phone: string|null (with phone format validation)
+     - company: string|null
+     - job_title: string|null
+     - source: string (e.g., website, referral, campaign)
+     - source_details: array|null (JSON data about the source)
+     - status: enum (New, Contacted, Qualified, Disqualified)
+     - score: int (0-100)
+     - notes: string|null
+     - assigned_to: int|null (user ID)
+     - campaign_id: int|null
+     - tags: array
+     - custom_fields: array
+     - created_at: Carbon
+     - updated_at: Carbon
+
+3. Implement additional data objects:
+   - LeadScoreData - For calculating and updating lead scores
+   - LeadSourceData - For tracking lead attribution
+   - LeadCustomFieldData - For handling dynamic custom fields
+   - LeadAssignmentData - For lead routing rules
+
+4. Create data transformation methods:
+   - fromEloquent() - Map Eloquent model to Data object
+   - toEloquent() - Map Data object to Eloquent model
+   - toArray() - Convert Data object to array
+   - fromRequest() - Create Data object from request input
+
+5. Add validation rules for each property:
+   - Use Laravel's validation system
+   - Add custom validation rules as needed
+   - Implement nested validation for complex properties
+
+6. Implement data casting:
+   - Date/time casting
+   - Enum casting
+   - Custom field casting
+
+7. Set up API resource transformation:
+   - Configure JSON serialization
+   - Handle API versioning
+   - Implement pagination support
+
+Take advantage of Laravel-Data's strong typing and validation features
+to ensure data integrity throughout the lead management system. This
+creates a more maintainable and type-safe codebase.
+```
+
+### MCP 4.2: Develop Lead Management Service
+```
+Create a lead management service using Laravel-Data for Fusion CRM V4:
+
+1. Implement LeadManagementService with typed methods:
+   - createLead(LeadData $data): Lead
+   - updateLead(int $id, LeadData $data): Lead
+   - deleteLead(int $id): bool
+   - getLead(int $id): ?LeadData
+   - listLeads(array $filters = [], int $perPage = 15): Paginator
+   - assignLead(int $leadId, int $userId): bool
+   - scoreLead(int $leadId, ?LeadScoreData $scoreData = null): int
+   - convertToContact(int $leadId, array $additionalData = []): Contact
+   - convertToDeal(int $leadId, array $dealData = []): Deal
+   - importLeads(Collection|array $leadsData): array
+   - exportLeads(array $filters = []): string (CSV/Excel export)
+
+2. Implement lead filtering and search:
+   - Use spatie/laravel-query-builder for API filtering
+   - Create complex filter combinations (status, score range, date, etc.)
+   - Set up full-text search on lead fields
+
+3. Add lead scoring logic:
+   - Define scoring algorithms based on lead attributes
+   - Implement automatic score updates on lead changes
+   - Create score threshold notifications
+
+4. Develop lead assignment rules:
+   - Round-robin assignment
+   - Territory-based assignment
+   - Score-based assignment
+   - Custom rule engine
+
+5. Set up lead activity tracking:
+   - Track lead interactions
+   - Log status changes
+   - Record conversion events
+
+6. Implement lead deduplication:
+   - Detect potential duplicates
+   - Merge duplicate leads
+   - Prevent duplicate creation
+
+7. Configure tenant isolation:
+   - Ensure all operations respect tenant boundaries
+   - Implement tenant-specific configurations
+
+Take advantage of Laravel-Data's strong typing and validation to ensure
+data integrity throughout lead operations, reducing bugs and improving
+maintainability.
+```
+
+### MCP 5.3: Implement Lead Conversion Workflow
+```
+Create a lead conversion workflow using Livewire for Fusion CRM V4:
+
+1. Implement LeadConversion Livewire component:
+   - Create step-by-step wizard interface
+   - Support conversion to Contact, Deal, or both
+   - Validate data at each step
+   - Provide summaries and confirmations
+
+2. Develop conversion business logic:
+   - Implement LeadConversionService with typed methods
+   - Handle data transformation between lead and target entities
+   - Manage relationships during conversion
+   - Create activity records for the conversion
+
+3. Create conversion options:
+   - Keep lead after conversion (for reference)
+   - Delete lead after conversion
+   - Mark lead as converted but retain
+   - Clone specific fields vs. all fields
+
+4. Implement post-conversion actions:
+   - Create follow-up tasks
+   - Send notifications
+   - Update lead source performance metrics
+   - Generate conversion reports
+
+5. Add validation rules for conversion:
+   - Required fields for contact/deal creation
+   - Business rules for valid conversions
+   - Prevent invalid state transitions
+
+6. Create conversion history:
+   - Track all conversions with metadata
+   - Provide conversion analytics
+   - Support reverting conversions if needed
+
+7. Implement UI components:
+   - Multi-step form with progress indicators
+   - Field mapping interface
+   - Confirmation dialogs
+   - Success/error messaging
+
+Take advantage of Livewire's reactive data binding and Laravel-Data's 
+typed objects to create a seamless, error-resistant conversion process
+that preserves data integrity.
 ```

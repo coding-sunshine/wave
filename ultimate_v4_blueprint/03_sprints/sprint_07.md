@@ -7,7 +7,21 @@
 
 ## 🏆 Epics
 ### Epic 1: Pipeline Core Infrastructure
-**Description**: Implement essential deal tracking system (V3 architecture)
+**Description**: Implement essential deal tracking system (V3 architecture) using Spatie Laravel-Model-States
+
+#### Tasks
+
+| Task | Priority | Effort (Hours) | Dependencies | Description |
+|------|----------|----------------|--------------|-------------|
+| 1.1 Create pipeline model and migration | High | 6 | Sprint 1: 2.2 | Implement pipeline data structure |
+| 1.2 Implement stage model with state pattern | High | 8 | 1.1 | Create pipeline stages using Laravel-Model-States |
+| 1.3 Implement deal model and migration | High | 8 | 1.1, 1.2 | Create deal data structure with state transitions |
+| 1.4 Set up deal-property association | Medium | 4 | 1.3, Sprint 4: 1.1 | Link deals to property listings |
+| 1.5 Implement deal forecasting models | Medium | 6 | 1.3 | Create models for deal forecasting data |
+
+**Suggested Packages**:
+- `spatie/laravel-model-states ^2.4` - [Laravel Model States](https://github.com/spatie/laravel-model-states) - State machine for Eloquent models
+- `nesbot/carbon ^2.72` - [Carbon](https://github.com/briannesbitt/Carbon) - Date and time handling
 
 ### Epic 2: Pipeline Management Services
 **Description**: Build service layer for pipeline and deal operations
@@ -45,16 +59,66 @@
 
 ## 🧩 Cursor IDE-Ready Prompts (MCPs)
 
+### MCP 1.2: Implement Stage Model with State Pattern
+```
+Implement pipeline stages using Spatie Laravel-Model-States for Fusion CRM V4:
+
+1. Install spatie/laravel-model-states ^2.4
+   - Add to composer.json
+   - Configure package settings
+
+2. Create base abstract DealState class:
+   - Extend Spatie\ModelStates\State
+   - Implement required methods (e.g., color(), icon(), label())
+   - Configure state transitions in DealState::config()
+   - Add validation logic for transitions
+
+3. Create concrete state classes for standard deal stages:
+   - New/Lead (initial state)
+   - Qualified
+   - Proposal
+   - Negotiation
+   - Verbal Agreement 
+   - Contract Sent
+   - Won (final state)
+   - Lost (final state)
+
+4. Implement transition classes for each allowed state change:
+   - NewToQualified
+   - QualifiedToProposal
+   - ProposalToNegotiation
+   - etc.
+
+5. Add validation and business rules to transitions:
+   - Required fields for specific transitions
+   - Authorization checks
+   - Event dispatching on transition
+
+6. Update the Deal model to use state integration:
+   - Add $casts property for the state field
+   - Add methods for checking current state
+   - Create helper methods for common transitions
+
+7. Set up tests for state transitions:
+   - Unit tests for each transition
+   - Integration tests for full deal lifecycle
+
+Take advantage of Laravel-Model-States' ability to represent each state as a separate class, 
+handle serialization to the database, and provide type-safe state transitions. This creates
+a more maintainable codebase with explicit state management.
+```
+
 ### MCP 1.3: Implement Deal Model and Migration
 ```
-Create a Deal model and migration for Fusion CRM V4 with the following specifications:
+Create a Deal model with state management for Fusion CRM V4:
+
 1. Generate migration with these fields:
    - id (bigIncrements)
    - tenant_id (foreignId with constraint)
    - title (string)
    - description (text, nullable)
    - pipeline_id (foreignId with constraint)
-   - stage_id (foreignId with constraint)
+   - state (string) - for Laravel-Model-States
    - client_id (foreignId with constraint)
    - property_id (foreignId, nullable, with constraint)
    - amount (decimal, 15, 2)
@@ -62,7 +126,6 @@ Create a Deal model and migration for Fusion CRM V4 with the following specifica
    - expected_close_date (date, nullable)
    - actual_close_date (date, nullable)
    - probability (integer, default=0) - percentage 0-100
-   - status (string) - open, won, lost, cancelled
    - source (string, nullable)
    - assigned_to (foreignId, nullable, references users)
    - reason_lost (text, nullable)
@@ -75,10 +138,11 @@ Create a Deal model and migration for Fusion CRM V4 with the following specifica
 
 2. Create Deal model with:
    - Tenant scope implementation
+   - HasStates trait from Spatie
+   - State configuration in $casts
    - Relationships to:
      - Tenant (BelongsTo)
      - Pipeline (BelongsTo)
-     - Stage (BelongsTo)
      - Client (BelongsTo)
      - Property (BelongsTo, nullable)
      - AssignedTo (BelongsTo User)
@@ -91,26 +155,22 @@ Create a Deal model and migration for Fusion CRM V4 with the following specifica
      - formatted_amount
      - weighted_amount (amount * probability/100)
      - days_in_pipeline
-     - days_in_stage
+     - days_in_current_state
      - days_to_close (from now to expected_close_date)
-     - status_label
    - Scope methods for:
-     - byStatus
+     - byState
      - byPipeline
-     - byStage
      - byOwner
-     - byProbabilityRange
-     - byCloseDate
-     - openDeals
-     - wonDeals
-     - lostDeals
 
-3. Configure for activity logging with detailed tracking of stage changes
+3. Implement state transition methods based on your DealState classes:
+   - qualify()
+   - sendProposal()
+   - enterNegotiation()
+   - win()
+   - lose($reason)
 
-4. Set up factories and seeders for testing
-
-Implement using Laravel 12's best practices for model definition with proper
-type hints, docblocks, and tenant isolation logic.
+Use Laravel-Model-States to manage deal progression through the pipeline, ensuring
+all state transitions follow business rules and maintain data integrity.
 ```
 
 ### MCP 2.4: Create Deal Service
@@ -215,4 +275,3 @@ Create a sophisticated Kanban board component for deal pipeline management in Fu
 Ensure the component maintains tenant isolation and respects user permissions.
 Implement using Livewire with Alpine.js for interactions and Tailwind for styling.
 Focus on performance with smart loading strategies and minimal DOM updates.
-```

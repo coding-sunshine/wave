@@ -29,6 +29,28 @@ Fusion CRM V4 is built as a modern web application using the TALL stack (Tailwin
 - AI response quality assessment
 - Security vulnerability scanning
 
+### Subscription & White-Label Support
+
+#### Multi-Tier Subscription System
+- Standard tiered subscription model with various feature sets
+- White-label subscription tier with full platform customization
+- Subscription management with automatic billing and invoicing
+- Usage tracking and quota enforcement per subscription tier
+
+#### White-Label Configuration
+- Tenant-specific branding (logos, colors, domains)
+- Custom email domains and templates
+- White-labeled API endpoints and documentation
+- Customizable user interface elements
+- Tenant-specific notification settings
+
+#### Property Customization System
+- Tenant-specific property customization layer
+- Private properties exclusive to specific tenants
+- Tenant-specific notes and annotations
+- Customizable metadata and display settings
+- Visibility controls for property details and features
+
 ## Architectural Style
 
 The application follows a layered architecture with the following key layers:
@@ -163,12 +185,14 @@ The system is organized into the following core components:
    - Role-based access control
    - Permission management
    - Tenant isolation
+   - API key management for white-label support
 
 2. **User Management**:
    - User CRUD operations
    - Profile management
    - Team management
    - Role assignment
+   - Tenant subscription management
 
 3. **Property Management**:
    - Property CRUD operations
@@ -201,7 +225,21 @@ The system is organized into the following core components:
    - Commission tracking
    - Payment processing
 
-8. **API Layer**:
+8. **White-Label Management**:
+   - Tenant branding configuration
+   - Custom domain management
+   - API key and credential storage
+   - Email template customization
+   - Interface customization controls
+
+9. **Property Customization**:
+   - Tenant-specific property customization
+   - Private property management
+   - Custom metadata and fields
+   - Property notes and annotations
+   - Visibility and display settings
+
+10. **API Layer**:
    - RESTful API endpoints
    - GraphQL API
    - API authentication

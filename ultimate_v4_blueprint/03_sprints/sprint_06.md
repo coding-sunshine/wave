@@ -8,20 +8,20 @@
 ## 🏆 Epics
 
 ### Epic 1: Document Core Services
-**Description**: Implement essential document storage and version control (V3 upgrade focus)
+**Description**: Implement essential document storage and version control (V3 upgrade focus) utilizing Spatie Laravel-MediaLibrary
 
 #### Tasks
 
 | Task | Priority | Effort (Hours) | Dependencies | Description |
 |------|----------|----------------|--------------|-------------|
-| 1.1 Create document model and migration | High | 6 | Sprint 1: 2.2 | Implement document data structure with migrations |
-| 1.2 Implement document categorization | Medium | 4 | 1.1 | Create document categories and types |
-| 1.3 Set up document storage service | High | 8 | 1.1 | Configure cloud storage integration for documents |
+| 1.1 Integrate Laravel-MediaLibrary | High | 6 | Sprint 1: 2.2 | Implement models with MediaLibrary traits and migrations |
+| 1.2 Configure media collections | Medium | 4 | 1.1 | Set up media collections and conversion presets |
+| 1.3 Set up document storage service | High | 8 | 1.1 | Configure cloud storage integration with Flysystem |
 | 1.4 Implement document versioning | Medium | 10 | 1.1, 1.3 | Create version tracking for document changes |
 | 1.5 Develop document metadata extraction | Medium | 6 | 1.1, 1.3 | Implement metadata extraction from uploaded files |
 
 **Suggested Packages**:
-- `spatie/laravel-medialibrary ^11.0` - [Spatie Laravel MediaLibrary](https://github.com/spatie/laravel-medialibrary) - Media management
+- `spatie/laravel-medialibrary ^11.0` - [Spatie Laravel MediaLibrary](https://github.com/spatie/laravel-medialibrary) - Complete media management with conversions
 - `league/flysystem-aws-s3-v3 ^3.22` - [Flysystem S3](https://github.com/thephpleague/flysystem-aws-s3-v3) - S3 storage adapter
 
 ### Epic 2: Document Management Services
@@ -60,61 +60,46 @@
 
 ## 🧩 Cursor IDE-Ready Prompts (MCPs)
 
-### MCP 1.1: Create Document Model and Migration
+### MCP 1.1: Integrate Laravel-MediaLibrary
 ```
-Create a Document model and migration for Fusion CRM V4 with the following specifications:
-1. Generate migration with these fields:
-   - id (bigIncrements)
-   - tenant_id (foreignId with constraint)
-   - title (string)
-   - description (text, nullable)
-   - document_type (string) - contract, agreement, report, other
-   - category_id (foreignId, nullable, with constraint)
-   - file_name (string)
-   - file_size (bigInteger)
-   - mime_type (string)
-   - extension (string)
-   - disk (string, default='s3')
-   - path (string)
-   - is_public (boolean, default=false)
-   - metadata (json, nullable)
-   - related_type (morphs, nullable) - polymorphic relation to clients, properties, etc.
-   - version (integer, default=1)
-   - created_by (foreignId with constraint)
-   - last_accessed_at (timestamp, nullable)
-   - expires_at (timestamp, nullable)
-   - timestamps
-   - softDeletes
+Integrate Spatie Laravel-MediaLibrary into Fusion CRM V4 with the following specifications:
 
-2. Create Document model with:
-   - Tenant scope implementation
-   - InteractsWithMedia trait from Spatie Media Library
-   - Relationships to:
-     - Tenant (BelongsTo)
-     - Category (BelongsTo)
-     - Creator (BelongsTo User)
-     - Versions (HasMany DocumentVersion)
-     - Related (MorphTo) - polymorphic relation to clients, properties, etc.
-     - SharedWith (BelongsToMany User through DocumentShare)
-   - Appropriate accessor methods for file_url, formatted_size, icon_by_type
-   - Scope methods for filtering by type, category
-   - Events for document lifecycle: created, accessed, shared
+1. Install and configure spatie/laravel-medialibrary ^11.0:
+   - Run composer installation
+   - Publish migrations and config
+   - Set up S3 disk configuration
+   - Configure media conversions settings
 
-3. Generate DocumentVersion model and migration with:
-   - id (bigIncrements)
-   - document_id (foreignId with constraint)
-   - version_number (integer)
-   - file_name (string)
-   - file_size (bigInteger)
-   - path (string)
-   - created_by (foreignId with constraint)
-   - change_summary (text, nullable)
-   - timestamps
+2. Create base models with MediaLibrary integration:
+   - Implement HasMedia and InteractsWithMedia trait in appropriate models
+   - Set up media collections for different document types:
+     - properties: 'images', 'floor_plans', 'virtual_tours'
+     - clients: 'documents', 'avatars'
+     - deals: 'contracts', 'agreements'
+     - users: 'avatars'
+   - Configure responsive image conversions for:
+     - Thumbnails (200x200)
+     - Preview (800x600)
+     - Full size with optimization
 
-4. Generate DocumentShare model and migration for tracking shared documents
+3. Configure custom path generators for tenant isolation:
+   - Implement TenantPathGenerator class
+   - Ensure all media is stored in tenant-specific paths
+   - Set up proper URL generation
 
-Implement using Laravel 12's best practices for model definition, with proper
-type hints, docblocks, and tenant isolation logic.
+4. Set up document metadata extraction:
+   - Extract metadata during upload
+   - Store as custom properties on media object
+   - Create indexes for searchable properties
+
+5. Implement document versioning:
+   - Configure replacements with versioning
+   - Add version tracking through custom properties
+   - Set up version comparison capabilities
+
+Take advantage of Laravel-MediaLibrary's built-in features for handling file uploads,
+generating thumbnails, and managing media across filesystems. Leverage the package's
+ability to associate files with multiple Eloquent models and generate responsive images.
 ```
 
 ### MCP 2.2: Develop Document Service
@@ -206,4 +191,3 @@ Ensure all components maintain tenant isolation and respect user permissions.
 Follow Tailwind and Alpine.js best practices for a clean, modern UI with
 optimal performance. Use FilePond for advanced upload handling and leverage
 browser capabilities for client-side features.
-```

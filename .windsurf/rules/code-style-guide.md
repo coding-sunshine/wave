@@ -1,7 +1,7 @@
 ---
 trigger: manual
 glob: ["**/*.{php,js,jsx,ts,tsx,css,blade.php}", "!vendor/**/*", "!node_modules/**/*"]
-description: Comprehensive code style guide for PHP, Laravel, React, Livewire, AlpineJS, and Tailwind
+description: Comprehensive code style guide for PHP, Laravel, Wave Kit, Filament, Livewire, AlpineJS, and Tailwind
 ---
 
 # Code Style Guide
@@ -84,50 +84,174 @@ class CreateUserAction
 }
 ```
 
-## Inertia.js Integration
-Refer to `.windsurf/rules/inertia.rules.md` for comprehensive Inertia.js best practices and patterns.
-
-## React & TypeScript
-
-### 1. Component Structure
-```tsx
-import { FC, useState } from 'react';
-
-interface UserFormProps {
-    onSubmit: (data: UserData) => void;
-    initialData?: UserData;
+### 5. Multi-Tenancy Patterns
+```php
+// Models with tenant awareness
+class Property extends Model
+{
+    use BelongsToTenant;
+    
+    protected $fillable = [
+        'name',
+        'address',
+        'status',
+        // other fields
+    ];
+    
+    // Relationships and other methods
 }
 
-export const UserForm: FC<UserFormProps> = ({ onSubmit, initialData }) => {
-    const [data, setData] = useState(initialData);
+// Tenant-aware Livewire components
+class ListProperties extends Component
+{
+    use WithTenantAwareness;
     
-    return (
-        <form className="space-y-4">
-            {/* Component content */}
-        </form>
-    );
-};
+    public function render(): View
+    {
+        return view('livewire.properties.list', [
+            'properties' => Property::query()
+                ->forCurrentTenant()
+                ->latest()
+                ->paginate(),
+        ]);
+    }
+}
 ```
 
-### 2. Hooks & State Management
-```tsx
-const useUser = (userId: string) => {
-    const [user, setUser] = useState<User | null>(null);
+## Wave Kit Implementation
+
+### 1. Extending Wave Models
+```php
+// Tenant model extending Wave's team concept
+class Tenant extends Model
+{
+    use HasFactory;
+    use SoftDeletes;
+
+    protected $fillable = [
+        'name',
+        'display_name',
+        'settings',
+        'api_key',
+        'subscription_status',
+    ];
     
-    useEffect(() => {
-        // Fetch user
-    }, [userId]);
-    
-    return { user };
-};
+    protected $casts = [
+        'settings' => 'array',
+    ];
+
+    // Relationships
+    public function users(): HasMany
+    {
+        return $this->hasMany(User::class);
+    }
+}
+
+// User model extending Wave's user model
+class User extends Authenticatable
+{
+    use HasApiTokens;
+    use HasFactory;
+    use HasRoles;
+    use Notifiable;
+
+    protected $fillable = [
+        'tenant_id',
+        'name',
+        'email',
+        'password',
+    ];
+
+    // Relationships
+    public function tenant(): BelongsTo
+    {
+        return $this->belongsTo(Tenant::class);
+    }
+}
 ```
 
-### 3. Event Handlers
-```tsx
-const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    // Handle submission
-};
+## Filament Admin
+
+### 1. Resource Structure
+```php
+class PropertyResource extends Resource
+{
+    protected static ?string $model = Property::class;
+    
+    protected static ?string $navigationIcon = 'heroicon-o-home';
+    
+    public static function form(Form $form): Form
+    {
+        return $form
+            ->schema([
+                Forms\Components\TextInput::make('name')
+                    ->required()
+                    ->maxLength(255),
+                Forms\Components\TextInput::make('address')
+                    ->required()
+                    ->maxLength(255),
+                Forms\Components\Select::make('status')
+                    ->options([
+                        'available' => 'Available',
+                        'pending' => 'Pending',
+                        'sold' => 'Sold',
+                    ])
+                    ->required(),
+            ]);
+    }
+    
+    public static function table(Table $table): Table
+    {
+        return $table
+            ->columns([
+                Tables\Columns\TextColumn::make('name')
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('address')
+                    ->searchable(),
+                Tables\Columns\BadgeColumn::make('status')
+                    ->colors([
+                        'success' => 'available',
+                        'warning' => 'pending',
+                        'danger' => 'sold',
+                    ]),
+            ])
+            ->filters([
+                // Filters
+            ])
+            ->actions([
+                Tables\Actions\EditAction::make(),
+            ])
+            ->bulkActions([
+                Tables\Actions\DeleteBulkAction::make(),
+            ]);
+    }
+}
+```
+
+### 2. Custom Widgets
+```php
+class StatsOverview extends Widget
+{
+    protected static string $view = 'filament.widgets.stats-overview';
+    
+    protected function getStats(): array
+    {
+        return [
+            Stat::make('Total Properties', Property::count())
+                ->description('Total properties in the system')
+                ->descriptionIcon('heroicon-m-arrow-trending-up')
+                ->color('success'),
+            Stat::make('Active Listings', Property::where('status', 'available')->count())
+                ->description('Properties currently listed')
+                ->descriptionIcon('heroicon-m-currency-dollar')
+                ->color('warning'),
+            Stat::make('Sold This Month', Property::whereMonth('sold_at', now()->month)->count())
+                ->description('Properties sold this month')
+                ->descriptionIcon('heroicon-m-arrow-trending-up')
+                ->color('success'),
+        ];
+    }
+}
 ```
 
 ## Livewire Components
@@ -200,21 +324,139 @@ Alpine.data('dropdown', () => ({
     transition-colors          /* Animation */
     disabled:opacity-50        /* Conditions */
 ">
-    Submit
+    Button Text
 </button>
 ```
 
-### 2. Component Patterns
-```blade
-<x-card class="divide-y divide-gray-200">
-    <x-card.header class="p-4 bg-gray-50">
-        {{ $title }}
-    </x-card.header>
+### 2. Theme Extension
+```js
+// tailwind.config.js
+module.exports = {
+    theme: {
+        extend: {
+            colors: {
+                'primary': {
+                    50: '#f8f5ff',
+                    // Other shades
+                    500: '#6941c6',
+                    // Other shades
+                    900: '#42307d',
+                },
+                'secondary': {
+                    // Secondary color palette
+                },
+            },
+        },
+    },
+};
+```
+
+## Documentation
+
+### 1. PHPDoc Standards
+```php
+/**
+ * Process a property listing.
+ *
+ * @param \App\Models\Property $property The property to process
+ * @param array<string, mixed> $data Additional data for processing
+ * @return array<string, mixed> Processed property data
+ * @throws \App\Exceptions\PropertyProcessingException When processing fails
+ */
+public function processProperty(Property $property, array $data): array
+{
+    // Implementation
+}
+```
+
+### 2. Git Standards
+1. **Branch Naming:**
+   ```
+   feature/property-management
+   bugfix/user-registration
+   hotfix/security-vulnerability
+   ```
+
+2. **PR Template:**
+   ```markdown
+   ## Description
+   Brief description of changes
+
+   ## Changes
+   - Added X feature
+   - Fixed Y bug
+
+   ## Tests
+   - [ ] Unit tests
+   - [ ] Feature tests
+   ```
+
+3. **Issues:**
+   ```markdown
+   ## Bug Report
+   **Description:**
+   Clear description of the issue
+
+   **Steps to Reproduce:**
+   1. Step 1
+   2. Step 2
+
+   **Expected vs Actual:**
+   - Expected: X
+   - Actual: Y
+   ```
+
+4. **Git Commits:**
+   ```
+   feat: add user registration
+   fix: resolve email validation issue
+   refactor: improve error handling
+   ```
+
+## Inertia.js Integration
+Refer to `.windsurf/rules/inertia.rules.md` for comprehensive Inertia.js best practices and patterns.
+
+## React & TypeScript
+
+### 1. Component Structure
+```tsx
+import { FC, useState } from 'react';
+
+interface UserFormProps {
+    onSubmit: (data: UserData) => void;
+    initialData?: UserData;
+}
+
+export const UserForm: FC<UserFormProps> = ({ onSubmit, initialData }) => {
+    const [data, setData] = useState(initialData);
     
-    <x-card.body class="p-4">
-        {{ $slot }}
-    </x-card.body>
-</x-card>
+    return (
+        <form className="space-y-4">
+            {/* Component content */}
+        </form>
+    );
+};
+```
+
+### 2. Hooks & State Management
+```tsx
+const useUser = (userId: string) => {
+    const [user, setUser] = useState<User | null>(null);
+    
+    useEffect(() => {
+        // Fetch user
+    }, [userId]);
+    
+    return { user };
+};
+```
+
+### 3. Event Handlers
+```tsx
+const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    // Handle submission
+};
 ```
 
 ## General Guidelines

@@ -1,8 +1,8 @@
-# Sprint 5: Task & Activity Management
+# Sprint 5: Task & Activity Management with Analytics
 
 ## 📅 Timeline
 - **Duration**: 2 weeks
-- **Sprint Goal**: Implement core task management system (V3 upgrade focus)
+- **Sprint Goal**: Implement core task management system with analytics dashboard
 - **Priority Adjustment**: Advanced calendar features moved to later phase
 
 ## 🏆 Epics
@@ -57,6 +57,23 @@
 **Suggested Packages**:
 - `fullcalendar/fullcalendar ^6.1` - [FullCalendar](https://github.com/fullcalendar/fullcalendar) - JavaScript calendar library
 - `wire-elements/spotlight ^1.0` - [Livewire Spotlight](https://github.com/wire-elements/spotlight) - Command palette for quick actions
+
+### Epic 4: Analytics Dashboard
+**Description**: Implement analytics dashboard using Spatie Laravel-Dashboard
+
+#### Tasks
+
+| Task | Priority | Effort (Hours) | Dependencies | Description |
+|------|----------|----------------|--------------|-------------|
+| 4.1 Set up dashboard infrastructure | High | 8 | Sprint 1: 2.2 | Implement Spatie Laravel-Dashboard with basic configuration |
+| 4.2 Create task statistics tile | High | 6 | 4.1, 1.1, 1.2 | Build dashboard tile for task metrics |
+| 4.3 Implement calendar events tile | Medium | 6 | 4.1, 2.1, 2.4 | Create dashboard tile showing upcoming events |
+| 4.4 Develop activity metrics tile | Medium | 8 | 4.1, Sprint 3: 1.1 | Build dashboard tile for contact activity metrics |
+| 4.5 Create performance analytics tile | Medium | 8 | 4.1, 4.2, 4.3, 4.4 | Implement user productivity and performance metrics |
+
+**Suggested Packages**:
+- `spatie/laravel-dashboard ^3.0` - [Laravel Dashboard](https://github.com/spatie/laravel-dashboard) - Dashboard framework
+- `league/commonmark ^2.4` - [League CommonMark](https://github.com/thephpleague/commonmark) - Markdown processing
 
 ## 🧩 Cursor IDE-Ready Prompts (MCPs)
 
@@ -195,4 +212,166 @@ Create a fully-featured interactive calendar component for Fusion CRM V4:
 Follow Tailwind and Alpine.js best practices for interactive elements and
 ensure the component is optimized for performance with proper event delegation
 and minimal repaints.
+```
+
+### MCP 4.1: Set Up Dashboard Infrastructure
+```
+Integrate Spatie Laravel-Dashboard for Fusion CRM V4:
+
+1. Install spatie/laravel-dashboard ^3.0:
+   - Run composer installation
+   - Publish configuration files
+   - Configure schedule for tile updates
+   - Set up appropriate migrations
+
+2. Configure dashboard framework:
+   - Create base dashboard routes
+   - Set up dashboard layout with responsive grid
+   - Configure authentication and authorization
+   - Implement tenant-aware dashboard access
+
+3. Create base dashboard components:
+   - DashboardController.php
+   - Dashboard layout Blade components
+   - Dashboard tile wrapper components
+   - Dashboard configuration interface
+
+4. Implement dashboard customization:
+   - User-specific dashboard layouts
+   - Dashboard layout persistence
+   - Drag-and-drop tile positioning
+   - Dashboard theme options
+   - Role-based default dashboards
+
+5. Set up dashboard caching:
+   - Configure efficient caching for tiles
+   - Implement cache invalidation strategies
+   - Set up refresh intervals by tile type
+
+6. Add responsive features:
+   - Mobile-friendly layouts
+   - Tile size adaptation
+   - Touch interaction support
+   - Progressive loading for performance
+
+7. Implement tenant isolation:
+   - Ensure all dashboard data respects tenant boundaries
+   - Configure tile visibility by tenant and user role
+   - Apply tenant-specific styling if needed
+
+Use Spatie Laravel-Dashboard as a foundation for creating insightful,
+real-time analytics displays that help users make data-driven decisions
+while maintaining tenant isolation and performance.
+```
+
+### MCP 4.2: Create Task Statistics Tile
+```
+Implement a task statistics dashboard tile using Spatie Laravel-Dashboard for Fusion CRM V4:
+
+1. Create TaskStatisticsTile class:
+   - Extend the Tile class from spatie/laravel-dashboard
+   - Configure refresh interval and cache settings
+   - Implement data fetching methods with tenant awareness
+   - Create render method for the tile view
+
+2. Develop TaskStatisticsStore class:
+   - Create methods to store and retrieve task statistics
+   - Implement tenant isolation for data storage
+   - Set up efficient data aggregation queries
+   - Configure automatic data refreshing via scheduled commands
+
+3. Create TaskStatisticsCommand class:
+   - Extend Illuminate\Console\Command
+   - Implement logic to calculate task statistics
+   - Configure tenant iteration for multi-tenant deployments
+   - Add to scheduler for regular updates
+
+4. Implement task metrics calculations:
+   - Tasks by status (not_started, in_progress, completed, deferred)
+   - Tasks by priority (low, medium, high, urgent)
+   - Tasks by assignment (assigned vs. unassigned)
+   - Overdue tasks count and percentage
+   - Completion rate metrics (daily, weekly, monthly)
+   - Average completion time
+   - Trending task categories
+
+5. Develop blade view for the tile:
+   - Create clean, informative visualization
+   - Implement mini-charts for key metrics
+   - Add color-coding for status and priority
+   - Include trend indicators (up/down arrows)
+   - Design mobile-responsive layout
+
+6. Add interaction capabilities:
+   - Click-through to detailed task lists
+   - Filter controls for time period
+   - User-specific vs. team-wide toggle
+   - Quick actions for task management
+
+7. Configure settings for the tile:
+   - Allow customization of displayed metrics
+   - Enable/disable specific charts
+   - Set preferred time ranges
+   - Configure alert thresholds
+
+Take advantage of Laravel-Dashboard's tile system to create a
+focused view of task-related metrics that helps teams monitor
+productivity and identify bottlenecks.
+```
+
+### MCP 4.5: Create Performance Analytics Tile
+```
+Implement a performance analytics dashboard tile using Spatie Laravel-Dashboard for Fusion CRM V4:
+
+1. Create PerformanceAnalyticsTile class:
+   - Extend the Tile class from spatie/laravel-dashboard
+   - Configure refresh interval and cache settings
+   - Implement data aggregation with tenant isolation
+   - Create render method for the tile view
+
+2. Develop PerformanceAnalyticsStore class:
+   - Create methods to store and retrieve performance metrics
+   - Implement efficient data storage and retrieval
+   - Set up data segmentation by user, team, and tenant
+   - Configure proper cache invalidation
+
+3. Create PerformanceAnalyticsCommand class:
+   - Extend Illuminate\Console\Command
+   - Implement performance calculation algorithms
+   - Set up scheduled execution for regular updates
+   - Add tenant-aware processing
+
+4. Implement key performance indicators:
+   - Task completion rate by user/team
+   - Average response time for assigned tasks
+   - Meeting attendance rate
+   - Client interaction frequency
+   - Deal progression metrics
+   - Activity logging completeness
+   - Documentation thoroughness score
+   - Cross-selling effectiveness metrics
+
+5. Develop blade view for the tile:
+   - Create informative data visualizations
+   - Implement comparative metrics (user vs. team average)
+   - Add trend indicators and historical comparisons
+   - Design clean, actionable interface
+   - Ensure mobile responsiveness
+
+6. Add detailed breakdown features:
+   - Click-through to user-specific performance details
+   - Historical trend analysis
+   - Performance improvement suggestions
+   - Goal tracking visualization
+
+7. Configure personalization options:
+   - Allow users to set personal KPI targets
+   - Enable customizable metrics display
+   - Configure notification thresholds
+   - Set comparison benchmarks
+
+Take advantage of Laravel-Dashboard's flexibility to create a
+performance analytics system that motivates users and provides
+actionable insights for productivity improvement while maintaining
+user privacy and tenant isolation.
 ```

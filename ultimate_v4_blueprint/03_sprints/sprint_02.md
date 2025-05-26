@@ -24,20 +24,20 @@
 - `laravel/fortify ^1.18` - [Laravel Fortify](https://github.com/laravel/fortify) - Backend authentication
 
 ### Epic 2: Role & Permission System
-**Description**: Implement role-based access control (RBAC) with tenant-aware permissions
+**Description**: Implement role-based access control (RBAC) with tenant-aware permissions using Spatie Laravel-Permission v6
 
 #### Tasks
 
 | Task | Priority | Effort (Hours) | Dependencies | Description |
 |------|----------|----------------|--------------|-------------|
-| 2.1 Install and configure permission package | High | 4 | 1.1, Sprint 1: 2.2 | Set up Spatie Permission with multi-tenant support |
+| 2.1 Install and configure Laravel-Permission package | High | 4 | 1.1, Sprint 1: 2.2 | Set up Spatie Permission with multi-tenant support |
 | 2.2 Define role and permission models | High | 6 | 2.1 | Create models for roles and permissions with tenant scoping |
-| 2.3 Implement permission middleware | Medium | 4 | 2.1, 2.2 | Create middleware for permission-based route protection |
+| 2.3 Implement permission middleware | Medium | 4 | 2.1, 2.2 | Leverage built-in middleware for permission-based route protection |
 | 2.4 Create role management UI | Medium | 8 | 2.2, 2.3 | Build interface for managing roles and permissions |
 | 2.5 Implement role-based UI adaptation | Medium | 6 | 2.2, 2.4 | Add UI components that adapt based on user roles |
 
 **Suggested Packages**:
-- `spatie/laravel-permission ^6.3` - [Spatie Laravel Permission](https://github.com/spatie/laravel-permission) - Role-based permissions
+- `spatie/laravel-permission ^6.3` - [Spatie Laravel Permission](https://github.com/spatie/laravel-permission) - Role-based permissions with support for multiple guards
 - `blade-ui-kit/blade-heroicons ^2.1` - [Blade Heroicons](https://github.com/blade-ui-kit/blade-heroicons) - SVG icons for UI
 
 ### Epic 3: Multi-Tenant Core Services
@@ -93,11 +93,14 @@ Set up Spatie's Laravel Permission package with multi-tenant support for Fusion 
    - Standard roles (Admin, Manager, Agent, Assistant)
    - Core permissions by module (view_clients, create_properties, etc.)
 6. Implement tenant-aware permission registration service
-7. Add middleware for checking permissions within tenant context
-8. Create permission policy classes for core models
+7. Leverage built-in Laravel Gate integrations for permission checks
+8. Use Blade directives (@role, @can) for permission-based UI rendering
+9. Create permission policy classes for core models
 
 Ensure all permission checks maintain tenant isolation and security boundaries
-while providing granular access control for user actions.
+while providing granular access control for user actions. Take advantage of 
+Laravel-Permission's direct integration with Laravel's Gate for seamless 
+permission checks like $user->can('edit articles') and @can directive usage.
 ```
 
 ### MCP 3.2: Develop Tenant Provisioning Workflow
@@ -123,4 +126,3 @@ Create a complete tenant provisioning workflow for Fusion CRM V4:
 
 Ensure the workflow is robust, handles errors gracefully, and maintains
 data integrity throughout the provisioning process.
-```
