@@ -6,29 +6,23 @@ use Illuminate\Database\Seeder;
 
 class ThemesTableSeeder extends Seeder
 {
-
     /**
      * Auto generated seed file
-     *
-     * @return void
      */
-    public function run()
+    public function run(): void
     {
-        
 
         \DB::table('themes')->delete();
-        
-        \DB::table('themes')->insert(array (
-            0 => 
-            array (
+
+        \DB::table('themes')->insert([
+            0 => [
                 'id' => 1,
                 'name' => 'Anchor Theme',
                 'folder' => 'anchor',
                 'active' => 1,
-                'version' => 1.0
-            )
-        ));
-        
-        
+                'version' => 1.0,
+            ],
+        ]);
+
     }
 }
