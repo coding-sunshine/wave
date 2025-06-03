@@ -1,25 +1,7 @@
-@import './component-styles.css' layer(base);
-@import 'tailwindcss';
-
-@config '../../../../../tailwind.config.js';
-
-/*
-  The default border color has changed to `currentcolor` in Tailwind CSS v4,
-  so we've added these compatibility styles to make sure everything still
-  looks the same as it did with Tailwind CSS v3.
-
-  If we ever want to remove these styles, we need to add an explicit border
-  color utility to any element that depends on these defaults.
-*/
-@layer base {
-  *,
-  ::after,
-  ::before,
-  ::backdrop,
-  ::file-selector-button {
-    border-color: var(--color-gray-200, currentcolor);
-  }
-}
+@import './component-styles.css';
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
 
 [x-cloak]{
   display:none;
@@ -73,7 +55,7 @@ svg {
 /****** Form Input CLASSES **********/
 
 .form-input, .form-textarea, .form-select {
-    @apply px-3 py-2 text-base leading-normal transition duration-150 ease-in-out bg-white border rounded-md appearance-none border-zinc-400 focus:outline-hidden focus:ring-3 focus:ring-opacity-30 focus:ring-blue-500 focus:border-blue-400;
+    @apply px-3 py-2 text-base leading-normal transition duration-150 ease-in-out bg-white border rounded-md appearance-none border-zinc-400 focus:outline-none focus:ring focus:ring-opacity-30 focus:ring-blue-500 focus:border-blue-400;
 }
 
 .form-select{
