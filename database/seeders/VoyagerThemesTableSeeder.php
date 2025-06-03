@@ -6,21 +6,16 @@ use Illuminate\Database\Seeder;
 
 class VoyagerThemesTableSeeder extends Seeder
 {
-
     /**
      * Auto generated seed file
-     *
-     * @return void
      */
-    public function run()
+    public function run(): void
     {
-
 
         \DB::table('themes')->delete();
 
-        \DB::table('themes')->insert(array (
-            0 =>
-            array (
+        \DB::table('themes')->insert([
+            0 => [
                 'id' => 1,
                 'name' => 'Tailwind Theme',
                 'folder' => 'tailwind',
@@ -28,9 +23,8 @@ class VoyagerThemesTableSeeder extends Seeder
                 'version' => '1.0',
                 'created_at' => '2020-08-23 08:06:45',
                 'updated_at' => '2020-08-23 08:06:45',
-            )
-        ));
-
+            ],
+        ]);
 
     }
 }
