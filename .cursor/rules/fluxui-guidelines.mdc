@@ -1,0 +1,247 @@
+---
+description: Flux UI guidelines
+globs: 
+alwaysApply: false
+---
+# Flux UI Guidelines
+
+## Introduction
+
+Flux is a robust UI component library designed specifically for Laravel Livewire applications. It's built on Tailwind CSS v4 and provides a rich set of components that are both easy to use and customize. This guide outlines best practices for working with Flux UI in this project.
+
+## Prerequisites
+
+Flux UI requires the following:
+- Laravel 10 or later
+- Livewire 3.5.19 or later
+- Tailwind CSS 4 or later
+
+## Installation and Setup
+
+### Basic Installation
+
+Flux is installed via Composer:
+
+```bash
+composer require livewire/flux
+```
+
+For Flux Pro (if licensed):
+
+```bash
+php artisan flux:activate
+```
+
+### Asset Integration
+
+Blade directives are required in your layout files:
+
+```blade
+<head>
+    <!-- Other head content -->
+    @fluxAppearance
+</head>
+
+<body>
+    <!-- Site content -->
+    @fluxScripts
+</body>
+```
+
+### Tailwind Configuration
+
+Flux requires specific Tailwind CSS configuration in your CSS file:
+
+```css
+@import 'tailwindcss';
+@import '../../vendor/livewire/flux/dist/flux.css';
+@custom-variant dark (&:where(.dark, .dark *));
+```
+
+### Font Configuration (Recommended)
+
+While optional, Flux is designed to work best with the Inter font family:
+
+```html
+<link rel="preconnect" href="https://fonts.bunny.net">
+<link href="https://fonts.bunny.net/css?family=inter:400,500,600&display=swap" rel="stylesheet" />
+```
+
+```css
+@theme {
+    --font-sans: Inter, sans-serif;
+}
+```
+
+## Component Usage
+
+### Basic Usage Pattern
+
+Flux components can be used directly in Blade templates:
+
+```blade
+<x-flux::button>
+    Click Me
+</x-flux::button>
+
+<x-flux::input wire:model="search" placeholder="Search..." />
+```
+
+### Component Customization
+
+Components can be published for customization:
+
+```bash
+php artisan flux:publish
+```
+
+After publishing, you can modify the components in your project's view directory while maintaining Flux's core functionality.
+
+## Theming
+
+### Color Schemes
+
+Flux supports custom theming through CSS variables. The default theme can be extended or replaced.
+
+```css
+@theme {
+    /* Primary colors */
+    --primary-50: 240 100% 98%;
+    --primary-100: 242 100% 96%;
+    --primary-200: 242 100% 92%;
+    --primary-300: 242 100% 86%;
+    --primary-400: 243 100% 77%;
+    --primary-500: 243 100% 69%;
+    --primary-600: 243 100% 59%;
+    --primary-700: 243 87% 50%;
+    --primary-800: 244 76% 42%;
+    --primary-900: 243 66% 34%;
+    --primary-950: 244 61% 22%;
+}
+```
+
+### Dark Mode Support
+
+Flux handles dark mode automatically with the `@fluxAppearance` directive. Dark mode can be:
+- System-based (default)
+- User-controlled via toggle
+- Disabled entirely by removing `@fluxAppearance`
+
+## Common Components
+
+### Buttons
+
+```blade
+<x-flux::button>Default Button</x-flux::button>
+<x-flux::button variant="primary">Primary Button</x-flux::button>
+<x-flux::button variant="secondary">Secondary Button</x-flux::button>
+<x-flux::button variant="outline">Outline Button</x-flux::button>
+<x-flux::button variant="text">Text Button</x-flux::button>
+<x-flux::button size="sm">Small Button</x-flux::button>
+<x-flux::button size="lg">Large Button</x-flux::button>
+<x-flux::button disabled>Disabled Button</x-flux::button>
+<x-flux::button loading>Loading Button</x-flux::button>
+```
+
+### Form Inputs
+
+```blade
+<x-flux::input wire:model="search" placeholder="Search..." />
+<x-flux::textarea wire:model="description" placeholder="Description..." />
+<x-flux::select wire:model="status" :options="['pending', 'active', 'completed']" />
+<x-flux::checkbox wire:model="remember" label="Remember me" />
+<x-flux::radio wire:model="option" value="1" label="Option 1" />
+```
+
+### Layout Components
+
+```blade
+<x-flux::card>
+    <x-slot:header>Card Header</x-slot:header>
+    Card Content
+    <x-slot:footer>Card Footer</x-slot:footer>
+</x-flux::card>
+
+<x-flux::modal wire:model="showModal">
+    <x-slot:header>Modal Title</x-slot:header>
+    Modal Content
+    <x-slot:footer>
+        <x-flux::button wire:click="$set('showModal', false)">Close</x-flux::button>
+    </x-slot:footer>
+</x-flux::modal>
+```
+
+### Data Display
+
+```blade
+<x-flux::table :items="$users">
+    <x-flux::table.column name="name" sortable />
+    <x-flux::table.column name="email" sortable />
+    <x-flux::table.column name="created_at" sortable>
+        <x-slot:cell="$user">
+            {{ $user->created_at->format('Y-m-d') }}
+        </x-slot:cell>
+    </x-flux::table.column>
+</x-flux::table>
+```
+
+## Best Practices
+
+1. **Component Consistency**: Use Flux components consistently throughout the application to maintain UI coherence.
+
+2. **Customization**: Prefer extending Flux components over building custom ones from scratch.
+
+3. **Responsive Design**: Flux components are designed to be responsive, but always test on multiple screen sizes.
+
+4. **Accessibility**: Maintain accessibility when customizing components by preserving aria attributes and focus states.
+
+5. **Updates**: Keep Flux updated regularly with:
+   ```bash
+   composer update livewire/flux
+   ```
+
+6. **Custom Components**: When building custom components, follow Flux's design patterns and use its utility classes.
+
+## Integration with Livewire
+
+Flux is designed to work seamlessly with Livewire for dynamic interfaces:
+
+```blade
+<div>
+    <x-flux::input wire:model.live="search" placeholder="Search users..." />
+    
+    <x-flux::table :items="$users">
+        <x-flux::table.column name="name" sortable />
+        <x-flux::table.column name="email" sortable />
+        <x-flux::table.column name="actions">
+            <x-slot:cell="$user">
+                <x-flux::button wire:click="edit({{ $user->id }})" size="sm">
+                    Edit
+                </x-flux::button>
+            </x-slot:cell>
+        </x-flux::table.column>
+    </x-flux::table>
+    
+    <x-flux::modal wire:model="showEditModal">
+        <x-slot:header>Edit User</x-slot:header>
+        
+        <form wire:submit="updateUser">
+            <x-flux::input wire:model="form.name" label="Name" />
+            <x-flux::input wire:model="form.email" label="Email" />
+            
+            <x-slot:footer>
+                <x-flux::button type="submit">Save</x-flux::button>
+                <x-flux::button variant="text" wire:click="$set('showEditModal', false)">
+                    Cancel
+                </x-flux::button>
+            </x-slot:footer>
+        </form>
+    </x-flux::modal>
+</div>
+```
+
+## Reference Resources
+
+- [Flux UI Documentation](mdc:https:/fluxui.dev/docs)
+- [Livewire Documentation](mdc:https:/livewire.laravel.com)
+- [Tailwind CSS v4 Documentation](mdc:https:/tailwindcss.com)

@@ -1,0 +1,544 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+# Tailwind CSS v4 and Alpine.js 3.14.9 Guidelines
+
+## Introduction
+
+This document outlines best practices for using Tailwind CSS v4 and Alpine.js 3.14.9 in our Laravel application. These frontend technologies work together to provide a powerful, efficient way to build interactive interfaces.
+
+## Tailwind CSS v4
+
+### Setup and Configuration
+
+Install Tailwind CSS v4:
+
+```bash
+npm install -D tailwindcss@latest
+npx tailwindcss init
+```
+
+Configure your `tailwind.config.js`:
+
+```javascript
+module.exports = {
+  content: [
+    './resources/**/*.blade.php',
+    './resources/**/*.js',
+    './resources/**/*.vue',
+    './app/View/Components/**/*.php',
+  ],
+  theme: {
+    extend: {
+      colors: {
+        primary: {
+          50: 'rgb(var(--color-primary-50) / <alpha-value>)',
+          100: 'rgb(var(--color-primary-100) / <alpha-value>)',
+          // ... other shades
+          900: 'rgb(var(--color-primary-900) / <alpha-value>)',
+        },
+        // ... other color groups
+      },
+      fontFamily: {
+        sans: ['Inter var', 'sans-serif'],
+      },
+    },
+  },
+  plugins: [
+    require('@tailwindcss/forms'),
+    require('@tailwindcss/typography'),
+  ],
+}
+```
+
+Import in your main CSS file (`resources/css/app.css`):
+
+```css
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --color-primary-50: 240 249 255;
+  --color-primary-100: 224 242 254;
+  /* ... other variable definitions */
+}
+```
+
+### Key Changes in Tailwind CSS v4
+
+1. **Built-in CSS variables**: Uses CSS variables for colors and other values by default
+2. **Modern CSS features**: Better use of modern CSS features like parent/sibling selectors and nesting
+3. **Grouped opacity modifiers**: Syntax for opacity is now unified
+4. **Improved gradient syntax**: More intuitive gradient declarations
+5. **Simplified configuration**: Config file structure is more streamlined
+6. **Utilities in variants**: Can use utilities in variant definitions
+
+### Basic Usage
+
+Use Tailwind's utility classes directly in your HTML/Blade templates:
+
+```html
+<button class="bg-primary-600 hover:bg-primary-700 text-white font-bold py-2 px-4 rounded">
+  Click me
+</button>
+
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+  <!-- Grid content -->
+</div>
+```
+
+### Layout Patterns
+
+#### Responsive Design
+
+```html
+<div class="w-full sm:w-1/2 md:w-1/3 lg:w-1/4 xl:w-1/6">
+  <!-- Responsive width element -->
+</div>
+```
+
+#### Flexbox
+
+```html
+<div class="flex flex-col md:flex-row justify-between items-center gap-4">
+  <div class="flex-shrink-0">Logo</div>
+  <nav class="flex gap-4">
+    <a href="#" class="hover:text-primary-500">Home</a>
+    <a href="#" class="hover:text-primary-500">About</a>
+    <a href="#" class="hover:text-primary-500">Contact</a>
+  </nav>
+</div>
+```
+
+#### Grid
+
+```html
+<div class="grid grid-cols-12 gap-4">
+  <div class="col-span-12 md:col-span-8">Main Content</div>
+  <div class="col-span-12 md:col-span-4">Sidebar</div>
+</div>
+```
+
+### CSS Variables
+
+Tailwind CSS v4 uses CSS variables by default for colors. Define your variables in your CSS:
+
+```css
+:root {
+  --color-brand: 37 99 235; /* RGB values */
+}
+```
+
+Then use them in your Tailwind classes:
+
+```html
+<div class="bg-[rgb(var(--color-brand))]">
+  Custom colored element
+</div>
+```
+
+### Dark Mode Configuration
+
+```javascript
+// tailwind.config.js
+module.exports = {
+  darkMode: 'class', // or 'media' for system preference
+  // ...rest of config
+}
+```
+
+```html
+<html class="dark">
+  <!-- Dark mode enabled -->
+  <div class="bg-white dark:bg-slate-900 text-black dark:text-white">
+    Content adapts to dark mode
+  </div>
+</html>
+```
+
+To toggle dark mode with Alpine.js:
+
+```html
+<button x-data @click="document.documentElement.classList.toggle('dark')">
+  Toggle Dark Mode
+</button>
+```
+
+### Custom Components
+
+Define reusable components in your CSS:
+
+```css
+@layer components {
+  .btn {
+    @apply px-4 py-2 rounded font-medium focus:outline-none focus:ring-2 focus:ring-offset-2;
+  }
+  
+  .btn-primary {
+    @apply btn bg-primary-600 text-white hover:bg-primary-700 
+           focus:ring-primary-500;
+  }
+  
+  .btn-secondary {
+    @apply btn bg-gray-200 text-gray-900 hover:bg-gray-300 
+           focus:ring-gray-500;
+  }
+}
+```
+
+## Alpine.js 3.14.9
+
+### Setup
+
+Install Alpine.js 3.14.9:
+
+```bash
+npm install alpinejs@3.14.9
+```
+
+Initialize in your JavaScript entry point (`resources/js/app.js`):
+
+```javascript
+import Alpine from 'alpinejs'
+import focus from '@alpinejs/focus'
+import persist from '@alpinejs/persist'
+
+// Register plugins
+Alpine.plugin(focus)
+Alpine.plugin(persist)
+
+// Make Alpine available globally
+window.Alpine = Alpine
+
+// Start Alpine
+Alpine.start()
+```
+
+### Basic Components
+
+A simple dropdown component:
+
+```html
+<div x-data="{ open: false }">
+  <button @click="open = !open">Toggle Dropdown</button>
+  
+  <div x-show="open" 
+       x-transition:enter="transition ease-out duration-200"
+       x-transition:enter-start="opacity-0 transform scale-95"
+       x-transition:enter-end="opacity-100 transform scale-100"
+       x-transition:leave="transition ease-in duration-100"
+       x-transition:leave-start="opacity-100 transform scale-100"
+       x-transition:leave-end="opacity-0 transform scale-95"
+       @click.away="open = false">
+    Dropdown content
+  </div>
+</div>
+```
+
+### Data Binding
+
+```html
+<div x-data="{ message: 'Hello World', count: 0 }">
+  <input type="text" x-model="message">
+  
+  <p x-text="message"></p>
+  
+  <button @click="count++">Increment</button>
+  <p>Count: <span x-text="count"></span></p>
+</div>
+```
+
+### Event Handling
+
+```html
+<div x-data="{ open: false }">
+  <button @click="open = !open">Toggle</button>
+  <button @click.prevent="handleSubmit()">Submit</button>
+  <input @keyup.escape="cancel()">
+  <div @click.outside="open = false">
+    Modal content
+  </div>
+</div>
+```
+
+New in Alpine.js 3.14.9:
+```html
+<!-- Magic $event variable -->
+<button @click="console.log($event.target)">Show Target</button>
+
+<!-- Custom events with details -->
+<button @click="$dispatch('notification', { message: 'Success!' })">Notify</button>
+<div @notification="showNotification($event.detail.message)">
+  <!-- Will handle the notification event -->
+</div>
+```
+
+### Conditionals
+
+```html
+<div x-data="{ user: { isAdmin: true } }">
+  <div x-show="user.isAdmin">Admin Panel</div>
+  
+  <template x-if="user.isAdmin">
+    <div>Full Admin Panel (Only rendered for admins)</div>
+  </template>
+  
+  <template x-if="user.isAdmin">
+    <div>Admin content</div>
+  </template>
+  <template x-else>
+    <div>Regular user content</div>
+  </template>
+</div>
+```
+
+### Loops
+
+```html
+<div x-data="{ users: [
+  { name: 'John', role: 'Admin' },
+  { name: 'Jane', role: 'Editor' },
+  { name: 'Bob', role: 'Viewer' }
+]}">
+  <template x-for="(user, index) in users" :key="index">
+    <div>
+      <span x-text="user.name"></span>
+      <span x-text="user.role"></span>
+    </div>
+  </template>
+</div>
+```
+
+### Computed Properties
+
+Use the `$computed` magic in Alpine.js 3.12+:
+
+```html
+<div x-data="{
+  price: 100,
+  quantity: 2,
+  get subtotal() {
+    return this.price * this.quantity;
+  },
+  get tax() {
+    return this.subtotal * 0.1;
+  },
+  get total() {
+    return this.subtotal + this.tax;
+  }
+}">
+  <div>Subtotal: $<span x-text="subtotal"></span></div>
+  <div>Tax: $<span x-text="tax.toFixed(2)"></span></div>
+  <div>Total: $<span x-text="total.toFixed(2)"></span></div>
+  
+  <input type="number" x-model="quantity">
+</div>
+```
+
+### Global Stores (Alpine.js 3.14.9)
+
+```javascript
+// Define a global store
+document.addEventListener('alpine:init', () => {
+  Alpine.store('darkMode', {
+    on: false,
+    toggle() {
+      this.on = !this.on
+      document.documentElement.classList.toggle('dark', this.on)
+    }
+  })
+  
+  Alpine.store('cart', {
+    items: [],
+    count() {
+      return this.items.length
+    },
+    total() {
+      return this.items.reduce((sum, item) => sum + item.price, 0)
+    },
+    addItem(item) {
+      this.items.push(item)
+    }
+  })
+})
+```
+
+Use the store:
+
+```html
+<div x-data>
+  <!-- Dark mode toggle -->
+  <button @click="$store.darkMode.toggle()">
+    <span x-show="$store.darkMode.on">🌙</span>
+    <span x-show="!$store.darkMode.on">☀️</span>
+  </button>
+  
+  <!-- Cart indicator -->
+  <div>
+    Cart: <span x-text="$store.cart.count()"></span> items
+    (<span x-text="$store.cart.total()"></span>)
+  </div>
+  
+  <!-- Add to cart button -->
+  <button @click="$store.cart.addItem({ id: 1, name: 'Product', price: 29.99 })">
+    Add to Cart
+  </button>
+</div>
+```
+
+### Alpine.js 3.14.9 Features
+
+1. **$data Magic** - Access the current component's data:
+   ```html
+   <div x-data="{ name: 'John' }">
+     <button @click="console.log($data)">Log data</button>
+   </div>
+   ```
+
+2. **Enhanced $refs** - More flexible reference handling:
+   ```html
+   <div x-data>
+     <input x-ref="inputField">
+     <button @click="$refs.inputField.focus()">Focus</button>
+   </div>
+   ```
+
+3. **Plugin Ecosystem** - Add functionality with plugins:
+   ```html
+   <!-- Focus Management (requires @alpinejs/focus plugin) -->
+   <div x-data x-trap="open">
+     <!-- Focus will be trapped inside this div when open is true -->
+   </div>
+   
+   <!-- Persistent state (requires @alpinejs/persist plugin) -->
+   <div x-data="{ count: $persist(0) }">
+     <button @click="count++">Increment (stays after refresh)</button>
+     <span x-text="count"></span>
+   </div>
+   ```
+
+4. **Improved Reactivity** - Better reactive expressions and binding
+
+5. **Deferred Loading** - Load Alpine components on demand:
+   ```html
+   <div x-data x-init="$nextTick(() => { /* Deferred work */ })">
+     <!-- Component content -->
+   </div>
+   ```
+
+## Integration Patterns
+
+### Alpine.js with Livewire
+
+Alpine.js and Livewire work well together:
+
+```html
+<div x-data="{ open: false }" wire:poll.15s="updateComments">
+  <button @click="open = !open" wire:click="markAsRead">
+    Comments (<span x-text="$wire.unreadCount"></span>)
+  </button>
+  
+  <div x-show="open" wire:loading.class="opacity-50">
+    <!-- Comments list rendered by Livewire -->
+    @foreach ($comments as $comment)
+      <div wire:key="{{ $comment->id }}">{{ $comment->body }}</div>
+    @endforeach
+  </div>
+</div>
+```
+
+### Reusable Blade Components
+
+Create Blade components that combine Tailwind and Alpine:
+
+```php
+// app/View/Components/Alert.php
+namespace App\View\Components;
+
+use Illuminate\View\Component;
+
+class Alert extends Component
+{
+    public $type;
+    public $message;
+    
+    public function __construct($type = 'info', $message = '')
+    {
+        $this->type = $type;
+        $this->message = $message;
+    }
+    
+    public function render()
+    {
+        return view('components.alert');
+    }
+}
+```
+
+```html
+<!-- resources/views/components/alert.blade.php -->
+<div
+    x-data="{ show: true }"
+    x-show="show"
+    x-transition
+    class="rounded-lg p-4 mb-4 {{ $type === 'error' ? 'bg-red-100 text-red-700' : 
+    ($type === 'success' ? 'bg-green-100 text-green-700' : 'bg-blue-100 text-blue-700') }}"
+>
+    <div class="flex justify-between items-center">
+        <div>{{ $message ?? $slot }}</div>
+        <button @click="show = false" class="text-gray-500 hover:text-gray-800">
+            &times;
+        </button>
+    </div>
+</div>
+```
+
+Usage:
+
+```html
+<x-alert type="success" message="Operation completed successfully!" />
+
+<x-alert type="error">
+  Something went wrong. Please try again.
+</x-alert>
+```
+
+## Best Practices
+
+### Tailwind CSS
+
+1. **Use custom theme configuration** for consistent brand colors and design
+2. **Extract components** for consistent, reusable UI elements
+3. **Follow a mobile-first approach** with responsive utilities
+4. **Organize complex components** with `@apply` in your CSS
+5. **Purge unused CSS** in production by properly configuring content paths
+6. **Use JIT mode** for faster development and smaller CSS files
+7. **Maintain a component library** of common UI patterns
+
+### Alpine.js
+
+1. **Keep component logic minimal and focused**
+2. **Use global stores** for sharing state between components
+3. **Separate complex logic** into reusable JavaScript functions
+4. **Initialize with x-data** at the appropriate scope level
+5. **Use x-cloak** to hide elements until Alpine is loaded
+6. **Add appropriate transitions** for a polished user experience
+7. **Use modifiers** like `.outside`, `.debounce`, etc. to optimize event handlers
+
+### Performance
+
+1. **Lazy load Alpine components** when not immediately needed
+2. **Use x-ref** instead of querySelector for DOM elements
+3. **Keep reactive data minimal** to avoid performance issues
+4. **Debounce** inputs and events that trigger frequent updates
+5. **Use @entangle with defer** when connecting Livewire properties to Alpine
+
+### Accessibility
+
+1. **Use proper ARIA attributes** with Alpine.js for dynamic components
+2. **Ensure keyboard navigation** works for interactive elements
+3. **Test with screen readers** for dynamic content changes
+4. **Use x-trap** for focus management in modals

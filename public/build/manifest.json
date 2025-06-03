@@ -9,10 +9,10 @@
     "src": "resources/themes/anchor/assets/css/app.css",
     "isEntry": true
   },
-  "resources/themes/anchor/assets/js/app.js": {
+  "resources/themes/drift/assets/js/app.js": {
     "file": "assets/app-CaUPGaqM.js",
     "name": "app",
-    "src": "resources/themes/anchor/assets/js/app.js",
+    "src": "resources/themes/drift/assets/js/app.js",
     "isEntry": true
   }
 }
