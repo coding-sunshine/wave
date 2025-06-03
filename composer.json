@@ -10,7 +10,7 @@
     "license": "MIT",
     "type": "project",
     "require": {
-        "php": "^8.2",
+        "php": "^8.3",
         "ext-exif": "*",
         "ext-gd": "*",
         "bezhansalleh/filament-google-analytics": "^2.0",
@@ -29,6 +29,8 @@
         "laravel/tinker": "^2.10.1",
         "laravel/ui": "^4.6",
         "livewire/livewire": "^3.5",
+        "prism-php/prism": "^0.68.1",
+        "prism-php/relay": "^1.0",
         "ralphjsmit/livewire-urls": "^1.5",
         "spatie/laravel-permission": "^6.12",
         "stripe/stripe-php": "^17.3",
