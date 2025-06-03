@@ -1,63 +1,32 @@
-# Fusion CRM V4 - Development Resources
+# Development Resources
 
-This document provides comprehensive development resources for building Fusion CRM V4 upon the existing **Wave Kit foundation**. These resources are specifically tailored for extending an established Laravel application with CRM functionality.
+## Core Technologies
 
-## Current Wave Foundation
+### Laravel 12
+- **Framework Core**
+  - Laravel Framework 12.x
+  - PHP 8.4+ features
+  - PSR-12 coding standards
+  - Laravel Horizon 5.x for queue management
 
-### ✅ Already Available in Wave
-- **Laravel 11** with PHP 8.1+ support and modern architecture
-- **Filament 3.2** admin panel with comprehensive resources
-- **Livewire 3** reactive components and established patterns
-- **Alpine.js 3.4.2** frontend interactivity
-- **Tailwind CSS 3.4.3** with dynamic theme system
-- **Spatie Permissions** fully configured with role management
-- **JWT Authentication** with API token management
-- **Stripe Integration** for billing and subscriptions
-- **Form Builder** with dynamic fields and entries
-- **Media Management** with file uploads and processing
-- **Testing Framework** with Pest PHP configured
+### Frontend Stack
+- **Livewire 3**
+  - Built-in Alpine.js integration <mcreference link="https://livewire.laravel.com/docs/alpine" index="1">1</mcreference>
+  - Real-time validation and file uploads
+  - SPA-like navigation with wire:navigate
+  - Component-based architecture
 
-### 🔄 Wave Package Ecosystem (Already Installed)
-```json
-{
-  "filament/filament": "^3.2",
-  "livewire/livewire": "^3.0", 
-  "spatie/laravel-permission": "^6.0",
-  "tymon/jwt-auth": "^2.0",
-  "intervention/image": "^3.0",
-  "stripe/stripe-php": "^13.0",
-  "laravel/folio": "^1.0",
-  "lab404/laravel-impersonate": "^1.7",
-  "devdojo/auth": "^1.0",
-  "devdojo/themes": "^1.0"
-}
-```
+- **Alpine.js 3.14.9**
+  - Lightweight JavaScript framework
+  - Seamless Livewire integration
+  - Client-side interactivity
+  - State management capabilities
 
-## CRM-Specific Package Extensions
-
-### Required CRM Packages
-```bash
-# AI Integration
-composer require openai-php/client
-
-# Financial Integration  
-composer require webfox/laravel-xero-oauth2
-
-# Additional Media Processing
-composer require spatie/laravel-medialibrary
-
-# Enhanced Validation
-composer require spatie/laravel-validation-rules
-
-# API Documentation
-composer require knuckleswtf/scribe
-
-# Enhanced Queue Management (if not using Horizon)
-composer require laravel/horizon
-
-# Real Estate Specific
-composer require geocoder-php/google-maps-provider
-```
+- **Tailwind CSS 4**
+  - Utility-first styling
+  - Custom theming and configuration
+  - Dark mode support
+  - Responsive design utilities
 
 ## Wave Kit Integration
 

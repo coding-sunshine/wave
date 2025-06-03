@@ -1,264 +1,166 @@
-# Sprint 1: CRM Model Extension & Filament Resources
+# Sprint 1: Project Setup & Core Architecture
 
 ## 📅 Timeline
 - **Duration**: 2 weeks
-- **Sprint Goal**: Extend Wave foundation with CRM-specific models, migrations, and Filament resources
+- **Sprint Goal**: Establish project foundation, infrastructure, and core architecture
 
 ## 🏆 Epics
 
-### Epic 1: CRM Model Creation
-**Description**: Create CRM-specific models that extend Wave's existing architecture and patterns
+### Epic 1: Project Infrastructure Setup
+**Description**: Initialize the Laravel 12 project with proper CI/CD, environments, and development workflows
 
 #### Tasks
 
 | Task | Priority | Effort (Hours) | Dependencies | Description |
 |------|----------|----------------|--------------|-------------|
-| 1.1 Extend Wave User model for CRM contacts | High | 6 | Sprint 0 | Add CRM-specific fields and relationships to existing User model |
-| 1.2 Create Property model with Wave patterns | High | 8 | 1.1 | Create Property model following Wave's model conventions |
-| 1.3 Create Lead model with team integration | High | 6 | 1.1, 1.2 | Create Lead model using Wave's team structure for multi-tenancy |
-| 1.4 Create Deal model with pipeline stages | High | 8 | 1.2, 1.3 | Create Deal model for sales pipeline management |
-| 1.5 Create Activity model for interaction tracking | Medium | 6 | 1.1-1.4 | Create Activity model for tracking all CRM interactions |
+| 1.1.1 Create new Laravel 12 project | High | 4 | None | Initialize a new Laravel 12 project with proper architecture |
+| 1.1.2 Set up repository and branch strategy | High | 2 | 1.1.1 | Create GitHub/GitLab repository with main, development, and feature branch strategy |
+| 1.3 Configure environments (dev/staging/prod) | Medium | 6 | 1.1, 1.2 | Set up multiple environments with proper configuration |
+| 1.4 Set up CI/CD pipeline | Medium | 8 | 1.2, 1.3 | Configure automated testing and deployment workflows |
+| 1.5 Initialize code quality tools | Medium | 4 | 1.1 | Set up Laravel Pint, PHPStan, and GitHub Actions |
 
-**Wave Integration Points**:
-- Extend existing `app/Models/User.php` with CRM fields
-- Use Wave's team structure for multi-tenancy
-- Follow Wave's model trait patterns
-- Integrate with Wave's existing media system
+**Suggested Packages**:
+- `laravel/pint ^1.13` - [Laravel Pint](https://github.com/laravel/pint) - Code styling
+- `phpstan/phpstan ^1.10` - [PHPStan](https://github.com/phpstan/phpstan) - Static analysis
+- `pestphp/pest ^2.28` - [Pest PHP](https://github.com/pestphp/pest) - Testing framework
 
-### Epic 2: Database Migrations
-**Description**: Create database migrations that extend Wave's existing schema
-
-#### Tasks
-
-| Task | Priority | Effort (Hours) | Dependencies | Description |
-|------|----------|----------------|--------------|-------------|
-| 2.1 Create migration to extend users table | High | 4 | 1.1 | Add CRM-specific fields to existing users table |
-| 2.2 Create properties table migration | High | 6 | 1.2 | Create properties table with proper relationships |
-| 2.3 Create leads table migration | High | 4 | 1.3 | Create leads table with team and user relationships |
-| 2.4 Create deals table migration | High | 6 | 1.4 | Create deals table with pipeline and relationship structure |
-| 2.5 Create activities table migration | Medium | 4 | 1.5 | Create activities table for interaction tracking |
-
-**Migration Strategy**:
-- Extend existing Wave tables where possible
-- Maintain Wave's existing foreign key patterns
-- Use Wave's team_id for multi-tenancy
-- Follow Wave's timestamp and soft delete patterns
-
-### Epic 3: Filament Resource Creation
-**Description**: Create CRM-specific Filament resources following Wave's established patterns
+### Epic 2: Database Schema Foundation
+**Description**: Design and implement the core database structure focusing on multi-tenancy
 
 #### Tasks
 
 | Task | Priority | Effort (Hours) | Dependencies | Description |
 |------|----------|----------------|--------------|-------------|
-| 3.1 Extend UserResource for CRM functionality | High | 8 | 2.1 | Enhance existing UserResource with CRM fields and relationships |
-| 3.2 Create PropertyResource | High | 12 | 2.2 | Create PropertyResource following Wave's resource patterns |
-| 3.3 Create LeadResource | High | 10 | 2.3 | Create LeadResource with lead management functionality |
-| 3.4 Create DealResource | High | 12 | 2.4 | Create DealResource with pipeline management |
-| 3.5 Create ActivityResource | Medium | 8 | 2.5 | Create ActivityResource for interaction tracking |
+| 2.1 Design core entity relationships | High | 8 | None | Create ERD for core entities including tenants, users, clients, properties |
+| 2.2 Implement multi-tenancy database structure | High | 16 | 2.1 | Create migrations for tenant isolation strategy |
+| 2.3 Configure MySQL optimization for multi-tenant schemas | Medium | 6 | 2.2 | Optimize database for multi-tenant performance |
+| 2.4 Create seeders for development data | Low | 4 | 2.2 | Create seed data for testing and development |
+| 2.5 Document database schema | Medium | 4 | 2.1, 2.2 | Create comprehensive documentation of database design |
 
-**Filament Integration**:
-- Follow patterns from existing Wave resources (UserResource, RoleResource, etc.)
-- Integrate with Wave's existing navigation structure
-- Use Wave's form and table conventions
-- Maintain Wave's UI/UX consistency
+**Suggested Packages**:
+- `spatie/laravel-multitenancy ^3.0` - [Spatie Laravel Multitenancy](https://github.com/spatie/laravel-multitenancy) - Multi-tenancy support
+- `doctrine/dbal ^3.7` - [Doctrine DBAL](https://github.com/doctrine/dbal) - Database abstraction layer for schema modifications
+
+### Epic 3: Core Application Structure
+**Description**: Establish the foundational application architecture patterns
+
+#### Tasks
+
+| Task | Priority | Effort (Hours) | Dependencies | Description |
+|------|----------|----------------|--------------|-------------|
+| 3.1 Create service provider structure | High | 4 | 1.1 | Establish pattern for service providers and container bindings |
+| 3.2 Set up model structure with scopes | High | 8 | 3.1 | Create base model classes with tenant scopes and query builders |
+| 3.3 Set up service layer architecture | High | 10 | 3.1, 3.2 | Implement service classes for business logic with direct model interaction |
+| 3.4 Create events and listeners structure | Medium | 4 | 3.1 | Set up event broadcasting architecture |
+| 3.5 Implement queue configuration | Medium | 4 | 3.1 | Configure queue drivers and worker processes |
+
+**Suggested Packages**:
+- `laravel/horizon ^5.23` - [Laravel Horizon](https://github.com/laravel/horizon) - Queue monitoring
+- `prism-php/prism ^1.0` - [Prism PHP](https://github.com/prism-php/prism) - AI integration foundation
 
 ## 🧩 Cursor IDE-Ready Prompts (MCPs)
 
-### MCP 1.1: Extend Wave User Model for CRM
+### MCP 1.1: Create New Laravel 12 Project
 ```
-I need to extend the existing Wave User model to support CRM functionality. Please help me:
-
-1. Analyze the current Wave User model in app/Models/User.php and identify:
-   - Existing fields and relationships
-   - Current traits and interfaces
-   - Authentication and team relationships
-
-2. Add CRM-specific fields to the users table migration:
-   - phone (string, nullable)
-   - address (text, nullable)
-   - license_number (string, nullable)
-   - contact_preference (enum: email, phone, sms)
-   - crm_settings (json, nullable)
-   - lead_source (string, nullable)
-   - status (enum: active, inactive, prospect)
-
-3. Extend the User model with CRM relationships:
-   - hasMany leads (as assigned agent)
-   - hasMany properties (as listing agent)
-   - hasMany deals (as agent)
-   - hasMany activities (as user)
-
-4. Add CRM-specific methods:
-   - getFullAddressAttribute()
-   - getPreferredContactMethodAttribute()
-   - scopeAgents()
-   - scopeClients()
-
-Ensure all changes maintain compatibility with existing Wave functionality and follow Wave's coding patterns.
+Create a new Laravel 12 project for Fusion CRM V4 with the following structure:
+1. Set up standard Laravel 12 application
+2. Configure .env structure for multi-environment support (local, testing, staging, production)
+3. Update composer.json with required dependencies:
+   - PHP 8.2+
+   - Laravel Framework 12.x
+   - Laravel Pint for code styling
+   - PHPStan for static analysis
+   - Pest PHP for testing
+4. Create a README.md with project setup instructions
+5. Implement a basic folder structure that supports:
+   - Domain-driven design with Services and Models
+   - Multi-tenancy support
+   - API resources for future endpoints
+Focus on performance, scalability, and tenant isolation as core architectural principles.
 ```
 
-### MCP 1.2: Create Property Model with Wave Patterns
+### MCP 2.1: Design Core Entity Relationships
 ```
-Create a Property model that integrates seamlessly with the Wave foundation. The model should:
+Create an Entity Relationship Diagram (ERD) for Fusion CRM V4 with the following core entities:
+1. Tenants: Multi-tenant architecture with complete data isolation
+2. Users: User accounts with role/permission assignments
+3. Clients: Core client entities with contact information and relationships
+4. Properties: Real estate properties with detailed attributes
+5. Deals/Opportunities: Sales pipeline tracking
+6. Tasks/Activities: User task management
+7. Documents: Document storage and management
+8. Xero Integration: Tables for Xero integration mappings
 
-1. Follow Wave's model structure and conventions:
-   - Use Wave's base model patterns
-   - Implement proper relationships
-   - Include appropriate traits (SoftDeletes, HasFactory)
-   - Use Wave's team structure for multi-tenancy
+Include foreign key relationships, indexing strategy, and data type recommendations.
+Optimize for:
+- Query performance across tenant boundaries
+- Scalability for large datasets
+- Data integrity with proper constraints
 
-2. Include these fields:
-   - team_id (foreign key to Wave's teams table)
-   - title, description, price, address
-   - property_type (enum: house, apartment, commercial, land)
-   - status (enum: available, under_contract, sold, withdrawn)
-   - listed_by (foreign key to users table)
-   - features (json for property features)
-   - coordinates (latitude, longitude)
-   - created_at, updated_at, deleted_at
-
-3. Define relationships:
-   - belongsTo Team (using Wave's team model)
-   - belongsTo User (listing agent)
-   - hasMany Leads (interested leads)
-   - hasMany Deals (related deals)
-   - hasMany Activities (property activities)
-   - morphMany Media (using Wave's media system)
-
-4. Include scopes and methods:
-   - scopeAvailable()
-   - scopeByType()
-   - scopeInPriceRange()
-   - getFormattedPriceAttribute()
-   - getFullAddressAttribute()
-
-5. Create the corresponding migration file that:
-   - Uses Wave's migration patterns
-   - Includes proper indexes
-   - Sets up foreign key constraints
-   - Follows Wave's naming conventions
-
-Ensure the model integrates with Wave's existing team structure for proper multi-tenancy.
+Implement using Laravel migrations with appropriate data types, indexes, and comments.
 ```
 
-### MCP 1.3: Create Lead Model with Team Integration
+### MCP 3.2: Set Up Model Structure with Scopes
 ```
-Create a Lead model that leverages Wave's team structure for multi-tenancy. The model should:
+Create a robust Eloquent model structure for Fusion CRM V4 that includes:
+1. Base model abstract class with:
+   - Tenant scope implementation
+   - Common accessors and mutators
+   - Timestamp handling
+   - Soft delete configuration
+   - Standard relationship methods
+   - Query optimization techniques
 
-1. Follow Wave's model patterns and include:
-   - team_id (foreign key to Wave's teams table)
-   - name, email, phone, address
-   - source (enum: website, referral, cold_call, social_media, advertisement)
-   - status (enum: new, contacted, qualified, unqualified, converted)
-   - assigned_to (foreign key to users table)
-   - score (integer, 0-100)
-   - notes (text)
-   - contact_preference (enum: email, phone, sms)
-   - last_contacted_at (timestamp)
+2. Model traits for common functionality:
+   - HasTenantScope - Automatically applies tenant scope to all queries
+   - HasStatusAttribute - For models with status fields
+   - HasUserTracking - For tracking created_by and updated_by
+   - HasSortableAttributes - For consistent column sorting
 
-2. Define relationships following Wave patterns:
-   - belongsTo Team (Wave's team model)
-   - belongsTo User (assigned agent)
-   - hasMany Activities (lead activities)
-   - belongsToMany Properties (interested properties)
-   - hasOne Deal (if converted)
+3. Implement specific model classes for core entities:
+   - Tenant model
+   - User model with authentication integration
+   - Client model
+   - Property model
+   
+4. Configure Eloquent features:
+   - Global scopes for tenant filtering
+   - Local scopes for common query patterns
+   - Eager loading optimization
+   - Attribute casting
+   - Hidden/visible attributes for serialization
 
-3. Include scopes and methods:
-   - scopeByStatus()
-   - scopeBySource()
-   - scopeAssignedTo()
-   - scopeHighScore()
-   - getScoreColorAttribute()
-   - getTimeSinceContactAttribute()
-   - markAsContacted()
-
-4. Create migration with:
-   - Proper foreign key constraints to Wave tables
-   - Indexes for performance
-   - Wave's timestamp patterns
-
-5. Add model factory for testing that:
-   - Uses Wave's existing User and Team factories
-   - Creates realistic lead data
-   - Follows Wave's factory patterns
-
-Ensure the model works seamlessly with Wave's existing team-based multi-tenancy.
+Focus on creating a model structure that enforces tenant isolation at the database level
+while providing rich query capabilities and maintaining clean separation of concerns.
 ```
 
-### MCP 3.2: Create PropertyResource Following Wave Patterns
+### MCP 3.3: Set Up Service Layer Architecture
 ```
-Create a PropertyResource for Filament that follows the patterns established by Wave's existing resources. The resource should:
+Create a service layer implementation for Fusion CRM V4 that includes:
+1. BaseService abstract class with:
+   - Authentication context management
+   - Tenant context handling
+   - Transaction support
+   - Error handling and logging
+   - Event dispatching
 
-1. Analyze Wave's existing resources (UserResource, RoleResource, etc.) and follow their patterns for:
-   - Form field organization and validation
-   - Table column configuration
-   - Action implementations
-   - Navigation integration
+2. Service implementation pattern for core services:
+   - Define clear public interfaces with method signatures
+   - Implement direct Eloquent model queries
+   - Encapsulate business logic
+   - Enforce validation and business rules
+   - Handle cross-cutting concerns
 
-2. Create PropertyResource with these features:
-   - Form with sections for basic info, location, features, and media
-   - File upload integration using Wave's media system
-   - Proper validation following Wave's patterns
-   - Relationship management for team and user associations
+3. Implement specific service classes:
+   - TenantService - Managing tenant operations
+   - UserService - User management and authentication
+   - ClientService - Client data operations
 
-3. Include table configuration with:
-   - Sortable and searchable columns
-   - Filters for property type, status, and price range
-   - Bulk actions following Wave's patterns
-   - Custom actions for property management
+4. Service provider for binding services to the container
 
-4. Add resource pages:
-   - ListProperties page with advanced filtering
-   - CreateProperty page with step-by-step form
-   - EditProperty page with media management
-   - ViewProperty page with detailed information
+5. Implement dependency injection throughout services
 
-5. Integrate with Wave's navigation:
-   - Add to appropriate navigation group
-   - Use Wave's icon system
-   - Follow Wave's permission patterns
-   - Maintain consistent UI/UX
-
-6. Include widgets for dashboard:
-   - Property statistics widget
-   - Recent properties widget
-   - Property status overview
-
-Ensure the resource feels native to Wave's existing admin panel and follows all established patterns.
+Ensure all services maintain proper separation of concerns while leveraging
+Laravel's Eloquent ORM directly for data access. Focus on clean, maintainable
+code with proper type hinting and documentation.
 ```
-
-## 📋 Deliverables
-
-### Week 1 Deliverables
-- **Extended User Model**: Wave User model extended with CRM fields and relationships
-- **Core CRM Models**: Property, Lead, Deal, and Activity models following Wave patterns
-- **Database Migrations**: All necessary migrations extending Wave's existing schema
-- **Model Factories**: Test factories for all new models
-
-### Week 2 Deliverables
-- **Filament Resources**: Complete PropertyResource, LeadResource, DealResource, and ActivityResource
-- **Enhanced UserResource**: Extended UserResource with CRM functionality
-- **Navigation Integration**: CRM resources integrated into Wave's admin navigation
-- **Basic Testing**: Unit tests for all models and resources
-
-## 🎯 Success Criteria
-
-- [ ] All CRM models integrate seamlessly with Wave's existing architecture
-- [ ] Database migrations extend Wave's schema without breaking existing functionality
-- [ ] Filament resources follow Wave's established patterns and UI/UX
-- [ ] CRM functionality is accessible through Wave's existing admin panel
-- [ ] All new code follows Wave's coding standards and conventions
-- [ ] Multi-tenancy works correctly using Wave's team structure
-- [ ] Comprehensive test coverage for all new functionality
-
-## 📝 Notes
-
-This sprint focuses on extending Wave's solid foundation with CRM-specific functionality. The key is to make all new features feel native to the existing Wave system while adding comprehensive real estate CRM capabilities.
-
-**Key Integration Points:**
-- Use Wave's team structure for CRM organization multi-tenancy
-- Follow Wave's Filament resource patterns for consistent admin experience
-- Leverage Wave's existing media system for property photos
-- Build upon Wave's authentication and permission system
-- Maintain Wave's coding standards and architectural patterns

@@ -1,220 +1,162 @@
-# Sprint 0: Wave Foundation Analysis & CRM Planning
+# Sprint 0: Wave Kit Setup & Windsurf IDE Configuration
 
 ## 📅 Timeline
-- **Duration**: 2 weeks
-- **Sprint Goal**: Analyze existing Wave foundation, understand current architecture, and plan CRM-specific extensions
+- **Duration**: 1 week
+- **Sprint Goal**: Initialize project with Wave Kit, configure development environment, and prepare for AI-assisted development
 
 ## 🏆 Epics
 
-### Epic 1: Wave Foundation Analysis
-**Description**: Comprehensive analysis of the existing Wave-based Laravel application to understand current capabilities and extension points
+### Epic 1: Wave Kit Installation & Configuration
+**Description**: Set up the initial project using Wave Kit as the foundation for Fusion CRM V4
 
 #### Tasks
 
 | Task | Priority | Effort (Hours) | Dependencies | Description |
 |------|----------|----------------|--------------|-------------|
-| 1.1 Analyze existing Wave models and relationships | High | 8 | None | Document current User, Team, Plan, Post, Page, Form models and their relationships |
-| 1.2 Review existing Filament resources | High | 6 | 1.1 | Analyze UserResource, RoleResource, PermissionResource patterns for CRM extension |
-| 1.3 Understand Wave's team structure for multi-tenancy | High | 4 | 1.1 | Document how Wave teams work and plan CRM organization adaptation |
-| 1.4 Review authentication and permission system | Medium | 4 | 1.1 | Understand Spatie permissions setup and plan CRM role extensions |
-| 1.5 Analyze Wave's theme and UI system | Medium | 4 | None | Document theme switching, Livewire components, and UI patterns |
+| 0.1.1 Install Wave Kit | High | 4 | None | Set up Wave Kit following DevDojo documentation |
+| 0.1.2 Configure environment variables | High | 2 | 0.1.1 | Set up .env file with necessary configuration |
+| 0.1.3 Configure database connection | High | 1 | 0.1.2 | Set up database connection and run migrations |
+| 0.1.4 Test Wave Kit core functionality | High | 4 | 0.1.3 | Verify auth, teams, billing, and user management |
+| 0.1.5 Update composer dependencies | Medium | 2 | 0.1.4 | Update packages for PHP 8.4 compatibility |
 
-### Epic 2: CRM Extension Planning
-**Description**: Plan specific CRM models, resources, and features that will extend the Wave foundation
+**Installation Commands**:
+```bash
+# Install Wave Kit
+composer create-project devdojo/wave
+
+# Install dependencies
+composer install
+
+# Copy .env file
+cp .env.example .env
+
+# Generate application key
+php artisan key:generate
+
+# Run migrations
+php artisan migrate
+
+# Seed database
+php artisan db:seed
+
+# Install NPM dependencies
+npm install && npm run dev
+```
+
+### Epic 2: Windsurf IDE Configuration
+**Description**: Configure project for optimal AI-assisted development with Windsurf IDE
 
 #### Tasks
 
 | Task | Priority | Effort (Hours) | Dependencies | Description |
 |------|----------|----------------|--------------|-------------|
-| 2.1 Design CRM model extensions | High | 12 | 1.1 | Plan Property, Lead, Deal, Activity models extending Wave patterns |
-| 2.2 Plan Filament resource extensions | High | 8 | 1.2, 2.1 | Design CRM resources following existing Wave resource patterns |
-| 2.3 Design CRM-specific permissions | Medium | 6 | 1.4, 2.1 | Plan Agent, Broker, Manager roles extending Spatie system |
-| 2.4 Plan database migrations strategy | High | 6 | 2.1 | Design migration approach that extends existing Wave schema |
-| 2.5 Document CRM user journey | Medium | 4 | 2.1, 2.2 | Map how CRM users will interact with extended Wave system |
+| 0.2.1 Create .windsurf directory | High | 1 | 0.1.1 | Set up directory for Windsurf IDE configuration |
+| 0.2.2 Define code generation prompts | High | 4 | 0.2.1 | Create AI prompts for generating controllers, models, etc. |
+| 0.2.3 Create blueprint reference files | Medium | 6 | 0.2.2 | Create reference files for architecture, patterns, etc. |
+| 0.2.4 Define test generation templates | Medium | 4 | 0.2.3 | Create templates for generating Pest tests |
+| 0.2.5 Configure code quality tools | Medium | 3 | 0.2.4 | Set up Laravel Pint, PHPStan with Windsurf integration |
 
-### Epic 3: Development Environment Setup
-**Description**: Prepare development environment for CRM extension development
+**Suggested Files**:
+- `.windsurf/templates/controller.md` - Controller template with PSR-12 compliance
+- `.windsurf/templates/model.md` - Model template with tenant-aware implementation
+- `.windsurf/templates/livewire.md` - Livewire component template
+- `.windsurf/templates/test.md` - Pest test template
+
+### Epic 3: Wave Kit Customization for Fusion CRM
+**Description**: Adapt Wave kit's existing structure for Fusion CRM's multi-tenant architecture
 
 #### Tasks
 
 | Task | Priority | Effort (Hours) | Dependencies | Description |
 |------|----------|----------------|--------------|-------------|
-| 3.1 Set up local Wave development environment | High | 4 | None | Ensure Wave is running locally with all features working |
-| 3.2 Configure IDE for Wave/CRM development | Medium | 2 | 3.1 | Set up Cursor/IDE with Wave-specific configurations |
-| 3.3 Create CRM development branch strategy | Medium | 2 | 3.1 | Plan Git workflow for CRM feature development |
-| 3.4 Set up testing environment | Medium | 4 | 3.1 | Ensure Pest PHP tests are running and plan CRM test structure |
-| 3.5 Document current Wave package ecosystem | Low | 2 | 3.1 | List all current packages and identify CRM-specific additions needed |
+| 0.3.1 Analyze Wave's team structure | High | 4 | 0.1.4 | Evaluate how to adapt team model for tenancy |
+| 0.3.2 Define tenant model strategy | High | 6 | 0.3.1 | Design tenant model extension from Wave's team model |
+| 0.3.3 Adapt Wave's user model | High | 4 | 0.3.2 | Modify user model for tenant association |
+| 0.3.4 Update authentication flow | Medium | 6 | 0.3.3 | Modify auth flow for tenant context |
+| 0.3.5 Adapt Wave's billing system | Medium | 8 | 0.3.4 | Modify billing system for tenant-based billing |
 
-**Current Wave Packages to Analyze**:
-- `filament/filament ^3.2` - Admin panel framework (already configured)
-- `livewire/livewire ^3.0` - Frontend reactivity (already configured)
-- `spatie/laravel-permission` - Role/permission system (fully configured)
-- `tymon/jwt-auth` - JWT authentication (already configured)
-- `intervention/image` - Image processing (already configured)
-- `stripe/stripe-php` - Payment processing (already configured)
+## 🧩 Windsurf IDE-Ready Prompts
 
-## 🧩 Cursor IDE-Ready Prompts (MCPs)
-
-### MCP 1.1: Analyze Existing Wave Models
+### Prompt 1: Wave Kit Tenant Adaptation
 ```
-I have an existing Wave-based Laravel application and need to analyze the current models to understand how to extend them for CRM functionality. Please help me:
+Create a tenant-aware architecture by extending Wave Kit's existing User and Team models:
 
-1. Review the existing Wave User model in app/Models/User.php and document:
-   - Current fields and relationships
-   - Authentication features
-   - Team relationships
-   - API token management
+1. Create a Tenant model that extends or relates to Wave's Team model:
+   - Add tenant-specific fields like API keys, custom settings, etc.
+   - Implement tenant settings management
+   - Set up tenant database schema migration
 
-2. Analyze the Wave Team model and understand:
-   - How teams are structured
-   - User-team relationships
-   - How this can be adapted for CRM organizations/brokerages
+2. Modify the User model:
+   - Add tenant relationship (many-to-one)
+   - Implement tenant scoping trait
+   - Update authentication to set current tenant context
 
-3. Review other Wave models (Plan, Post, Page, Form, etc.) and identify:
-   - Patterns used for model structure
-   - Relationship conventions
-   - Traits and interfaces used
+3. Create TenantScope class:
+   - Implement global scope for tenant filtering
+   - Handle console command exceptions
+   - Add tenant context management
 
-4. Document the current database schema and identify:
-   - Tables that can be extended for CRM
-   - Relationship patterns to follow
-   - Migration strategies for CRM additions
+4. Add TenantMiddleware:
+   - Set current tenant based on authenticated user
+   - Handle cross-tenant access prevention
+   - Configure middleware in Kernel.php
 
-Focus on understanding the existing architecture so we can extend it properly for CRM functionality.
+Use PHP 8.4 features where applicable and follow PSR-12 standards.
+Implement strict typing with declare(strict_types=1) and proper type hints.
+Add PHPStan compatible docblocks for all methods.
 ```
 
-### MCP 1.2: Review Existing Filament Resources
+### Prompt 2: Setting Up Laravel Pint for PSR-12 Compliance
 ```
-I need to analyze the existing Filament resources in my Wave application to understand the patterns for creating CRM-specific resources. Please help me:
+Configure Laravel Pint for Fusion CRM V4 with PSR-12 compliance:
 
-1. Review the UserResource in app/Filament/Resources/UserResource.php and document:
-   - Form field patterns and validation
-   - Table column configurations
-   - Action implementations
-   - Page structure and navigation
+1. Create pint.json in project root with the following configuration:
+   - Set preset to "psr12"
+   - Configure rules for strict_types declaration
+   - Set up PHP 8.4 compatibility
+   - Configure custom rules for Fusion CRM conventions
 
-2. Analyze the RoleResource and PermissionResource to understand:
-   - How Spatie permissions are integrated
-   - Resource relationship handling
-   - Admin panel navigation patterns
+2. Add Composer script for linting:
+   - Add "lint" command to run pint
+   - Add pre-commit hook configuration
 
-3. Review other resources (PostResource, PageResource, etc.) and identify:
-   - Common patterns across resources
-   - Reusable components and widgets
-   - Form and table conventions
+3. Create GitHub workflow for automated linting:
+   - Set up action to run on pull requests
+   - Configure GitHub Actions YAML file
 
-4. Plan how to create CRM resources (PropertyResource, LeadResource, DealResource) that:
-   - Follow established Wave patterns
-   - Integrate with existing navigation
-   - Maintain consistent UI/UX
-   - Leverage existing components
+4. Configure Windsurf IDE integration:
+   - Add lint command to .windsurf configuration
+   - Configure auto-formatting on save
 
-Provide specific examples of how to extend these patterns for CRM entities.
+Ensure all configuration follows the project's coding standards and best practices.
 ```
 
-### MCP 2.1: Design CRM Model Extensions
+### Prompt 3: Setting Up Tenant-Aware Middleware
 ```
-Based on my analysis of the existing Wave foundation, help me design CRM-specific models that extend the current architecture. I need:
+Create a tenant-aware middleware implementation for Fusion CRM V4:
 
-1. Property model that:
-   - Extends Wave's model patterns
-   - Integrates with Wave's team structure for multi-tenancy
-   - Uses Wave's media system for property photos
-   - Follows Wave's relationship conventions
+1. Generate TenantMiddleware class:
+   - Implement handle method to set tenant context
+   - Add tenant resolution logic
+   - Handle tenant-switching capability
+   - Implement proper error handling for missing tenant
 
-2. Lead model that:
-   - Connects to Wave's User model for assignment
-   - Uses Wave's team structure for organization isolation
-   - Integrates with Wave's form system for lead capture
-   - Follows Wave's status/workflow patterns
+2. Register middleware in Kernel.php:
+   - Add to web middleware group
+   - Configure route middleware alias
 
-3. Deal model that:
-   - Links to Property and Lead models
-   - Tracks sales pipeline stages
-   - Integrates with Wave's user system for agent assignment
-   - Uses Wave's activity/event patterns
+3. Create tests for tenant middleware:
+   - Test tenant resolution from authenticated user
+   - Test tenant-switching functionality
+   - Test error handling for missing tenant
 
-4. Activity model that:
-   - Tracks interactions across all CRM entities
-   - Integrates with Wave's user system
-   - Uses Wave's timestamp and tracking patterns
+4. Implement tenant context service:
+   - Create TenantManager service
+   - Add current tenant getter/setter methods
+   - Implement tenant context caching
+   - Add event dispatching for tenant context changes
 
-Provide complete model code with:
-- Proper relationships following Wave conventions
-- Appropriate traits and interfaces
-- Database migration files
-- Model factories for testing
-- Proper tenant scoping using Wave's team structure
-
-Ensure all models integrate seamlessly with the existing Wave architecture.
+Implement strict typing, proper exception handling, and comprehensive docblocks.
+Follow PSR-12 standards and use PHP 8.4 features where applicable.
+Add appropriate unit and feature tests using Pest.
 ```
-
-### MCP 2.2: Plan Filament Resource Extensions
-```
-Help me plan CRM-specific Filament resources that extend the existing Wave admin panel. I need:
-
-1. PropertyResource that:
-   - Follows the pattern established by Wave's existing resources
-   - Integrates with Wave's media system for photo uploads
-   - Uses Wave's form validation patterns
-   - Maintains consistent navigation with existing resources
-
-2. LeadResource that:
-   - Extends Wave's user management patterns
-   - Integrates with the Property model for lead-property relationships
-   - Uses Wave's status management patterns
-   - Follows Wave's table and form conventions
-
-3. DealResource that:
-   - Creates a sales pipeline interface
-   - Integrates with both Lead and Property resources
-   - Uses Wave's relationship management patterns
-   - Implements Kanban-style pipeline views
-
-4. Enhanced dashboard widgets that:
-   - Extend Wave's existing dashboard
-   - Show CRM-specific metrics
-   - Follow Wave's widget patterns
-   - Integrate with Wave's analytics foundation
-
-Provide complete resource implementations with:
-- Form schemas following Wave patterns
-- Table configurations matching Wave style
-- Actions and bulk actions
-- Page classes and navigation
-- Proper integration with existing Wave admin panel
-
-Ensure all resources feel native to the existing Wave admin experience.
-```
-
-## 📋 Deliverables
-
-### Week 1 Deliverables
-- **Wave Foundation Documentation**: Comprehensive analysis of existing models, resources, and patterns
-- **CRM Extension Plan**: Detailed plan for extending Wave with CRM functionality
-- **Development Environment**: Fully configured development setup for CRM extension
-
-### Week 2 Deliverables
-- **CRM Model Designs**: Complete specifications for Property, Lead, Deal, and Activity models
-- **Filament Resource Plans**: Detailed plans for CRM resources following Wave patterns
-- **Migration Strategy**: Database migration approach that extends existing Wave schema
-- **Testing Strategy**: Plan for testing CRM extensions building on Wave's Pest framework
-
-## 🎯 Success Criteria
-
-- [ ] Complete understanding of Wave's existing architecture and patterns
-- [ ] Detailed plan for CRM model extensions that integrate seamlessly with Wave
-- [ ] Filament resource designs that maintain Wave's UI/UX consistency
-- [ ] Development environment ready for CRM extension development
-- [ ] Clear migration path from Wave foundation to CRM functionality
-- [ ] Testing strategy that builds upon Wave's existing test suite
-
-## 📝 Notes
-
-This sprint is crucial for understanding the existing Wave foundation and planning CRM extensions that feel native to the existing system. The goal is to leverage Wave's proven architecture while adding comprehensive CRM functionality.
-
-**Key Focus Areas:**
-- Understand Wave's team structure for CRM multi-tenancy
-- Analyze Wave's Filament resource patterns for CRM resource creation
-- Plan database extensions that maintain Wave's schema integrity
-- Design CRM features that integrate seamlessly with existing Wave functionality

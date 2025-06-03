@@ -1,259 +1,267 @@
 # Fusion CRM V4 - Technical Stack
 
-This document outlines the complete technical stack for Fusion CRM V4, building upon the **existing Wave-based Laravel application**. All components have been selected to ensure compatibility with the current codebase and to support a modern, scalable, and maintainable CRM system.
+This document outlines the complete technical stack for Fusion CRM V4, including core technologies, packages, architectural patterns, and development tools. All components have been selected to ensure compatibility with PHP 8.4 and to support a modern, scalable, and maintainable codebase.
 
-## Current Wave Kit Foundation
+## Wave Kit Foundation
 
-Fusion CRM V4 is built upon an **existing Wave Kit implementation** with the following components already in place:
+Fusion CRM V4 will be built using Wave Kit as the starting foundation:
 
-### ✅ Already Implemented in Codebase
 - **Wave Kit** ([Documentation](https://devdojo.com/wave/docs/getting-started))
-  - Complete user authentication and management system
-  - Team/organization structure (foundation for multi-tenancy)
-  - Subscription and billing system with Stripe integration
-  - API scaffolding with JWT token management
-  - Comprehensive admin panel with Filament 3.2
-  - Multi-theme system with dynamic switching
+  - User authentication and management
+  - Team/organization structure
+  - Subscription and billing system
+  - API scaffolding and token management
+  - Starter UI components and layouts
 
-### ✅ Current Backend Stack
-- **Laravel 11** ([Documentation](https://laravel.com/docs))
-  - Modern Laravel framework with PHP 8.1+ support
-  - Enhanced performance and features
+## Core Technologies
+
+### Backend Framework
+- **Laravel** ([Documentation](https://laravel.com/docs))
+  - Starting with Wave Kit's Laravel version
+  - Upgrade path to utilize PHP 8.4 features
+  - Modern PHP features and optimizations
+  - Enhanced performance over Laravel 8 (V3)
   - Robust foundation for enterprise applications
-  - Wave-specific customizations and extensions
 
-### ✅ Current Frontend Stack
+### Frontend Framework
 - **Livewire 3** ([Documentation](https://livewire.laravel.com/docs/v3))
   - Real-time, reactive components without complex JavaScript
   - Seamless integration with Laravel
   - Efficient DOM updates with minimal overhead
   - Enhanced testing capabilities
 
-### ✅ Current JavaScript Framework
-- **Alpine.js 3.4.2** ([Documentation](https://alpinejs.dev/))
+### JavaScript Framework
+- **Alpine.js 3.14.9** ([Documentation](https://alpinejs.dev/))
   - Lightweight JavaScript framework for frontend interactivity
   - Declarative syntax similar to Vue.js
   - Perfect complement to Livewire
   - Modern reactivity system
 
-### ✅ Current CSS Framework
-- **Tailwind CSS 3.4.3** ([Documentation](https://tailwindcss.com/))
+### CSS Framework
+- **Tailwind CSS** ([Documentation](https://tailwindcss.com/))
   - Utility-first CSS framework
-  - Dynamic theme system integration
+  - Modern CSS features (container queries, cascade layers)
   - Built-in dark mode support
   - Highly customizable design system
 
-## Current Admin Panel
+## Architectural Patterns
 
-### ✅ Filament 3.2 Implementation
-- **Complete Admin Interface**: Fully functional admin panel
-- **Existing Resources**:
-  - UserResource: User management with roles and permissions
-  - RoleResource: Role management with Spatie permissions
-  - PermissionResource: Permission management
-  - PostResource: Blog/content management
-  - PageResource: Static page management
-  - CategoryResource: Content categorization
-  - PlanResource: Subscription plan management
-  - SettingResource: Application settings
-  - FormsResource: Dynamic form builder
-  - ChangelogResource: Version/update management
+### Application Architecture
+- **Multi-tenant Architecture**
+  - Single-tenant model (separate data per organization)
+  - Global scopes for automatic tenant filtering
+  - Tenant middleware for request isolation
+  - Tenant-aware cache and queue configuration
 
-## Current Package Ecosystem
+### Code Organization
+- **Service-Repository Pattern**
+  - Services for business logic
+  - Repositories for data access (where complexity warrants)
+  - Clear separation of concerns
+  - Improved testability
 
-### ✅ Authentication & Authorization (Implemented)
-- **spatie/laravel-permission:^6.4** ([GitHub](https://github.com/spatie/laravel-permission))
-  - Role-based access control (fully configured)
-  - Permission management (admin interface ready)
-  - Laravel 11 compatible
-  - Integrated with Filament resources
+### API Architecture
+- **RESTful API** with optional **GraphQL**
+  - Comprehensive endpoint structure
+  - Resource-based controllers
+  - Consistent response formats
+  - Laravel API resources for transformation
 
-### ✅ File Storage & Media (Implemented)
-- **intervention/image:^2.7** ([GitHub](https://github.com/Intervention/image))
-  - Image processing and manipulation
-  - Avatar uploads and resizing
-  - Multiple format support
+### Authentication
+- **OAuth 2.0** with **Laravel Sanctum**
+  - Token-based authentication
+  - API token management
+  - SPA authentication
+  - CSRF protection
 
-### ✅ Authentication Systems (Implemented)
-- **tymon/jwt-auth:@dev** ([GitHub](https://github.com/tymondesigns/jwt-auth))
-  - JWT token authentication for API
-  - Token management and refresh
-  - Secure API access
+## Required Packages
 
-### ✅ Payment Processing (Implemented)
-- **stripe/stripe-php:^15.3** ([GitHub](https://github.com/stripe/stripe-php))
-  - Complete Stripe integration
-  - Subscription management
-  - Payment processing
-  - Webhook handling
+### Authentication & Authorization
+- **spatie/laravel-permission:^6.0** ([GitHub](https://github.com/spatie/laravel-permission))
+  - Role-based access control
+  - Permission management
+  - Laravel 12 compatible
+  - Active maintenance and community support
 
-### ✅ UI Components (Implemented)
-- **filament/filament:^3.2** ([GitHub](https://github.com/filamentphp/filament))
-  - Modern admin panel framework
-  - Form builders and table components
-  - Resource management
-  - Dashboard widgets
+### Multi-tenancy
+- **stancl/tenancy:^4.0** ([GitHub](https://github.com/archtechx/tenancy))
+  - Multi-tenant architecture
+  - Optional - custom implementation may be preferred
+  - Central database with tenant scoping
 
-### ✅ Additional Current Packages
-- **devdojo/app:0.11.0** - Wave application core
-- **devdojo/auth:^1.0** - Enhanced authentication system
-- **devdojo/themes:0.0.11** - Theme management system
-- **laravel/folio:^1.1** - File-based routing system
-- **laravel/ui:^4.5** - UI scaffolding
-- **laravel/pail:^1.2** - Log monitoring
-- **laravel/tinker:^2.7** - REPL for Laravel
-- **lab404/laravel-impersonate:^1.7.5** - User impersonation
-- **gehrisandro/tailwind-merge-laravel:^1.2** - Tailwind class merging
-- **ralphjsmit/livewire-urls:^1.4** - URL handling for Livewire
-- **codeat3/blade-phosphor-icons:^2.0** - Icon system
-- **bezhansalleh/filament-google-analytics:^2.0** - Analytics integration
-
-## Required CRM Extensions
-
-### 🔄 Enhanced Multi-tenancy
-- **Custom Implementation** (building on Wave teams)
-  - Extend Wave's team structure for CRM organizations
-  - Tenant-aware models and scopes
-  - Data isolation and security
-
-### 🆕 CRM-Specific Packages to Add
+### File Storage & Media
 - **spatie/laravel-medialibrary:^11.0** ([GitHub](https://github.com/spatie/laravel-medialibrary))
-  - Enhanced media management for property photos
-  - Document storage for contracts and agreements
+  - Comprehensive media management
+  - Image conversions and optimization
   - Multiple disk support
+  - Laravel 12 compatible
 
-### 🆕 Excel & CSV Processing
+### Data Export
+- **spatie/laravel-export:^2.0** ([GitHub](https://github.com/spatie/laravel-export))
+  - Static site generation capability
+  - Export to various formats
+  - Headless CMS capabilities
+
+### Excel & CSV Processing
 - **maatwebsite/excel:^3.1** ([GitHub](https://github.com/SpartnerNL/Laravel-Excel))
-  - Lead import/export functionality
-  - Property data processing
-  - Bulk operations support
+  - Excel file imports/exports
+  - CSV handling
+  - Large dataset processing
+  - Queue support for background processing
 
-### 🆕 PDF Generation
+### PDF Generation
 - **barryvdh/laravel-dompdf:^2.0** ([GitHub](https://github.com/barryvdh/laravel-dompdf))
-  - Contract generation
-  - Report creation
-  - Property brochures
+  - PDF generation from HTML
+  - Template-based PDF creation
+  - Export capabilities
 
-### 🆕 Queue Management
+### Form Handling
+- **spatie/laravel-navigation:^1.0** ([GitHub](https://github.com/spatie/laravel-navigation))
+  - Navigation management
+  - Menu building
+  - Active link detection
+
+### Queue Management
 - **laravel/horizon:^5.0** ([GitHub](https://github.com/laravel/horizon))
   - Queue monitoring dashboard
-  - Background job processing
-  - Email campaign management
+  - Job metrics and insights
+  - Failed job management
+  - Queue balancing and prioritization
 
-### 🆕 AI & Machine Learning
+### AI & Machine Learning
 - **openai-php/client:^0.8.0** ([GitHub](https://github.com/openai-php/client))
-  - AI-powered lead scoring
-  - Content generation
-  - Property descriptions
+  - OpenAI API integration
+  - Async request support
+  - Rate limiting handling
+  - Compatible with Laravel 12
 
-### 🆕 Communication
-- **laravel/mail** (enhanced configuration)
-  - Email campaign management
-  - Automated follow-ups
-  - Template system
-
-### 🆕 API Documentation
+### API Documentation
 - **scribe/laravel:^4.0** ([GitHub](https://github.com/knuckleswtf/scribe))
-  - CRM API documentation
-  - Integration guides
-  - Third-party developer resources
+  - API documentation generation
+  - Interactive documentation interface
+  - Authentication examples
+  - Response samples
 
-## Current Development Tools
-
-### ✅ Testing Framework (Implemented)
-- **pestphp/pest:^3.4** ([GitHub](https://github.com/pestphp/pest))
+### Testing
+- **pestphp/pest:^2.0** ([GitHub](https://github.com/pestphp/pest))
   - Modern testing framework
+  - Expressive syntax
   - Laravel integration
-  - Feature and unit testing
-
-### ✅ Browser Testing (Implemented)
-- **laravel/dusk:^8.0** ([GitHub](https://github.com/laravel/dusk))
-  - End-to-end testing
+  - Coverage reporting
+- **laravel/dusk:^7.0** ([GitHub](https://github.com/laravel/dusk))
+  - Browser testing
   - JavaScript interaction testing
-  - Admin panel testing
+  - Screenshot capture
+  - Console logging
 
-### ✅ Code Quality (Implemented)
-- **nunomaduro/collision:^8.1** - Error handling and debugging
-- **spatie/laravel-ignition:^2.0** - Enhanced error pages
+### Development Tools
+- **laravel/pint:^1.0** ([GitHub](https://github.com/laravel/pint))
+  - PHP code style fixer
+  - PSR-12 compatibility
+  - Laravel conventions
+  - Automated formatting
+- **phpstan/phpstan:^1.10** ([GitHub](https://github.com/phpstan/phpstan))
+  - Static analysis
+  - Type checking
+  - Error detection
+  - Code quality assurance
 
-## Database & Infrastructure
+### Third-Party Integrations
+- **xerofresh/oauth2-xero:^3.0** ([GitHub](https://github.com/XeroAPI/xero-php-oauth2))
+  - Xero OAuth2 client
+  - Account integration
+  - Financial management
+- **vapi/client:** (custom implementation)
+  - Voice AI integration
+  - Call processing
+  - Sentiment analysis
 
-### ✅ Current Database Setup
-- **SQLite** (development) - Currently configured
-- **MySQL 8.0+** (production ready) - Migration path available
+## Database & Storage
 
-### ✅ Current Cache & Queue
-- **File-based** (development) - Currently configured
-- **Redis 7.0+** (production ready) - Configuration available
+### Primary Database
+- **MySQL 8.0+**
+  - Industry-standard relational database
+  - JSON document support
+  - Full-text search capabilities
+  - Spatial data support
 
-### ✅ Current File Storage
-- **Local Storage** (development) - Currently configured
-- **AWS S3** (production ready) - Configuration available
+### Cache & Queue
+- **Redis 7.0+**
+  - In-memory data store
+  - Session storage
+  - Cache management
+  - Queue processing
 
-## Build System
+### File Storage
+- **AWS S3** (or compatible alternative)
+  - Scalable object storage
+  - CDN integration possibilities
+  - Versioning and lifecycle policies
+  - Backup capabilities
 
-### ✅ Current Build Tools
-- **Vite 6.2** ([Documentation](https://vitejs.dev/))
-  - Modern build system
-  - Hot module replacement
-  - Dynamic theme loading
-  - Asset optimization
+## Development Environment
 
-### ✅ Current CSS Processing
-- **PostCSS 8.4.38** with plugins:
-  - **Autoprefixer 10.4.19** - Browser compatibility
-  - **PostCSS Nesting 12.1.1** - CSS nesting support
+### Local Development
+- **Laravel Sail** ([Documentation](https://laravel.com/docs/sail))
+  - Docker-based development environment
+  - Consistent setup across developers
+  - Built-in services (MySQL, Redis, Mailhog)
+  - Simple CLI commands
 
-## Theme System Architecture
+### Code Quality
+- **GitHub Actions**
+  - Automated testing
+  - Code quality checks
+  - Deployment automation
+  - Pull request validation
 
-### ✅ Current Theme Implementation
-- **Dynamic Theme Loading**: Vite configuration reads active theme
-- **Theme Structure**: 
-  - `resources/themes/anchor/` - Default theme
-  - `resources/themes/drift/` - Alternative theme
-  - Theme-specific assets, components, and layouts
-- **Theme Configuration**: JSON-based theme metadata
-- **Asset Compilation**: Theme-aware Vite builds
+### Deployment
+- **Laravel Forge** or **Laravel Envoyer**
+  - Zero-downtime deployment
+  - Server provisioning
+  - SSL management
+  - Scheduled tasks
 
-## CRM-Specific Extensions Needed
+## Optional Admin Panel
 
-### 🔄 Enhanced Models
-- Extend Wave User model for CRM contacts
-- Property management models
-- Lead tracking and pipeline models
-- Communication history models
+### Admin Interface (Optional)
+- **filament/filament:^3.0** ([GitHub](https://github.com/filamentphp/filament))
+  - Admin panel framework
+  - TALL stack compatibility
+  - Resource management
+  - Dashboard widgets
+  - Quick implementation of admin features
 
-### 🔄 Enhanced Filament Resources
-- ClientResource (extending UserResource patterns)
-- PropertyResource
-- LeadResource
-- PipelineResource
-- CommunicationResource
+## Architecture Considerations
 
-### 🔄 Enhanced Livewire Components
-- Lead capture forms
-- Property search and filtering
-- Communication timeline
-- Dashboard widgets
+### Performance Optimization
+- **Laravel Octane**
+  - Application boot optimization
+  - Request handling improvement
+  - Worker process management
+  - Socket-based serving
 
-### 🔄 Enhanced API Endpoints
-- CRM-specific API routes
-- Third-party integrations
-- Mobile app support
-- Webhook endpoints
+### Security Measures
+- **spatie/laravel-csp:^2.8** ([GitHub](https://github.com/spatie/laravel-csp))
+  - Content Security Policy
+  - XSS protection
+  - Inline script handling
+- **spatie/laravel-activitylog:^4.7** ([GitHub](https://github.com/spatie/laravel-activitylog))
+  - User activity tracking
+  - Model change logging
+  - Security audit trails
 
-## Migration Strategy
+## Implementation Rationale
 
-1. **Phase 1**: Extend existing models and resources
-2. **Phase 2**: Add CRM-specific packages and configurations
-3. **Phase 3**: Implement advanced CRM features
-4. **Phase 4**: Add AI and automation capabilities
+This technical stack was selected based on the following criteria:
 
-## Performance Considerations
+1. **PHP 8.4 Compatibility**: All packages are compatible with PHP 8.4 or have clear upgrade paths
+2. **Modern Technologies**: Utilizing the latest stable versions of all core technologies
+3. **Active Maintenance**: All packages have active maintenance and community support
+4. **Performance Optimization**: Technologies chosen with performance in mind
+5. **Solo Developer Friendly**: Tools that enhance productivity for a single developer
+6. **AI Integration Ready**: Support for OpenAI and other AI services
+7. **Scalability**: Architecture designed to scale with growing user base and data
+8. **Security**: Robust security practices and tools included by default
 
-- **Leverage existing Wave optimizations**
-- **Extend current caching strategies**
-- **Build upon existing queue system**
-- **Utilize current asset optimization**
-
-This technical stack builds upon the solid foundation already established in the Wave-based codebase, ensuring consistency and leveraging existing investments while adding CRM-specific capabilities.
+This comprehensive stack provides all the necessary tools and technologies to successfully build Fusion CRM V4 with a modern, maintainable, and scalable architecture.

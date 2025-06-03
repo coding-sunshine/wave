@@ -2,1367 +2,1233 @@
 
 # **✅ Fusion V4 – Feature Blueprint**
 
-*Building upon Wave Kit Foundation*
+*LEGEND*
 
 | Icon/Tag | Meaning |
 | ----- | ----- |
-| ✅ | **IMPLEMENTED** – Currently working in codebase |
-| 🔴 | **NOT IMPLEMENTED - CRITICAL** – Must-have for CRM MVP, needs development |
-| 🔄 | **PARTIALLY IMPLEMENTED** – Wave foundation exists, needs CRM extension |
-| 🆕 | **NOT IMPLEMENTED - NEW** – Net-new CRM functionality, needs full development |
-| 🟡 | **NOT IMPLEMENTED - MEDIUM** – Phase 2 priority, needs development |
-| 📘 | **TECHNICAL FOUNDATION** – Backend, infrastructure, API, or auth focus |
-| 🧩 | **NOT IMPLEMENTED - INTEGRATION** – Third-party service integration needed |
-| 🧠 | **NOT IMPLEMENTED - R&D** – Innovation features for future phases |
+| 🔴 | Top Priority – Must-have for MVP or early release |
+| 🔄 | Upgraded – Major enhancement of a V3 feature |
+| 🆕 | New Feature – Net-new functionality introduced in V4 |
+| ✅ | Core Carried Forward – Existing feature retained in V4 as-is |
+| 🟡 | Medium Priority – Phase 2 or secondary priority after MVP |
+| 📘 | Developer / Technical – Backend, infrastructure, API, or auth focus |
+| 🧩 | Integration – Third-party service or platform integration |
+| 🧠 | R\&D / Experimental – Innovation or early-stage feature |
 
-*A future-ready, AI-powered CRM platform built on Wave Kit foundation.*
-
-## **🚨 CURRENT IMPLEMENTATION STATUS**
-
-**✅ IMPLEMENTED (Wave Foundation Only):**
-- Basic Laravel 11 application with Wave Kit
-- User authentication and management
-- Basic admin panel with Filament 3.2
-- Team/subscription structure
-- Basic models: User, Post, Category, Forms
-
-**🔴 NOT IMPLEMENTED (All CRM Features):**
-- **Zero CRM functionality exists**
-- No Property, Lead, Deal, Contact models
-- No CRM-specific database tables
-- No AI integration
-- No real estate features
-- No advanced automation
-
-**📊 Implementation Progress: ~5% Complete (Wave Foundation Only)**
+*A future-ready, AI-powered platform for real estate professionals.*
 
 ---
 
-## **🏗️ WAVE FOUNDATION (Currently Implemented)**
+## **🚀 AI-DRIVEN LEAD GENERATION**
 
-### ✅ IMPLEMENTED - Core Infrastructure
-- **User Management System**: ✅ Basic authentication, registration, and profile management
-- **Team/Organization Structure**: ✅ Multi-tenant foundation via Wave teams (ready for CRM extension)
-- **Subscription & Billing**: ✅ Stripe integration with plan management (Wave foundation)
-- **Admin Panel**: ✅ Filament 3.2 with basic resource management
-- **Role & Permission System**: ✅ Spatie permissions with admin interface
-- **API Foundation**: ✅ JWT authentication with token management
-- **Theme System**: ✅ Dynamic theme switching with asset compilation
-- **File Management**: ✅ Basic image uploads and storage management
-- **Form Builder**: ✅ Dynamic forms system (Wave foundation)
-- **Content Management**: ✅ Basic blog posts, pages, and categorization
-- **Changelog System**: ✅ Version tracking and user notifications
-- **User Impersonation**: ✅ Admin ability to impersonate users
+### Phase 1 Core Features (MVP)
 
-### ✅ IMPLEMENTED - Technical Foundation
-- **Laravel 11**: ✅ Modern framework with PHP 8.1+ support
-- **Livewire 3**: ✅ Real-time reactive components framework
-- **Alpine.js 3.4.2**: ✅ Lightweight JavaScript framework
-- **Tailwind CSS 3.4.3**: ✅ Utility-first CSS with theme system
-- **Filament 3.2**: ✅ Admin panel framework with basic resources
-- **Testing Setup**: ✅ Pest PHP framework configured
-- **Build System**: ✅ Vite 6.2 with theme-aware compilation
-- **Database**: ✅ SQLite (dev), MySQL-ready (production)
-- **Package Ecosystem**: ✅ DevDojo packages (auth, themes, app)
-- **DevDojo Wave**: ✅ Complete SaaS foundation with authentication, billing, teams
+🔴🆕 **Multi-Channel Lead Capture Engine**  
+- Forms integration with custom field mapping
+- Live chat widget with GPT response handling
+- Webhook support for external form builders
+- Lead validation and duplicate detection
 
-### ✅ IMPLEMENTED - Current Models & Resources
-- **User Model**: ✅ Extended Wave User with username generation and role assignment
-- **Basic Models**: ✅ Post, Category, Forms (extending Wave models)
-- **Filament Resources**: ✅ UserResource, RoleResource, PermissionResource, FormsResource, SettingResource, PageResource, CategoryResource, ChangelogResource, PlanResource
-- **Authentication**: ✅ Social providers, 2FA, JWT auth
-- **Database**: ✅ Basic migrations for user management and Wave foundation
+**Suggested Packages:**
+- [Filament/Forms](https://filamentphp.com/docs/3.x/forms/installation) - Modern form builder with dynamic fields
+- [Spatie/Laravel-WebhookClient](https://github.com/spatie/laravel-webhook-client) - Handle incoming webhooks
+- [Laravel Livewire Forms](https://github.com/bastinald/laravel-livewire-forms) - Dynamic form generator for Livewire
+- [Livewire v3](https://livewire.laravel.com/) - Dynamic form components with real-time validation
+- [Laravel Validation Rules](https://github.com/spatie/laravel-validation-rules) - Additional validation rules
+
+🔴🆕 **Landing Page AI Copy Generator**  
+- Property listing content generation
+- SEO-optimized headlines and descriptions
+- Multilingual content support
+- A/B testing capabilities
+
+**Suggested Packages:**
+- [OpenAI PHP Client](https://github.com/openai-php/client) - Latest OpenAI integration
+- [Spatie/Laravel-Translatable](https://github.com/spatie/laravel-translatable) - Multilingual content
+- [Artesaos/SEOTools](https://github.com/artesaos/seotools) - SEO Tools for Laravel
+- [RomegaDigital/Multitenancy](https://github.com/romegadigital/Multitenancy) - For A/B testing per tenant
+- [Spatie/Laravel-Sitemap](https://github.com/spatie/laravel-sitemap) - SEO optimization
+
+🔴🆕 **Smart Lead Score & Routing**  
+- Configurable scoring rules engine
+- Automated agent assignment logic
+- Lead priority queues
+- Performance tracking dashboard
+
+**Suggested Packages:**
+- [Laravel Workflow](https://github.com/zerodahero/laravel-workflow) - Business process automation
+- [Spatie/Laravel-Model-States](https://github.com/spatie/laravel-model-states) - Lead state management
+- [Laravel Horizon](https://github.com/laravel/horizon) - Queue monitoring for lead processing
+
+🔴🆕 **Lead Source Attribution**  
+- UTM parameter tracking
+- First/last touch attribution
+- Custom source definition
+- ROI reporting per channel
+
+**Suggested Packages:**
+- [Spatie/Laravel-Analytics](https://github.com/spatie/laravel-analytics) - Google Analytics integration
+- [Laravel Mixpanel](https://github.com/gummibeer/laravel-mixpanel) - Advanced event tracking
+- [Spatie/Laravel-UTM-Forwarder](https://github.com/spatie/laravel-utm-forwarder) - UTM parameter handling
+
+### Phase 2 Enhancements
+
+🟡🆕 **Auto-Nurture Sequences**  
+- GPT-generated email campaigns
+- Dynamic content personalization
+- Behavioral trigger automation
+- SMS/Voice channel integration
+
+**Suggested Packages:**
+- [Laravel Mailcoach](https://mailcoach.app/) - Advanced email marketing platform
+- [Spatie/Laravel-Mailcoach](https://github.com/spatie/laravel-mailcoach) - Self-hosted email campaigns
+- [Laravel Notification Channels](https://laravel-notification-channels.com/) - Multi-channel notifications
+- [OpenAI PHP Laravel](https://github.com/openai-php/laravel) - AI content generation
+
+🟡🆕 **GPT-Powered Cold Outreach**  
+- Smart email template generation
+- Subject line optimization
+- Personalized CTA suggestions
+- Response rate analytics
+
+🟡🆕 **AI Campaign Optimization**  
+- ML-based engagement tracking
+- Automated A/B testing
+- Conversion path analysis
+- Performance predictions
+
+🟡🆕 **Social Media In A Box v2**  
+- GPT content generation
+- Canva design integration
+- Scheduling and analytics
+- Cross-platform publishing
+
+**Suggested Packages:**
+- [Socialite](https://github.com/laravel/socialite) - Social media authentication
+- [Laravel Social Media](https://github.com/atymic/twitter-api-php) - Social platform APIs
+- [Laravel Image Optimizer](https://github.com/spatie/laravel-image-optimizer) - Image processing for social
+
+🟡🆕 **GPT Lead Brief Generator**  
+- Comprehensive lead profiles
+- Market insights integration
+- Property match scoring
+- Investment potential analysis
+
+### Advanced Features & R&D
+
+📘🆕 **GPT Coaching Layer**  
+- Real-time sales guidance
+- Call script optimization
+- Objection handling support
+- Performance analytics
+
+📘🆕 **Resemble.ai Voice Cloning**   
+- Custom voice agent creation
+- Automated follow-up calls
+- Sentiment analysis
+- Call transcription and insights
+
+🧠🆕 **Smart Suggestions Engine**  
+- AI-driven lead insights
+- Property matching algorithms
+- Deal probability scoring
+- Market trend analysis
 
 ---
 
+## **🔄 PLATFORM SUBSCRIBER ACQUISITION CRM**
+
+### Core Features
+
+🔴🆕 **Platform Lead Management System**  
+- Dedicated CRM module for tracking potential platform subscribers
+- Pipeline management for SaaS subscription leads
+- Conversion funnel specifically for platform adoption
+- Lead qualification scoring for SaaS prospects
+
+**Suggested Packages:**
+- [Filament](https://filamentphp.com/) - Modern admin panel and CRM interface
+- [Laravel CRM](https://github.com/crater-invoice/crater) - Open-source CRM foundation
+- [Spatie/Laravel-Data](https://github.com/spatie/laravel-data) - Data transfer objects
+- [Laravel Nova Metrics](https://nova.laravel.com/docs/4.0/metrics) - Advanced analytics
+
+🔴🆕 **Multi-Channel Acquisition Tools**  
+- Landing pages optimized for SaaS conversion
+- Platform demo scheduling automation
+- Trial user tracking and engagement monitoring
+- Automated follow-up sequences for platform leads
+
+🔴🆕 **SaaS Subscriber Analytics**  
+- Customer Acquisition Cost (CAC) tracking
+- Lifetime Value (LTV) projections
+- Churn risk analysis and prevention tools
+- Subscription revenue forecasting
+
+🔴🆕 **Partner & Affiliate Management**  
+- Affiliate tracking and commission calculation
+- Partner portal for lead status visibility
+- Referral attribution across marketing channels
+- Commission payout integration with Xero
+
+### Advanced Features
+
+🟡🆕 **Subscription Upsell Intelligence**  
+- AI-driven plan upgrade recommendations
+- Usage-based feature suggestions
+- Cross-sell opportunity identification
+- Renewal optimization tools
+
+🟡🆕 **Customer Success Automation**  
+- Onboarding completion tracking
+- Feature adoption monitoring
+- AI-powered engagement scoring
+- Retention risk early warning system
+
+🟡🆕 **AI-Enhanced Subscription Growth Tools**  
+- Predictive analytics for subscriber segments
+- Personalized nurture content creation
+- Automated case studies and social proof generation
+- Competitive differentiation content engine
+
+### Technical Components
+
+📘🆕 **Platform Marketing Automation Framework**  
+- Separate lead management pipeline from property leads
+- Segmentation by industry, company size, and use case
+- Integration with email marketing platforms
+- Attribution modeling specific to SaaS acquisition
+
+📘🆕 **Subscription Management Engine**  
+- Plan upgrades and downgrades workflow
+- Billing cycle automation
+- Subscription status webhooks
+- Usage metering and quota tracking
+
+---
+
+## **🛡️ SINGLE-DATABASE MULTI-TENANT & WHITE-LABEL CAPABILITIES**
+
+### Note:
+We call tenant a subscriber for the system so please when I say tenant please refer to it as a subscriber.
+
+### Core Features
+
+🔴🆕 **White-Label Platform Support**  
+- Full platform white-labeling for premium subscribers
+- Custom branding, logos, and color schemes
+- Branded email templates and notifications
+- Custom domain and SSL configuration
+- Tenant-specific API keys and documentation
+
+**Suggested Packages:**
+- [Stancl/Tenancy](https://github.com/stancl/tenancy) - The most robust Laravel multi-tenancy package
+- [Laravel DNS](https://github.com/spatie/dns) - DNS management for custom domains
+- [Spatie/Laravel-Settings](https://github.com/spatie/laravel-settings) - Tenant-specific configuration
+- [Laravel Multitenancy](https://github.com/spatie/laravel-multitenancy) - Alternative multi-tenancy approach
+
+🔴🆕 **Property Customization Layer**  
+- Tenant-specific property customization
+- Custom property descriptions and features
+- Show/hide project or property details and fields per tenant
+- Custom tagging and categorization
+- Tenant-specific pricing display options
+
+🔴🆕 **Tenant-Exclusive Property Management**  
+- Private property listings for tenant-specific inventory
+- Independent property management from shared listings
+- Tenant-specific notes and annotations
+- Private and public note publishing options
+- Custom metadata and fields per tenant
+
+🔴🆕 **Multi-Tier Subscription Management**  
+- Configurable subscription plans with feature sets
+- White-label tier with enhanced customization
+- Usage tracking and quota enforcement
+- Automated billing and subscription management
+- Plan upgrade/downgrade workflows
+
+**Suggested Packages:**
+- [Laravel Cashier Stripe](https://github.com/laravel/cashier-stripe) - Subscription billing with Stripe
+- [Laravel Paddle](https://github.com/laravel/cashier-paddle) - Alternative billing with Paddle
+- [Spatie/Laravel-Webhook-Server](https://github.com/spatie/laravel-webhook-server) - Billing webhooks
+
+### Advanced Features
+
+🟡🆕 **White-Label API Infrastructure**  
+- Tenant-specific API endpoints and documentation
+- Custom API key management
+- Rate limiting based on subscription tier
+- Branded developer portal
+- Analytics dashboard for API usage
+
+🟡🆕 **Custom Integration Management**  
+- Tenant-specific third-party integration credentials
+- Isolated integration workflows per tenant
+- Custom webhook configurations
+- Secure credential storage with encryption
+- Integration health monitoring
+
+🟡🆕 **Advanced White-Label Analytics Dashboard**  
+- Tenant-specific usage metrics and conversion tracking
+- Customer journey visualization for property inquiries
+- Custom report builder with white-labeled exports
+- Performance comparison against industry benchmarks
+- Lead source attribution and ROI calculation
+- Visual funnel analysis for property engagement
+- Engagement heat-mapping for property listings
+
+🟡🆕 **Enhanced Property Customization Workflows**  
+- Batch property customization tools for bulk management
+- Property customization templates and presets
+- A/B testing for property descriptions and features
+- Scheduled and conditional property customizations
+- Team-based approval workflows for property changes
+- Version history and rollback capabilities
+- Custom field management per tenant
+
+🟡🆕 **Multi-Currency and Regional Settings**  
+- Tenant-specific currency display preferences (default: AUD)
+- Dynamic currency conversion for international clients
+- Regional date and measurement format settings
+- Localized property feature terminology
+- Multi-language support for property descriptions
+- Timezone-aware scheduling and notifications
+- Regional compliance and disclosure management
+
+**Suggested Packages:**
+- [Laravel Money](https://github.com/cknow/laravel-money) - Multi-currency support
+- [Laravel Localization](https://github.com/mcamara/laravel-localization) - Multi-language support
+- [Spatie/Laravel-Translatable](https://github.com/spatie/laravel-translatable) - Database translations
+- [Laravel Currency](https://github.com/torann/laravel-currency) - Currency conversion
+
+### Technical Components
+
+📘🆕 **Tenant Isolation Framework**  
+- Robust multi-tenant single database architecture
+- Tenant middleware for request isolation
+- Cached tenant context for performance
+- Cross-tenant data protection
+- Tenant-aware service layer
+
+**Suggested Packages:**
+- [Stancl/Tenancy](https://github.com/stancl/tenancy) - The gold standard for Laravel multi-tenancy
+- [Laravel Cache](https://github.com/illuminate/cache) - Tenant context caching
+- [Spatie/Laravel-Permission](https://github.com/spatie/laravel-permission) - Tenant-aware permissions
+
+📘🆕 **White-Label Configuration System**  
+- Admin interface for white-label management
+- Configuration validation and deployment
+- Custom domain verification
+- SSL certificate management
+- CDN integration for tenant assets
+
+**Suggested Packages:**
+- [Filament](https://filamentphp.com/) - Admin interface for configuration
+- [Laravel Flysystem](https://github.com/league/flysystem) - Multi-storage for tenant assets
+- [Spatie/Laravel-Backup](https://github.com/spatie/laravel-backup) - Tenant data backup
+
+---
+
+## **🧠 [AI-POWERED CORE](?tab=t.s822azb88fv2)**
+
+### Core AI Infrastructure
+
+🔴 **OpenAI Integration**  
+- GPT-4 API integration
+- Fine-tuning pipeline
+- Token usage monitoring
+- Cost optimization logic
+- Fallback handling
+
+**Suggested Packages:**
+- [OpenAI PHP Client](https://github.com/openai-php/client) - Official OpenAI PHP client
+- [OpenAI Laravel](https://github.com/openai-php/laravel) - Laravel integration for OpenAI
+- [Laravel Rate Limiting](https://github.com/spatie/laravel-rate-limited-job-middleware) - API rate limiting
+- [Laravel Usage Tracking](https://github.com/stephenjude/usagetracker) - Monitor AI usage and costs
+
+🔴🆕 **Bot In A Box v2**  
+- Configurable chat widgets
+- Multi-channel deployment
+- Custom conversation flows
+- Analytics dashboard
+- Training interface
+
+**Suggested Packages:**
+- [BotMan](https://github.com/botman/botman) - Chatbot framework for PHP
+- [Laravel WebSockets](https://github.com/beyondcode/laravel-websockets) - Real-time chat
+- [Pusher Channels](https://github.com/pusher/pusher-php-server) - Real-time messaging
+
+### Automated Intelligence
+
+🔴🆕 **AI Smart Summaries**  
+- Lead activity digests
+- Meeting transcription
+- Deal progress tracking
+- Action item extraction
+- Performance metrics
+
+🔴🆕 **GPT Concierge Bot**  
+- Property requirement matching
+- Automated scheduling
+- FAQ handling
+- Lead qualification
+- Voice integration ready
+
+🔴🆕 **Auto-Generated Content**  
+- Dynamic property descriptions
+- Email campaign content
+- Social media posts
+- Market reports
+- Multilingual support
+
+### Advanced AI Features
+
+🟡🆕 **Vapi.ai Integration**  
+- Voice agent deployment
+- Call sentiment analysis
+- Conversation analytics
+- Custom voice training
+- Integration monitoring
+
+🟡🆕 **GPT Predictive Suggestions**  
+- Lead follow-up timing
+- Property recommendations
+- Price adjustment alerts
+- Market trend insights
+- Action prioritization
+
+### Development Resources
+
+**Support Links**
+* [AI Margin Strategy](?tab=t.s822azb88fv2)
+* [AI Usage Framework](?tab=t.inb06qqc63l#heading=h.p94f4n88lfcr)
+* API Documentation
+* Integration Guides
+
+---
+
+## **✅ Strategy-Based Funnel Engine [(more info here)](?tab=t.nmueybswcjk)**
+
+## ---
+
+### **🧱 Feature Type:**
+
+## **Marketing Automation & Lead Conversion Toolkit**
+
+## ---
+
+### **📌 Description:**
+
+## **A powerful, modular system inside Fusion V4 that enables Members to launch strategy-specific funnels (e.g., Co-Living, Rooming, Dual Occ) with full AI, automation, and voice agent integration.**
+
+## **Members can:**
+
+* ## **Select from pre-built, high-converting funnels based on property strategy**
+
+* ## **Automatically deploy matching landing pages, email sequences, lead scoring logic, and property filters**
+
+* ## **Use AI (OpenAI) to personalize content and pitches**
+
+* ## **Activate Vapi to follow up, qualify, and rebook leads via voice AI**
+
+* ## **Route leads and tasks directly into Fusion CRM**
+
+| Component | Purpose |
+| ----- | ----- |
+| 🎯 Funnel Templates | Pre-built for Co-Living, Rooming, Dual Occ, Duplex, etc. |
+| 🤖 AI Prompt Engine | Personalized emails, reports, ROI summaries |
+| 🔄 N8N Flow Connector | Automation orchestration for CRM updates, email/SMS, booking |
+| 🗣️ Vapi Integration Layer | Smart voice calls for follow-up, booking, nurturing |
+| 📊 Funnel Analytics | Track conversion rate, source, funnel performance |
+| 🏷️ Strategy Tags | Tag leads/properties for strategy (e.g. is\_coliving) |
+
+### **📈 Benefits:**
+
+* Members launch niche funnels in minutes (zero setup complexity)
+* Sales agents get better-qualified, high-intent leads
+* Entire lead lifecycle is automated and intelligent
+* Easy tracking of what *strategy* is driving real ROI
+
+---
+
+### 
+
+### **🧩 Dev Dependencies:**
+
+* AI Prompt templates (stored per strategy)
+* Webhook endpoint builder (for funnel submission forms)
+* Internal N8N integration manager (admin-access for templated flows)
+* Fusion property tag filtering on lead intake
+* Vapi webhook support \+ fallback logic
+* Funnel performance report table in Admin dashboard
+
+**Suggested Packages:**
+- [Spatie/Laravel-Tags](https://github.com/spatie/laravel-tags) - Advanced tagging system
+- [Laravel WebSockets](https://github.com/beyondcode/laravel-websockets) - Real-time updates
+- [Spatie/Laravel-Webhook-Server](https://github.com/spatie/laravel-webhook-server) - Send webhooks to N8N
+- [Spatie/Laravel-Webhook-Client](https://github.com/spatie/laravel-webhook-client) - Process N8N responses
+- [Laravel HTTP Client](https://laravel.com/docs/11.x/http-client) - API calls to N8N and Vapi
+- [Laravel A/B Testing](https://github.com/ben182/laravel-ab) - Funnel optimization
 
+---
 
-## Phase 1: CRM Foundation Extension (🔴 Priority)
-
-### 1.1 Enhanced User & Contact Management
-**Building on Wave's User system**
-
-- **Extended User Model**
-  - CRM-specific fields (phone, mobile, address, company)
-  - Lead source tracking and attribution
-  - Contact preferences and communication history
-  - Custom fields and tags system
-  - Relationship mapping (agent ↔ client ↔ broker)
-
-- **Contact Types & Roles**
-  - Leads (potential clients)
-  - Clients (active customers)
-  - Agents (sales representatives)
-  - Brokers (business owners)
-  - Builders (property developers)
-  - Vendors (service providers)
-
-- **Advanced Contact Features**
-  - Contact scoring and qualification
-  - Communication timeline and history
-  - Document vault per contact
-  - Task and appointment scheduling
-  - Notes and interaction logging
-
-### 1.2 Property Management System
-**Core real estate functionality**
-
-- **Property Models**
-  - Residential properties (houses, apartments, townhouses)
-  - Commercial properties (offices, retail, industrial)
-  - Land and development sites
-  - Off-the-plan and new builds
-
-- **Property Features**
-  - Comprehensive property details (bedrooms, bathrooms, parking, etc.)
-  - Location data with mapping integration
-  - Photo galleries and virtual tours
-  - Property history and price tracking
-  - Market analysis and comparable sales
-
-- **Property Status Management**
-  - Available, Under Contract, Sold, Withdrawn
-  - Price changes and market updates
-  - Inspection scheduling and feedback
-  - Offer management and negotiation tracking
-
-### 1.3 Lead Management System
-**Advanced lead capture and nurturing**
-
-- **Lead Sources**
-  - Website forms and landing pages
-  - Phone calls and SMS
-  - Social media campaigns
-  - Referrals and word-of-mouth
-  - Third-party portals (REA, Domain)
-  - Walk-ins and open homes
-
-- **Lead Qualification**
-  - Automated lead scoring algorithms
-  - Qualification questionnaires
-  - Budget and timeline assessment
-  - Property preferences and requirements
-  - Communication preferences
-
-- **Lead Nurturing**
-  - Automated follow-up sequences
-  - Personalized email campaigns
-  - SMS and phone call scheduling
-  - Property matching and recommendations
-  - Market updates and newsletters
-
-### 1.4 Deal & Pipeline Management
-**Sales process automation**
-
-- **Sales Pipeline Stages**
-  - Lead Generation
-  - Initial Contact
-  - Qualification
-  - Property Viewing
-  - Offer Preparation
-  - Negotiation
-  - Contract Signing
-  - Settlement
-
-- **Deal Tracking**
-  - Deal value and commission calculation
-  - Timeline and milestone tracking
-  - Document management and e-signatures
-  - Communication history per deal
-  - Task automation and reminders
-
-## Phase 2: AI-Powered Lead Generation (🔴 Priority)
-
-### 2.1 Multi-Channel Lead Capture Engine
-**Comprehensive lead acquisition system**
-
-- **Form Builder Integration**
-  - Extending Wave's form system for lead capture
-  - Dynamic forms based on property type and source
-  - Progressive profiling and data enrichment
-  - A/B testing for form optimization
-  - Integration with landing pages and websites
-
-- **Communication Channels**
-  - Phone call tracking and recording
-  - SMS campaigns and two-way messaging
-  - Live chat integration with AI assistance
-  - Voice message capture and transcription
-  - Social media lead capture (Facebook, Instagram)
-
-- **Lead Source Attribution**
-  - UTM parameter tracking
-  - Referral source identification
-  - Campaign performance analytics
-  - ROI tracking per channel
-  - Attribution modeling and reporting
-
-### 2.2 Auto-Nurture Sequences with GPT
-**AI-powered lead nurturing**
-
-- **GPT-Generated Campaigns**
-  - Personalized email sequences based on lead profile
-  - Dynamic content generation for different property types
-  - Market update emails with AI-generated insights
-  - Follow-up sequences based on lead behavior
-  - Re-engagement campaigns for cold leads
-
-- **Behavioral Triggers**
-  - Property view tracking and follow-up
-  - Email open and click behavior analysis
-  - Website activity monitoring
-  - Automated responses to lead actions
-  - Escalation rules for hot leads
-
-### 2.3 GPT-Powered Cold Outreach Builder
-**AI-assisted prospecting**
-
-- **Outreach Templates**
-  - AI-generated email templates for different scenarios
-  - Personalization based on lead data and property interests
-  - Follow-up sequence automation
-  - A/B testing for message optimization
-  - Response tracking and analysis
-
-- **Prospecting Tools**
-  - Lead list building and segmentation
-  - Contact enrichment and data validation
-  - Outreach scheduling and automation
-  - Response management and follow-up
-  - Performance analytics and optimization
-
-### 2.4 Landing Page AI Copy Generator
-**Automated marketing content creation**
-
-- **Page Generation**
-  - AI-generated landing pages for specific properties
-  - Market-specific content for different suburbs
-  - Campaign-specific pages for different lead sources
-  - Mobile-optimized responsive design
-  - SEO optimization and meta tag generation
-
-- **Content Optimization**
-  - A/B testing for headlines and copy
-  - Conversion rate optimization
-  - Dynamic content based on visitor behavior
-  - Lead magnet creation and optimization
-  - Call-to-action optimization
-
-### 2.5 AI Campaign Optimization Engine
-**Performance-driven marketing automation**
-
-- **Campaign Analytics**
-  - Real-time performance monitoring
-  - Conversion tracking and attribution
-  - ROI analysis and reporting
-  - Predictive analytics for campaign success
-  - Automated optimization recommendations
-
-- **Smart Optimization**
-  - Automatic bid adjustments for paid campaigns
-  - Content optimization based on performance
-  - Audience targeting refinement
-  - Budget allocation optimization
-  - Campaign pause/resume automation
-
-### 2.6 Smart Lead Score & Routing
-**AI-powered lead prioritization**
-
-- **Scoring Algorithm**
-  - Behavioral scoring based on website activity
-  - Demographic scoring based on profile data
-  - Engagement scoring based on communication
-  - Property match scoring based on preferences
-  - Predictive scoring using machine learning
-
-- **Automated Routing**
-  - Lead assignment based on agent availability
-  - Skill-based routing for specialized properties
-  - Geographic routing for local expertise
-  - Load balancing across team members
-  - Escalation rules for high-value leads
-
-### 2.7 Social Media In A Box v2
-**Comprehensive social media automation**
-
-- **Content Generation**
-  - AI-generated social media posts for properties
-  - Market update posts with local insights
-  - Success story posts with client testimonials
-  - Educational content for buyers and sellers
-  - Seasonal and event-based content
-
-- **Canva Integration**
-  - Automated graphic creation for property posts
-  - Brand-consistent design templates
-  - Property feature highlight graphics
-  - Market report visualizations
-  - Social media story templates
-
-- **Publishing Automation**
-  - Multi-platform posting (Facebook, Instagram, LinkedIn)
-  - Optimal timing based on audience engagement
-  - Hashtag optimization and trending topics
-  - Cross-platform content adaptation
-  - Performance tracking and analytics
-
-### 2.8 GPT Lead Brief Generator & Coaching
-**AI-powered sales assistance**
-
-- **Lead Briefs**
-  - Comprehensive lead summaries with key insights
-  - Property recommendations based on preferences
-  - Conversation starters and talking points
-  - Market data relevant to lead interests
-  - Previous interaction history and context
-
-- **Sales Coaching**
-  - Real-time coaching during calls and meetings
-  - Objection handling suggestions
-  - Closing technique recommendations
-  - Follow-up action suggestions
-  - Performance improvement insights
-
-### 2.9 Resemble.ai Voice Cloning
-**Personalized voice communication**
-
-- **Voice Cloning Setup**
-  - Agent voice recording and training
-  - Voice model creation and optimization
-  - Quality testing and refinement
-  - Multi-language support
-  - Voice customization options
-
-- **Voice Applications**
-  - Personalized voicemail messages
-  - Automated follow-up calls
-  - Property description narration
-  - Market update audio content
-  - Multilingual communication support
-
-## Phase 3: Strategy-Based Funnel Engine (🔴 Priority)
-
-### 3.1 Pre-built Funnel Templates
-**Industry-specific marketing funnels**
-
-- **Funnel Types**
-  - Co-Living property funnels for shared accommodation
-  - Rooming house funnels for investment properties
-  - Dual Occupancy funnels for development opportunities
-  - First Home Buyer funnels for new purchasers
-  - Investment Property funnels for investors
-  - Luxury Property funnels for high-end markets
-
-- **Template Components**
-  - Landing pages with property-specific content
-  - Email sequences tailored to property type
-  - Follow-up automation based on engagement
-  - Conversion tracking and optimization
-  - A/B testing for funnel performance
-
-### 3.2 AI Prompt Engine for Personalization
-**Dynamic content generation**
-
-- **Personalization Engine**
-  - Content adaptation based on lead profile
-  - Property recommendations using AI matching
-  - Market insights relevant to lead location
-  - Communication style adaptation
-  - Timing optimization for maximum engagement
-
-- **Content Generation**
-  - Personalized email content for each lead
-  - Property descriptions tailored to buyer type
-  - Market reports customized by interest area
-  - Follow-up messages based on interaction history
-  - Objection handling content for common concerns
-
-### 3.3 N8N Flow Connector
-**Advanced automation orchestration**
-
-- **Workflow Automation**
-  - Complex multi-step automation workflows
-  - Integration with external services and APIs
-  - Conditional logic and branching scenarios
-  - Error handling and retry mechanisms
-  - Performance monitoring and optimization
-
-- **Integration Capabilities**
-  - CRM data synchronization
-  - Email marketing platform integration
-  - Social media automation
-  - Lead scoring and routing
-  - Reporting and analytics automation
-
-### 3.4 Vapi Integration Layer
-**Voice AI for follow-ups**
-
-- **Voice AI Features**
-  - Automated follow-up calls to leads
-  - Appointment scheduling via voice
-  - Property inquiry handling
-  - Market update delivery
-  - Lead qualification through conversation
-
-- **Integration Components**
-  - CRM data integration for personalized calls
-  - Call recording and transcription
-  - Sentiment analysis and lead scoring
-  - Follow-up action automation
-  - Performance analytics and reporting
-
-### 3.5 Funnel Analytics & Performance Tracking
-**Comprehensive funnel optimization**
-
-- **Analytics Dashboard**
-  - Funnel performance visualization
-  - Conversion rate tracking by stage
-  - Lead source attribution analysis
-  - ROI calculation and reporting
-  - Predictive analytics for optimization
-
-- **Optimization Tools**
-  - A/B testing for funnel components
-  - Automated optimization recommendations
-  - Performance alerts and notifications
-  - Benchmark comparison and industry standards
-  - Custom reporting and data export
-
-### 3.6 Strategy Tags System
-**Advanced categorization and targeting**
-
-- **Tagging Framework**
-  - Property strategy tags (Co-Living, Dual Occ, etc.)
-  - Lead behavior tags (Hot, Warm, Cold)
-  - Communication preference tags
-  - Geographic and demographic tags
-  - Custom business-specific tags
-
-- **Tag Applications**
-  - Automated lead routing based on tags
-  - Targeted marketing campaigns
-  - Personalized content delivery
-  - Performance analysis by tag segments
-  - Predictive modeling using tag data
-
-## Phase 4: Property & Builder Systems (🔴 Priority)
-
-### 4.1 Builder White-Label Portals
-**Branded builder experiences**
-
-- **Portal Features**
-  - Custom branding for each builder
-  - Project showcase and gallery
-  - Lead capture and management
-  - Inventory management and updates
-  - Sales reporting and analytics
-
-- **White-Label Components**
-  - Custom domain and subdomain support
-  - Branded email templates and communications
-  - Custom color schemes and logos
-  - Personalized content and messaging
-  - Builder-specific features and workflows
-
-### 4.2 Advanced Project, Stage & Lot Management
-**Comprehensive development tracking**
-
-- **Project Management**
-  - Multi-stage development projects
-  - Timeline and milestone tracking
-  - Budget and cost management
-  - Resource allocation and scheduling
-  - Progress reporting and updates
-
-- **Stage & Lot Tracking**
-  - Individual lot status and availability
-  - Stage completion and handover
-  - Pricing and specification management
-  - Buyer allocation and contracts
-  - Settlement tracking and coordination
-
-### 4.3 Property Match Intelligence
-**AI-powered property matching**
-
-- **Matching Algorithm**
-  - Buyer preference analysis
-  - Property feature matching
-  - Location and lifestyle matching
-  - Budget and financing compatibility
-  - Predictive matching using machine learning
-
-- **Intelligence Features**
-  - Automated property recommendations
-  - Match score calculation and ranking
-  - Buyer notification automation
-  - Agent alerts for high-match properties
-  - Performance tracking and optimization
-
-### 4.4 Builder + Project CRM
-**Specialized builder relationship management**
-
-- **Builder Management**
-  - Builder profile and contact management
-  - Project portfolio tracking
-  - Performance metrics and reporting
-  - Communication history and notes
-  - Contract and agreement management
-
-- **Project CRM Features**
-  - Project-specific lead management
-  - Sales team coordination
-  - Marketing campaign management
-  - Buyer journey tracking
-  - Settlement and handover management
-
-### 4.5 Inventory API Uploads
-**Automated inventory management**
-
-- **Upload Capabilities**
-  - JSON, CSV, and XML file support
-  - Real-time API integration
-  - Bulk upload and processing
-  - Data validation and error handling
-  - Automated scheduling and updates
-
-- **Data Management**
-  - Property data normalization
-  - Duplicate detection and merging
-  - Image and media processing
-  - Price and availability updates
-  - Historical data tracking
-
-## Phase 5: Push Portal Technology (🔴 Priority)
-
-### 5.1 Multi-Channel Publishing
-**Comprehensive property distribution**
-
-- **Publishing Channels**
-  - REA (realestate.com.au) integration
-  - Domain.com.au integration
-  - WordPress site management
-  - PHP Fast Site Engine
-  - Custom website integration
-
-- **Publishing Features**
-  - Automated property syndication
-  - Channel-specific formatting
-  - Image optimization and resizing
-  - SEO optimization for each channel
-  - Performance tracking per channel
-
-### 5.2 Agent Control Panel
-**Visibility and control management**
-
-- **Control Features**
-  - Property visibility settings per channel
-  - Agent-specific publishing permissions
-  - Approval workflows for listings
-  - Bulk editing and management
-  - Performance monitoring and reporting
-
-- **Dashboard Components**
-  - Publishing status overview
-  - Channel performance metrics
-  - Lead generation tracking
-  - Error monitoring and alerts
-  - Optimization recommendations
-
-### 5.3 Auto-Validation & MLS Formatting
-**Automated quality assurance**
-
-- **Validation Rules**
-  - Property data completeness checks
-  - Image quality and format validation
-  - Price and specification verification
-  - Compliance with channel requirements
-  - Error detection and correction
-
-- **MLS Formatting**
-  - Automated format conversion
-  - Channel-specific field mapping
-  - Data standardization and normalization
-  - Quality score calculation
-  - Approval workflow integration
-
-### 5.4 De-duplication & Versioning
-**Data integrity management**
-
-- **De-duplication Engine**
-  - Intelligent duplicate detection
-  - Merge and consolidation tools
-  - Conflict resolution workflows
-  - Data quality scoring
-  - Automated cleanup processes
-
-- **Version Control**
-  - Property change tracking
-  - Historical data preservation
-  - Rollback and recovery options
-  - Audit trail maintenance
-  - Performance impact monitoring
-
-### 5.5 White-Labelling Support
-**Brand injection and customization**
-
-- **Branding Features**
-  - Logo and color scheme injection
-  - Custom domain and subdomain support
-  - Branded email templates
-  - Personalized content and messaging
-  - Agency-specific features and workflows
-
-- **Customization Options**
-  - Custom fields and data points
-  - Workflow customization
-  - Reporting and analytics customization
-  - Integration with agency systems
-  - Performance optimization
-
-### 5.6 AI-powered Push Suggestions
-**Intelligent publishing optimization**
-
-- **Suggestion Engine**
-  - Optimal timing recommendations
-  - Channel selection optimization
-  - Content improvement suggestions
-  - Pricing strategy recommendations
-  - Performance enhancement tips
-
-- **AI Features**
-  - Machine learning-based optimization
-  - Predictive analytics for performance
-  - Automated A/B testing
-  - Continuous improvement algorithms
-  - Personalized recommendations
-
-### 5.7 Smart Duplicate Detection
-**Advanced duplicate management**
-
-- **Detection Algorithm**
-  - Multi-field matching analysis
-  - Fuzzy matching for similar properties
-  - Image similarity detection
-  - Location-based duplicate identification
-  - Machine learning-enhanced detection
-
-- **Management Tools**
-  - Automated merge suggestions
-  - Manual review and approval
-  - Conflict resolution workflows
-  - Data quality improvement
-  - Performance monitoring
-
-### 5.8 Compliance Integrations
-**Regulatory compliance automation**
-
-- **FIRB Compliance**
-  - Foreign investment approval tracking
-  - Compliance status monitoring
-  - Automated reporting and alerts
-  - Documentation management
-  - Audit trail maintenance
-
-- **NDIS Compliance**
-  - Accessibility requirement checking
-  - Compliance documentation
-  - Reporting and certification
-  - Quality assurance processes
-  - Performance monitoring
-
-## Phase 6: Platform Subscriber Acquisition CRM (🔴 NOT IMPLEMENTED - Critical)
-
-### 6.1 Platform Lead Management System - **NOT IMPLEMENTED**
-**Dedicated CRM for tracking potential platform subscribers**
-
-- 🔴 **Platform Lead Management System**
-  - Dedicated CRM module for tracking potential platform subscribers
-  - Pipeline management for SaaS subscription leads
-  - Conversion funnel specifically for platform adoption
-  - Lead qualification scoring for SaaS prospects
-
-- 🔴 **Multi-Channel Acquisition Tools**
-  - Landing pages optimized for SaaS conversion
-  - Platform demo scheduling automation
-  - Trial user tracking and engagement monitoring
-  - Automated follow-up sequences for platform leads
-
-- 🔴 **SaaS Subscriber Analytics**
-  - Customer Acquisition Cost (CAC) tracking
-  - Lifetime Value (LTV) projections
-  - Churn risk analysis and prevention tools
-  - Subscription revenue forecasting
-
-- 🔴 **Partner & Affiliate Management**
-  - Affiliate tracking and commission calculation
-  - Partner portal for lead status visibility
-  - Referral attribution across marketing channels
-  - Commission payout integration with Xero
-
-### 6.2 Advanced Platform Features - **NOT IMPLEMENTED**
-
-- 🟡 **Subscription Upsell Intelligence**
-  - AI-driven plan upgrade recommendations
-  - Usage-based feature suggestions
-  - Cross-sell opportunity identification
-  - Renewal optimization tools
-
-- 🟡 **Customer Success Automation**
-  - Onboarding completion tracking
-  - Feature adoption monitoring
-  - AI-powered engagement scoring
-  - Retention risk early warning system
-
-- 🟡 **AI-Enhanced Subscription Growth Tools**
-  - Predictive analytics for subscriber segments
-  - Personalized nurture content creation
-  - Automated case studies and social proof generation
-  - Competitive differentiation content engine
-
-### 6.3 Technical Platform Components - **NOT IMPLEMENTED**
-
-- 📘 **Platform Marketing Automation Framework**
-  - Separate lead management pipeline from property leads
-  - Segmentation by industry, company size, and use case
-  - Integration with email marketing platforms
-  - Attribution modeling specific to SaaS acquisition
-
-- 📘 **Subscription Management Engine**
-  - Plan upgrades and downgrades workflow
-  - Billing cycle automation
-  - Subscription status webhooks
-  - Usage metering and quota tracking
-
-## Phase 7: Multi-Tenant & White-Label System (🔴 NOT IMPLEMENTED - Critical)
-
-### 7.1 White-Label Platform Support - **NOT IMPLEMENTED**
-**Note: Tenant refers to subscriber in our system**
-
-- 🔴 **White-Label Platform Support**
-  - Full platform white-labeling for premium subscribers
-  - Custom branding, logos, and color schemes
-  - Branded email templates and notifications
-  - Custom domain and SSL configuration
-  - Tenant-specific API keys and documentation
-
-- 🔴 **Property Customization Layer**
-  - Tenant-specific property customization
-  - Custom property descriptions and features
-  - Show/hide project or property details and fields per tenant
-  - Custom tagging and categorization
-  - Tenant-specific pricing display options
-
-- 🔴 **Tenant-Exclusive Property Management**
-  - Private property listings for tenant-specific inventory
-  - Independent property management from shared listings
-  - Tenant-specific notes and annotations
-  - Private and public note publishing options
-  - Custom metadata and fields per tenant
-
-- 🔴 **Multi-Tier Subscription Management**
-  - Configurable subscription plans with feature sets
-  - White-label tier with enhanced customization
-  - Usage tracking and quota enforcement
-  - Automated billing and subscription management
-  - Plan upgrade/downgrade workflows
-
-### 7.2 Advanced White-Label Features - **NOT IMPLEMENTED**
-
-- 🟡 **White-Label API Infrastructure**
-  - Tenant-specific API endpoints and documentation
-  - Custom API key management
-  - Rate limiting based on subscription tier
-  - Branded developer portal
-  - Analytics dashboard for API usage
-
-- 🟡 **Custom Integration Management**
-  - Tenant-specific third-party integration credentials
-  - Isolated integration workflows per tenant
-  - Custom webhook configurations
-  - Secure credential storage with encryption
-  - Integration health monitoring
-
-- 🟡 **Advanced White-Label Analytics Dashboard**
-  - Tenant-specific usage metrics and conversion tracking
-  - Customer journey visualization for property inquiries
-  - Custom report builder with white-labeled exports
-  - Performance comparison against industry benchmarks
-  - Lead source attribution and ROI calculation
-  - Visual funnel analysis for property engagement
-  - Engagement heat-mapping for property listings
-
-- 🟡 **Enhanced Property Customization Workflows**
-  - Batch property customization tools for bulk management
-  - Property customization templates and presets
-  - A/B testing for property descriptions and features
-  - Scheduled and conditional property customizations
-  - Team-based approval workflows for property changes
-  - Version history and rollback capabilities
-  - Custom field management per tenant
-
-- 🟡 **Multi-Currency and Regional Settings**
-  - Tenant-specific currency display preferences (default: AUD)
-  - Dynamic currency conversion for international clients
-  - Regional date and measurement format settings
-  - Localized property feature terminology
-  - Multi-language support for property descriptions
-  - Timezone-aware scheduling and notifications
-  - Regional compliance and disclosure management
-
-### 7.3 Technical Multi-Tenant Components - **NOT IMPLEMENTED**
-
-- 📘 **Tenant Isolation Framework**
-  - Robust multi-tenant single database architecture
-  - Tenant middleware for request isolation
-  - Cached tenant context for performance
-  - Cross-tenant data protection
-  - Tenant-aware service layer
-
-- 📘 **White-Label Configuration System**
-  - Admin interface for white-label management
-  - Configuration validation and deployment
-  - Custom domain verification
-  - SSL certificate management
-  - CDN integration for tenant assets
-
-## Phase 8: Advanced Features & Integrations (🟡 Medium Priority)
-
-### 8.1 Marketing & Content Tools - **NOT IMPLEMENTED**
-**Comprehensive marketing automation**
-
-- **GPT Ad & Social Templates**
-  - Channel-specific ad templates (Facebook, Instagram, Google)
-  - Property-specific social media content
-  - Market update templates
-  - Success story templates
-  - Seasonal and event-based content
-
-- **Dynamic Brochure Builder v2**
-  - AI-powered content generation
-  - Property-specific brochure creation
-  - Brand-consistent design templates
-  - Multi-format output (PDF, web, print)
-  - Performance tracking and optimization
-
-- **Retargeting Ad Builder**
-  - Automated retargeting campaign creation
-  - Audience segmentation and targeting
-  - Creative optimization and testing
-  - Performance monitoring and reporting
-  - ROI tracking and optimization
-
-- **Email Campaigns with GPT Personalization**
-  - Personalized email content generation
-  - Behavioral trigger-based campaigns
-  - A/B testing and optimization
-  - Performance analytics and reporting
-  - Integration with CRM data
-
-- **Landing Page Generator**
-  - AI-generated landing pages
-  - Property-specific page creation
-  - Conversion optimization
-  - A/B testing capabilities
-  - Performance tracking and analytics
-
-### 8.2 Financial Integration (Xero) - **NOT IMPLEMENTED**
-**Comprehensive financial management**
-
-- **Multi-Tenant OAuth2 Xero Integration**
-  - Secure authentication and authorization
-  - Multi-tenant data isolation
-  - Token management and refresh
-  - Error handling and retry logic
-  - Performance monitoring and optimization
-
-- **Contact Sync Engine**
-  - Bidirectional contact synchronization
-  - Data mapping and transformation
-  - Conflict resolution and merging
-  - Real-time sync and batch processing
-  - Error handling and reporting
-
-- **Invoice Sync Engine**
-  - Automated invoice creation and sync
-  - Multiple invoice types (EOI, training, service, commission)
-  - Status tracking and updates
-  - Payment reconciliation
-  - Error handling and retry logic
-
-- **Commission Reconciliation**
-  - Automated commission calculation
-  - Payment tracking and reconciliation
-  - Reporting and analytics
-  - Dispute resolution workflows
-  - Audit trail maintenance
-
-- **Finance Dashboards**
-  - Real-time financial metrics
-  - Cash flow analysis and forecasting
-  - Revenue and expense tracking
-  - Profitability analysis
-  - Custom reporting and export
-
-### 8.3 Advanced Integrations - **NOT IMPLEMENTED**
-**Third-party platform connectivity**
-
-- **REA/Domain API Integration**
-  - Property listing synchronization
-  - Lead capture and management
-  - Performance tracking and analytics
-  - Automated updates and maintenance
-  - Error handling and monitoring
-
-- **WordPress Site Hub Management**
-  - Multi-site management and control
-  - Content synchronization and updates
-  - Theme and plugin management
-  - Performance monitoring and optimization
-  - Security and backup management
-
-- **PHP Fast Site Engine**
-  - High-performance site generation
-  - Real-time property feed integration
-  - SEO optimization and performance
-  - Mobile responsiveness and speed
-  - Analytics and tracking integration
-
-- **Zapier & Make Integration**
-  - Workflow automation and integration
-  - Third-party service connectivity
-  - Custom trigger and action creation
-  - Error handling and monitoring
-  - Performance optimization
-
-- **Open API Documentation**
-  - Comprehensive API documentation
-  - Interactive testing and examples
-  - Authentication and security guides
-  - Rate limiting and usage guidelines
-  - Developer support and resources
-
-### 8.4 Security & Compliance - **NOT IMPLEMENTED**
-**Enterprise-grade security**
-
-- **OAuth2 + Passport/Sanctum Authentication**
-  - Secure API authentication
-  - Token management and refresh
-  - Scope-based access control
-  - Rate limiting and throttling
-  - Security monitoring and alerts
-
-- **Role-based Access & Impersonation**
-  - Granular permission management
-  - User impersonation for support
-  - Audit logging and tracking
-  - Security policy enforcement
-  - Compliance reporting
-
-- **Comprehensive Audit Logging**
-  - User action tracking
-  - Data change monitoring
-  - Security event logging
-  - Compliance reporting
-  - Performance impact monitoring
-
-- **Data Encryption & Compliance**
-  - Data encryption at rest and in transit
-  - GDPR and CCPA compliance
-  - Privacy policy management
-  - Data retention and deletion
-  - Consent management
-
-### 8.5 Joey's AI Suggestions System - **NOT IMPLEMENTED**
-**Intelligent business recommendations and insights**
-
-- **AI Business Intelligence**
-  - Market trend analysis and predictions
-  - Property investment opportunity identification
-  - Lead behavior pattern recognition
-  - Sales performance optimization suggestions
-  - Revenue growth opportunity alerts
-
-- **Automated Recommendations**
-  - Best time to contact leads based on behavior
-  - Optimal pricing strategies for properties
-  - Marketing campaign optimization suggestions
-  - Agent performance improvement recommendations
-  - Territory expansion opportunities
-
-- **Predictive Analytics**
-  - Lead conversion probability scoring
-  - Property market value predictions
-  - Sales cycle duration forecasting
-  - Churn risk identification and prevention
-  - Seasonal trend analysis and preparation
-
-- **Strategic Insights**
-  - Competitive analysis and positioning
-  - Market share growth opportunities
-  - Resource allocation optimization
-  - Team performance benchmarking
-  - ROI optimization across all activities
-
-- **Implementation Features**
-  - Daily/weekly insight emails
-  - Dashboard widget with key recommendations
-  - Mobile notifications for urgent opportunities
-  - Integration with existing AI systems
-  - Customizable insight categories and priorities
-
-## Phase 9: Auto Signup & Guided Onboarding (🔴 NOT IMPLEMENTED - Critical)
-
-### 9.1 Self-Service Auto Signup - **NOT IMPLEMENTED**
-**Self-service customer acquisition**
-
-- **Self-Service Auto Signup**
-  - Automated account creation
-  - Plan selection and customization
-  - Payment processing integration
-  - Email verification and activation
-  - Welcome sequence automation
-
-- **Plan Selection Logic**
-  - Feature comparison and recommendations
-  - Pricing calculator and customization
-  - Trial period management
-  - Upgrade and downgrade automation
-  - Usage tracking and billing
-
-- **Payment Integration (eWAY/Xero)**
-  - Secure payment processing
-  - Multiple payment method support
-  - Automated billing and invoicing
-  - Payment failure handling
-  - Refund and chargeback management
-
-- **Guided Onboarding Checklist**
-  - Step-by-step setup process
-  - Progress tracking and completion
-  - Help and support integration
-  - Customization based on user type
-  - Success metrics and optimization
-
-- **Email Triggers & Automation**
-  - Welcome email sequences
-  - Onboarding progress notifications
-  - Feature introduction emails
-  - Support and help content
-  - Engagement and retention campaigns
-
-- **Admin Visibility Dashboard**
-  - Signup analytics and reporting
-  - Conversion funnel analysis
-  - User behavior tracking
-  - Performance optimization insights
-  - Revenue and growth metrics
-
-### 9.2 Complete Automated Registration and Provisioning System - **NOT IMPLEMENTED**
-
-#### 🔐 User Roles Created
-- Default: `subscriber`
-- Optional affiliate/referral tracking code stored on registration
-
-#### 📝 Fields Collected at Signup
-- Full Name
-- Email Address
-- Mobile Number
-- Business Name
-- ABN
-- Referral Code (optional)
-- Subscription Plan Selection (dropdown)
-- Credit Card or Payment Token
-
-#### 💳 Plan Selection Logic
+## **🏗️ PROPERTY & BUILDER CONTROL**
+
+🔴🆕 **Builder White-Label Portals**  
+Branded builder views with full stock and lead visibility
+
+**Suggested Packages:**
+- [Filament](https://filamentphp.com/) - Modern admin panels for builders
+- [Laravel Sanctum](https://github.com/laravel/sanctum) - API authentication for portals
+- [Spatie/Laravel-Permission](https://github.com/spatie/laravel-permission) - Builder-specific permissions
+
+🔄🔴 **Member-Uploaded Listings**  
+Users upload/manage their own inventory, including validation
+
+**Suggested Packages:**
+- [Spatie/Laravel-MediaLibrary](https://github.com/spatie/laravel-medialibrary) - File uploads and management
+- [Laravel Image Optimizer](https://github.com/spatie/laravel-image-optimizer) - Image optimization
+- [Livewire File Uploads](https://livewire.laravel.com/docs/uploads) - Real-time file uploads
+
+🔄🔴 **Project, Stage & Lot Management**  
+Full structure with AI-powered data entry forms
+
+🔴🆕 **Property Match Intelligence**  
+AI filters and buyer-property match scoring
+
+🔴🆕 **Builder \+ Project CRM**  
+Pipeline tools for builders with contract & agent engagement tracking
+
+🔴🆕 **Inventory API Uploads**  
+JSON/CSV/API import tools for large property sync
+
+**Suggested Packages:**
+- [Laravel Excel](https://github.com/spartnerNL/Laravel-Excel) - CSV/Excel import/export
+- [Laravel Import Export](https://github.com/rap2hpoutre/laravel-excel) - Alternative import solution
+- [Spatie/SimpleExcel](https://github.com/spatie/simple-excel) - Lightweight Excel handling
+
+---
+
+## **🔄 PUSH PORTAL TECHNOLOGY**
+
+🔄🔴 **Multi-Channel Publishing**  
+Push listings to:
+
+* PIAB Fast PHP Sites
+* WordPress Sites
+* External MLS feeds (REA, Domain)
+* Private/Internal Listings
+
+**Suggested Packages:**
+- [Corcel](https://github.com/corcel/corcel) - WordPress integration for Laravel
+- [Laravel API Resources](https://laravel.com/docs/11.x/eloquent-resources) - REST API formatting
+- [Spatie/Laravel-Feed](https://github.com/spatie/laravel-feed) - RSS feed generation
+- [Laravel Sanctum](https://github.com/laravel/sanctum) - API authentication
+- [WP API Client](https://github.com/wp-api/client-php) - WordPress REST API client
+
+🔄🔴 **Agent Control Panel**  
+Control visibility per channel, schedule go-live, view push history
+
+🔄🔴 **Media Management**  
+Upload/manage photos, floorplans, videos, brochures
+
+🔴🆕 **Auto-Validation & MLS Formatting**  
+Detect and correct incomplete or invalid data
+
+✅ **Custom Tags & Categories**  
+E.g., SMSF-ready, FIRB-approved, NDIS, dual-living
+
+🔴🆕 **De-duplication & Versioning**  
+Prevent listing conflicts and track changes
+
+🔄🔴 **Audit Logs & Compliance Tracking**  
+Timestamped activity by user/role
+
+🔴🆕 **White-Labelling Support**  
+Inject brand logo/contact into listing view
+
+✅ **Role Access Control**  
+Agents, Developers, Builders, Admins
+
+🟡🆕 **AI-powered Push Suggestions**  
+Suggest optimal time/day to publish listings
+
+🟡🆕 **Smart Duplicate Detection**  
+Detect cross-MLS or cross-agent duplicates
+
+🟡🆕 **Compliance Integrations**  
+Auto-check FIRB/NDIS eligibility from providers
+
+---
+
+## **👥 CRM & ROLE SYSTEM**
+
+🔴🆕 **Single-Tenant Architecture**  
+Brand-level CRM segmentation
+
+🔄🔴 **Custom Roles & Permissions Matrix**  
+Granular control of access and module visibility
+
+**Suggested Packages:**
+- [Spatie/Laravel-Permission](https://github.com/spatie/laravel-permission) - The most robust permissions package
+- [Laravel Sanctum](https://github.com/laravel/sanctum) - Modern authentication
+- [Filament Shield](https://github.com/bezhanSalleh/filament-shield) - Filament permissions integration
+
+🔄🔴 **Sales Pipeline Management**  
+Full Kanban & List view \+ AI-driven forecasting
+
+**Suggested Packages:**
+- [Laravel Kanban Board](https://github.com/innocenzi/laravel-kanban) - Kanban interface
+- [Livewire v3](https://livewire.laravel.com/) - Dynamic pipeline updates
+- [Spatie/Laravel-Model-States](https://github.com/spatie/laravel-model-states) - Deal states
+
+🔴🆕 **Team Collaboration Tools**  
+@Mentions, notes, file sharing, tagging
+
+**Suggested Packages:**
+- [Laravel Comments](https://github.com/beyondcode/laravel-comments) - Comment system with mentions
+- [Spatie/Laravel-Activitylog](https://github.com/spatie/laravel-activitylog) - Activity tracking
+- [Laravel Mentions](https://github.com/jameslkingsley/laravel-mentions) - User mentions
+
+🔴🆕 **Custom Fields \+ Dynamic Forms**  
+Per entity: leads, deals, properties, users
+
+🔴🆕 **Advanced Task Automation**  
+If-this-then-that logic (e.g., status changes → tasks)
+
+✅ **Relationship Linking Engine**  
+Clients ↔ Agents ↔ Brokers ↔ Referrers ↔ Developers
+
+---
+
+## **📈 ANALYTICS & REPORTING**
+
+🔴🆕 **AI Analytics Layer**  
+Ask questions like: "What suburb had best ROI Q1?"
+
+**Suggested Packages:**
+- [Laravel Analytics](https://github.com/spatie/laravel-analytics) - Google Analytics integration
+- [Laravel Charts](https://github.com/consoletvs/charts) - Beautiful charts and graphs
+- [Spatie/Laravel-Data](https://github.com/spatie/laravel-data) - Structured data handling
+- [Laravel Nova Metrics](https://nova.laravel.com/docs/4.0/metrics) - Advanced analytics dashboards
+
+🔄🔴 **KPI Dashboards by Role**  
+Dynamic data widgets based on role
+
+🔄🔴 **Conversion Funnel Visualisation**  
+View full journey: Lead → Deal → Commission
+
+🔴🆕 **AI Deal Forecasting**  
+Predict likelihood of close using GPT patterning
+
+---
+
+## **📣 MARKETING & CONTENT TOOLS**
+
+🟡🆕 **GPT Ad & Social Templates**  
+Tailored for channel, persona, and tone
+
+**Suggested Packages:**
+- [Laravel Socialite](https://github.com/laravel/socialite) - Social media integration
+- [Spatie/Laravel-MediaLibrary](https://github.com/spatie/laravel-medialibrary) - Media management
+- [Intervention Image](https://github.com/Intervention/image) - Image processing
+- [Laravel Social Media Auto Posting](https://github.com/atymic/twitter-api-php) - Social automation
+
+🔄🟡 **Dynamic Brochure Builder v2**  
+AI content fill, templated layout selection
+
+🟡🆕 **Retargeting Ad Builder**  
+Facebook/Instagram funnel-based ads
+
+🔄🟡 **Email Campaigns \+ GPT Personalisation**  
+Auto-subject lines, dynamic body content
+
+🔄🟡 **Landing Page Generator**  
+GPT or template-driven landing pages
+
+---
+
+## 
+
+## 
+
+## **📁 CLIENT & DEAL TRACKER**
+
+✅ **Enhanced Client Profiles**  
+Full contact history, notes, tasks, linked deals
+
+**Suggested Packages:**
+- [Spatie/Laravel-Activitylog](https://github.com/spatie/laravel-activitylog) - Comprehensive activity tracking
+- [Laravel Timeline](https://github.com/cybercog/laravel-optimus) - Client interaction timeline
+- [Laravel Comments](https://github.com/beyondcode/laravel-comments) - Note system with threading
+- [Spatie/Laravel-Tags](https://github.com/spatie/laravel-tags) - Client categorization
+
+🔄🔴 **Sales Pipeline**  
+Kanban & List views from enquiry to settlement
+
+🔴🆕 **Document Vault**  
+Per-deal storage for PDFs, emails, contracts
+
+**Suggested Packages:**
+- [Spatie/Laravel-MediaLibrary](https://github.com/spatie/laravel-medialibrary) - Document management
+- [Laravel PDF](https://github.com/barryvdh/laravel-dompdf) - PDF generation and handling
+- [Spatie/PDF-to-Image](https://github.com/spatie/pdf-to-image) - PDF preview generation
+
+🔄🔴 **Follow-Up Task Logic**  
+Improved scheduling; no overwrite of follow-up dates
+
+🔄🔴 **Payment Tracker**  
+Log stages: EOI → Deposit → Commission → Payout
+
+✅ **Linked Property Info View**  
+Show stage, developer, availability per client/deal
+
+🔴🆕 **Status Quick-Edit Dropdowns**  
+Fast update tools on dashboard and pipelines
+
+🔴🆕 **Important Notes Panel**  
+Pinned alerts for Admin, Agents, and Support
+
+🔄🔴 **Reservation Form v2**  
+Auto-filled, validated, stakeholder-mapped
+
+🔴🆕 **Bulk Update Tools**  
+Tagging, Super Group handling, status change
+
+---
+
+## **📲 WEBSITES & API**
+
+🔄🟡 **WordPress Site Hub**  
+Manage sync, forms, custom branding
+
+**Suggested Packages:**
+- [Corcel](https://github.com/corcel/corcel) - WordPress database integration
+- [Laravel API Resources](https://laravel.com/docs/11.x/eloquent-resources) - API standardization
+- [Laravel Sanctum](https://github.com/laravel/sanctum) - API authentication
+- [Spatie/Laravel-CORS](https://github.com/spatie/laravel-cors) - Cross-origin resource sharing
+
+🔄🟡 **PHP Fast Site Engine**  
+Real-time feed with blazing load times
+
+📘🆕 **Fusion API v2**  
+REST \+ GraphQL with open developer access
+
+**Suggested Packages:**
+- [Lighthouse GraphQL](https://github.com/nuwave/lighthouse) - GraphQL server for Laravel
+- [Laravel Sanctum](https://github.com/laravel/sanctum) - API authentication
+- [Spatie/Laravel-Query-Builder](https://github.com/spatie/laravel-query-builder) - API query building
+- [Laravel API Documentation](https://github.com/rakutentech/laravel-request-docs) - Auto-generated API docs
+
+🟡🆕 **Zapier & Make Integration**  
+Trigger-based workflows with 3rd party tools
+
+📘🆕 **Open API Documentation**  
+Dev-accessible, structured REST/GraphQL docs
+
+**Suggested Packages:**
+- [Laravel OpenAPI](https://github.com/vyuldashev/laravel-openapi) - OpenAPI spec generation
+- [Scramble](https://github.com/dedoc/scramble) - API documentation from code
+- [Laravel API Documentation Generator](https://github.com/mpociot/laravel-apidoc-generator) - Generate docs
+
+---
+
+## **🔒 SECURITY & COMPLIANCE**
+
+📘✅ **OAuth2 \+ Passport/Sanctum**  
+Modern, secure token auth flows
+
+**Suggested Packages:**
+- [Laravel Sanctum](https://github.com/laravel/sanctum) - Modern API authentication (recommended over Passport)
+- [Laravel Passport](https://github.com/laravel/passport) - Full OAuth2 server implementation
+- [Laravel Fortify](https://github.com/laravel/fortify) - Authentication backend features
+- [Laravel Two-Factor Authentication](https://github.com/pragmarx/google2fa-laravel) - 2FA implementation
+
+📘✅ **Role-based Access & Impersonation**  
+Switching, impersonation, visibility scopes
+
+**Suggested Packages:**
+- [Spatie/Laravel-Permission](https://github.com/spatie/laravel-permission) - Roles and permissions
+- [Laravel Impersonate](https://github.com/lab404/laravel-impersonate) - User impersonation
+- [Spatie/Laravel-Activitylog](https://github.com/spatie/laravel-activitylog) - Security auditing
+
+📘🔄 **Audit Logging**  
+User action and event tracking
+
+📘🔄 **IP/Token Rate Limiting**  
+Request throttling, DDoS resilience
+
+**Suggested Packages:**
+- [Laravel Rate Limiting](https://laravel.com/docs/11.x/rate-limiting) - Built-in rate limiting
+- [Spatie/Laravel-Rate-Limited-Job-Middleware](https://github.com/spatie/laravel-rate-limited-job-middleware) - Job rate limiting
+- [Laravel Security](https://github.com/enlightn/enlightn) - Security analysis
+
+📘✅ **Data Encryption & GDPR/CCPA Compliance**
+
+**Suggested Packages:**
+- [Laravel GDPR](https://github.com/sander3/laravel-gdpr) - GDPR compliance tools
+- [Spatie/Laravel-Personal-Data-Export](https://github.com/spatie/laravel-personal-data-export) - Data export
+- [Laravel Encryption](https://laravel.com/docs/11.x/encryption) - Built-in encryption
+
+---
+
+## **💸 XERO INTEGRATION (FINANCIAL CORE)**
+
+🔴🆕 **Multi-Tenant OAuth2 Auth**  
+Each org securely connected to their own Xero
+
+**Suggested Packages:**
+- [Xero Laravel](https://github.com/webfox/laravel-xero-oauth2) - Modern Xero integration
+- [Laravel Cashier Stripe](https://github.com/laravel/cashier-stripe) - Subscription billing
+- [Laravel Invoice](https://github.com/laraveldaily/laravel-invoices) - PDF invoice generation
+- [Spatie/Laravel-Webhook-Client](https://github.com/spatie/laravel-webhook-client) - Xero webhooks
+
+🔴🆕 **Contact Sync**  
+Fusion CRM clients/leads → Xero contacts
+
+🔴🆕 **Invoice Sync Engine**  
+Push EOI, training, service, and commission invoices
+
+🔴🆕 **Invoice Status Tracking**  
+Live sync of Paid, Draft, Overdue statuses
+
+🔴🆕 **Commission Reconciliation**  
+Payouts/journals logged, synced to Xero
+
+🔴🆕 **Expense Mapping**  
+Fees → proper Xero chart of accounts
+
+🔴🆕 **Audit Trail**  
+Financial logs of syncs and user actions
+
+🔴🆕 **Finance Dashboards**  
+Live cashflow, invoice aging, agent earnings
+
+🔴🆕 **Payment Triggers**  
+Advance deal stages on invoice payment
+
+📘🆕 **Laravel Queued Jobs**  
+Rate-limited, scalable sync system
+
+**Suggested Packages:**
+- [Laravel Horizon](https://github.com/laravel/horizon) - Queue monitoring
+- [Laravel Queue Monitor](https://github.com/romegadigital/laravel-queue-monitor) - Job tracking
+- [Spatie/Laravel-Backup](https://github.com/spatie/laravel-backup) - Financial data backup
+
+## **🔧 Fusion V4 – Feature Add: Auto Signup & Guided Onboarding**
+
+### **Feature Name:**
+
+**Self-Service Auto Signup & Guided Onboarding**
+
+---
+
+### **✅ Overview**
+
+This feature enables new Members to register themselves through a public-facing signup form, select a subscription plan, securely pay ( Xero), and be provisioned instantly into the Fusion platform with appropriate permissions and onboarding guidance.
+
+---
+
+### **🧩 Modules Involved**
+
+* **Auth** (registration \+ login)
+
+* **Subscription Management**
+
+* **User Roles & Permissions**
+
+* **Payment Integration** (eWAY/Xero)
+
+* **Dashboard/Onboarding Module**
+
+* **Email System**
+
+* **AI Assistant (optional)**
+
+---
+
+### 
+
+### **🔐 User Roles Created**
+
+* Default: `subscriber`
+
+* Optional affiliate/referral tracking code stored on registration
+
+---
+
+### **📝 Fields Collected at Signup**
+
+* Full Name
+
+* Email Address
+
+* Mobile Number
+
+* Business Name
+
+* ABN
+
+* Referral Code (optional)
+
+* Subscription Plan Selection (dropdown)
+
+* Credit Card or Payment Token
+
+---
+
+### **💳 Plan Selection Logic**
+
 | Plan | Price | Commitment |
-|------|-------|------------|
-| Monthly | $330/month + $990 setup fee | 12 months |
+| ----- | ----- | ----- |
+| Monthly | $330/month \+ $990 setup fee | 12 months |
 | Monthly (No Setup) | $415/month | 12 months |
 | Annual Saver | $3,960/year | No setup |
 
-**Plans determine:**
-- Feature access flags (`is_feed_access`, `is_php_site_access`, `is_wordpress_site_access`)
-- Payment frequency
-- Email sequences
-- Access to AI tools
+Plans determine:
 
-#### 🔄 Registration Flow
-1. User visits `/signup`
-2. Enters details & selects plan
-3. Submits payment via eWAY or Xero link
-4. System creates:
-   - User account (role: `subscriber`)
-   - Toggles relevant features based on plan
-   - Logs source and referral code (if any)
-5. Redirects to CRM dashboard with onboarding steps
+* Feature access flags (`is_feed_access`, `is_php_site_access`, `is_wordpress_site_access`)
 
-#### 🎯 Post-Signup Onboarding Checklist
-- ✅ Set password
-- ✅ Sign digital agreement
-- ✅ Complete CRM tour
-- ✅ Upload contacts
-- ✅ Connect website
-- ✅ Launch first property flyer
-- ✅ Meet your BDM (AI or human)
+* Payment frequency
 
-*Tracked via new `onboarding_progress` table or feature flag array.*
+* Email sequences
 
-#### ✉️ Email Triggers
-- Welcome email
-- Payment receipt
-- Weekly onboarding reminders (if checklist incomplete)
-- Optional: AI-driven onboarding using Bot In A Box
-
-#### 📊 Admin Visibility
-- Signup report with source tracking
-- Signup-to-sale conversion rates
-- Dashboard widget: "New Subscribers This Month"
-- Logs under `users.created_via = auto`
-
-#### 🛠️ Technical Implementation
-- New route: `GET /signup`, `POST /signup`
-- Uses `AuthController@registerSelf`
-- Registers users via API `/api/auth/register`
-- Adds billing record via `BillingService::createFromSignup($plan, $user)`
-- Optional: webhook listener from Xero for payment confirmation
-- Future: Stripe support via driver-based billing engine
-
-#### 🔐 Security Features
-- CSRF protection
-- Honeypot or CAPTCHA anti-spam
-- Email verification optional
-- Rate-limiting on signup
-
-## Phase 10: Geanelle's AI Features (🔴 NOT IMPLEMENTED - Critical)
-
-### 10.1 AI-Generated Suburb & State Intelligence - **NOT IMPLEMENTED**
-**Comprehensive market data integration and analysis**
-
-- 🔴 **REA Data Integration**
-  - AI-generated Suburb & State Info for projects
-  - Price and Rent data sourcing from REA (https://www.realestate.com.au/australia/)
-  - Market trend analysis and predictions
-  - Demographic insights and analytics
-  - Investment potential scoring
-
-- 🔴 **Market Intelligence Engine**
-  - Automated suburb profile generation
-  - Price history and trend analysis
-  - Rental yield calculations
-  - Growth potential predictions
-  - Comparative market analysis
-
-### 10.2 AI Brochure Photo Extraction - **NOT IMPLEMENTED**
-**Intelligent document processing and media extraction**
-
-- 🔴 **Brochure Processing System**
-  - Upload brochures and extract photos automatically
-  - AI-powered facade photo identification
-  - Floor plan extraction and categorization
-  - Image quality enhancement and optimization
-  - Automated tagging and metadata generation
-
-- 🔴 **Photo Management Integration**
-  - Extracted photos added to Project Profile automatically
-  - Intelligent categorization (facade, floor plans, amenities, etc.)
-  - Duplicate detection and removal
-  - Quality scoring and optimization
-  - Integration with existing media library
-
-### 10.3 Builder Communication System - **NOT IMPLEMENTED**
-**Automated builder relationship management**
-
-- 🔴 **Builder Email Templates**
-  - Requesting Price list/Availability
-  - More info requests
-  - Hold requests
-  - Property requests
-  - Custom template builder
-
-- 🔴 **Automated Builder Communications**
-  - Template-based email generation
-  - Automated follow-up sequences
-  - Response tracking and analytics
-  - Builder relationship scoring
-  - Communication history tracking
-
-**Development Required:**
-- AI document processing integration
-- REA data scraping and API integration
-- Advanced OCR and image recognition
-- Builder communication workflow engine
-- Template management system
-
-## Phase 11: Future Improvements - Competitive Edge Features (🧠 NOT IMPLEMENTED - R&D)
-
-### 11.1 Advanced AI & Machine Learning - **NOT IMPLEMENTED**
-**Next-generation intelligent features**
-
-- 🧠 **Predictive Market Analytics**
-  - AI-powered property value predictions
-  - Market trend forecasting with 90%+ accuracy
-  - Investment opportunity scoring
-  - Risk assessment algorithms
-  - Seasonal demand prediction
-
-- 🧠 **Advanced Lead Intelligence**
-  - Behavioral pattern recognition
-  - Emotional sentiment analysis from communications
-  - Purchase intent prediction
-  - Optimal contact timing algorithms
-  - Personalized communication strategies
-
-- 🧠 **Smart Property Matching**
-  - AI-powered property recommendation engine
-  - Buyer preference learning algorithms
-  - Lifestyle and demographic matching
-  - Investment goal alignment
-  - Automated property shortlisting
-
-### 11.2 Voice & Conversational AI - **NOT IMPLEMENTED**
-**Advanced voice interaction capabilities**
-
-- 🧠 **Advanced Voice AI**
-  - Natural language property search
-  - Voice-activated CRM commands
-  - Multilingual voice support
-  - Emotional tone analysis
-  - Voice-to-text transcription with context
-
-- 🧠 **Conversational Property Assistant**
-  - AI property consultant chatbot
-  - Natural language property queries
-  - Investment advice and recommendations
-  - Market insights on demand
-  - Personalized property tours
-
-### 11.3 Augmented Reality & Virtual Tours - **NOT IMPLEMENTED**
-**Immersive property experience**
-
-- 🧠 **AR Property Visualization**
-  - Augmented reality property overlays
-  - Virtual staging and furniture placement
-  - Renovation potential visualization
-  - Neighborhood information overlays
-  - Investment potential heat maps
-
-- 🧠 **Virtual Tour Integration**
-  - 360-degree property tours
-  - Interactive floor plan navigation
-  - Virtual open house hosting
-  - Remote property inspection tools
-  - VR headset compatibility
-
-### 11.4 Blockchain & Smart Contracts - **NOT IMPLEMENTED**
-**Future-proof transaction technology**
-
-- 🧠 **Smart Contract Integration**
-  - Automated property transaction processing
-  - Escrow and settlement automation
-  - Digital property ownership records
-  - Transparent commission tracking
-  - Automated compliance checking
-
-- 🧠 **Blockchain Property Registry**
-  - Immutable property history records
-  - Ownership verification system
-  - Transaction transparency
-  - Fraud prevention mechanisms
-  - Digital property certificates
-
-### 11.5 IoT & Smart Building Integration - **NOT IMPLEMENTED**
-**Connected property ecosystem**
-
-- 🧠 **Smart Building Data**
-  - IoT sensor data integration
-  - Energy efficiency monitoring
-  - Predictive maintenance alerts
-  - Environmental quality tracking
-  - Security system integration
-
-- 🧠 **Property Performance Analytics**
-  - Real-time property metrics
-  - Tenant satisfaction monitoring
-  - Maintenance cost optimization
-  - Energy usage analytics
-  - Investment performance tracking
-
-## Implementation Priority Matrix
-
-### 🔴 Critical Priority (Weeks 1-16) - MUST BUILD FIRST
-- **Phase 1**: CRM Foundation Creation (Models, Database, Basic CRUD)
-- **Phase 2**: AI-Powered Lead Generation
-- **Phase 3**: Strategy-Based Funnel Engine
-- **Phase 4**: Property & Builder Control Systems
-
-### 🔴 High Priority (Weeks 17-20) - CORE BUSINESS FEATURES
-- **Phase 5**: Push Portal Technology
-- **Phase 6**: Platform Subscriber Acquisition CRM
-- **Phase 7**: Multi-Tenant & White-Label System
-
-### 🟡 Medium Priority (Weeks 21-24) - ADVANCED FEATURES
-- **Phase 8**: Advanced Features & Integrations
-- **Phase 9**: Auto Signup & Guided Onboarding
-- **Phase 10**: Geanelle's AI Features
-
-### 🧠 Future Priority (Post-Launch) - R&D FEATURES
-- **Phase 11**: Future Improvements - Competitive Edge Features
-  - Advanced AI & Machine Learning
-  - Voice & Conversational AI
-  - Augmented Reality & Virtual Tours
-  - Blockchain & Smart Contracts
-  - IoT & Smart Building Integration
-
-## Success Metrics
-
-### Lead Generation
-- 300% increase in lead capture volume
-- 50% improvement in lead quality scores
-- 40% reduction in cost per lead
-- 60% increase in conversion rates
-
-### Sales Performance
-- 25% increase in deal closure rates
-- 30% reduction in sales cycle time
-- 50% improvement in agent productivity
-- 35% increase in average deal value
-
-### Operational Efficiency
-- 70% reduction in manual data entry
-- 80% automation of routine tasks
-- 60% improvement in response times
-- 90% reduction in data errors
-
-### AI Performance
-- 85% accuracy in lead scoring
-- 75% success rate in AI-generated content
-- 90% user satisfaction with AI features
-- 50% reduction in manual content creation
+* Access to AI tools
 
 ---
 
-## 🎯 COMPREHENSIVE FEATURE COVERAGE CONFIRMED
+### **🔄 Flow**
 
-**This updated blueprint now includes ALL features from the original requirements:**
+1. User visits `/signup`
 
-### ✅ **Complete Feature Integration**
-- **All Original V4 Features**: Every feature from the original document is included
-- **Platform Subscriber CRM**: Dedicated SaaS lead management system
-- **Multi-Tenant White-Label**: Complete tenant customization and branding
-- **Auto Signup System**: Detailed self-service registration with payment integration
-- **Geanelle's AI Features**: REA data integration, brochure processing, builder communications
-- **Future R&D Features**: Advanced AI, AR/VR, blockchain, and IoT capabilities
+2. Enters details & selects plan
 
-### 🔴 **Reality-Based Implementation Status**
-- **Current State**: Only Wave foundation implemented (~5% complete)
-- **Development Required**: 95% of CRM functionality needs to be built from scratch
-- **Accurate Timeline**: 24-week development plan accounting for actual scope
-- **Realistic Priorities**: Phase-based development with clear dependencies
+3. Submits payment via eWAY or Xero link
 
-### 🏗️ **Solid Foundation Strategy**
-- **Leverage Wave Kit**: Build upon proven Laravel 11 + Filament 3.2 foundation
-- **Extend Existing Systems**: Use Wave's authentication, teams, and billing infrastructure
-- **Modern Tech Stack**: Livewire 3, Alpine.js 3.4.2, Tailwind CSS 3.4.3
-- **Scalable Architecture**: Enterprise-ready design patterns from day one
+4. System creates:
 
-**This comprehensive feature set transforms the current Wave foundation into a complete, AI-powered real estate platform that addresses ALL original requirements while providing a realistic roadmap for implementation.**
+    * User account (role: `subscriber`)
+
+    * Toggles relevant features based on plan
+
+    * Logs source and referral code (if any)
+
+5. Redirects to CRM dashboard with onboarding steps
+
+---
+
+### **🎯 Post-Signup Onboarding Checklist**
+
+* ✅ Set password
+
+* ✅ Sign digital agreement
+
+* ✅ Complete CRM tour
+
+* ✅ Upload contacts
+
+* ✅ Connect website
+
+* ✅ Launch first property flyer
+
+* ✅ Meet your BDM (AI or human)
+
+Tracked via new `onboarding_progress` table or feature flag array.
+
+---
+
+### **✉️ Email Triggers**
+
+* Welcome email
+
+* Payment receipt
+
+* Weekly onboarding reminders (if checklist incomplete)
+
+* Optional: AI-driven onboarding using Bot In A Box
+
+---
+
+### **📊 Admin Visibility**
+
+* Signup report with source tracking
+
+* Signup-to-sale conversion rates
+
+* Dashboard widget: "New Subscribers This Month"
+
+* Logs under `users.created_via = auto`
+
+---
+
+### **🛠️ Tech Notes**
+
+* New route: `GET /signup`, `POST /signup`
+
+* Uses `AuthController@registerSelf`
+
+* Registers users via API `/api/auth/register`
+
+* Adds billing record via `BillingService::createFromSignup($plan, $user)`
+
+* Optional: webhook listener from Xero for payment confirmation
+
+* Future: Stripe support via driver-based billing engine
+
+---
+
+### **🔐 Security**
+
+* CSRF protection
+
+* Honeypot or CAPTCHA anti-spam
+
+* Email verification optional
+
+* Rate-limiting on signup
+
+**Suggested Packages for Onboarding:**
+- [Laravel Tour](https://github.com/spatie/laravel-tour) - Interactive product tours
+- [Laravel Onboarding](https://github.com/calebporzio/onboard) - User onboarding flows
+- [Filament Tour](https://github.com/ryangjchandler/filament-tour) - Admin panel tours
+- [Laravel Progress](https://github.com/hillelcoren/laravel-progress) - Progress tracking
+
+
+1. AI-generated Suburb & State Info for projects including Price and Rent data (source can be REA \- [https://www.realestate.com.au/australia/](https://www.realestate.com.au/australia/))
+2. Extraction of Photos of Facade, floor plans, etc from Brochures using AI (i.e. we upload the brochures and photos will be generated from these and added to the Project Profile)
+3. Ability to create and send email to builders via the CRM. Email template Options for Requesting Price list/Availability, More info, Hold request, or Property Request
+
+**Suggested Packages for AI Features:**
+- [OpenAI PHP Client](https://github.com/openai-php/client) - AI content generation
+- [Spatie/Laravel-PDF-to-Image](https://github.com/spatie/pdf-to-image) - PDF processing for brochures
+- [Laravel OCR](https://github.com/thiagoalessio/tesseract-ocr-for-php) - Text extraction from images
+- [Laravel Web Scraping](https://github.com/roach-php/laravel) - Data extraction from REA
+
+---
+
+## **🔮 FUTURE IMPROVEMENTS: COMPETITIVE EDGE FEATURES**
+
+*The following features represent potential future enhancements to maintain Fusion v4 as the market-leading CRM solution in Australia, based on competitive analysis.*
+
+### Australian Market-Specific Features
+
+🔴🆕 **Advanced Compliance & Legal Module**  
+- Australian-specific compliance documentation
+- PEXA integration for settlement tracking
+- AML/CTF compliance automation
+- Auto-generated contracts with e-signing
+
+**Suggested Packages:**
+- [Laravel Legal Documents](https://github.com/spatie/laravel-pdf) - Document generation
+- [Laravel E-Signature](https://github.com/docusign/docusign-php-client) - DocuSign integration
+- [Laravel Compliance](https://github.com/spatie/laravel-validation-rules) - Validation rules
+
+🔴🆕 **Local Market Intelligence**  
+- Suburb-specific demographic insights
+- Australian property cycle indicators
+- School zone mapping and analytics
+- Integration with CoreLogic/RP Data API
+- FIRB eligibility checking
+
+🔴🆕 **Superannuation Integration**  
+- SMSF property investment tools
+- Automated compliance checks
+- Specialist advisor network
+- Documentation templates
+
+🔴🆕 **Australian-Specific Analytics**  
+- Stamp duty calculators by state
+- First Home Owner Grant eligibility
+- Grant/incentive tracking by property
+- Regional and rural property analytics
+
+### Enhanced Client & Agent Experience
+
+🔴🆕 **Agent/Buyer Matching Algorithm**  
+- AI-powered matchmaking beyond property features
+- Personality and communication style matching
+- Previous transaction pattern analysis
+- Behavioral analytics to predict buyer preferences
+
+🟡🆕 **Enhanced Mobile Functionality**  
+- Full feature parity on mobile apps
+- Location-based property alerts
+- On-site inspection tools with AR overlay
+- Voice-to-CRM note capture
+- Australian voice recognition training
+
+**Suggested Packages:**
+- [Laravel PWA](https://github.com/silviolleite/laravel-pwa) - Progressive Web App features
+- [Laravel Geolocation](https://github.com/stevebauman/location) - Location services
+- [Laravel Mobile Detect](https://github.com/jenssegers/agent) - Mobile optimization
+
+🟡🆕 **Self-Service Client Portal**  
+- Client-facing app for status tracking
+- Document repository with permission controls
+- Progress visualization for Australian buying process
+- Settlement countdown and milestone alerts
+
+### Advanced Sales & Marketing Tools
+
+🟡🆕 **Vendor Paid Advertising Management**  
+- VPA proposal templates with ROI calculators
+- Digital and print campaign tracking
+- Major portal spend optimization
+- Cost-per-lead analysis
+
+🧠🆕 **AI-Powered Pricing Strategy**  
+- Automated comparable market analysis
+- Price prediction based on Australian market data
+- Pricing strategy recommendations by suburb
+- Negotiation assistant with local market insights
+
+🔄🔴 **Enhanced Trust Accounting**  
+- Full trust account management
+- Integration with Australian accounting standards
+- Deposit tracking and management
+- Release automation with approval workflows
+
+### REX CRM-Inspired Enhancements
+
+🔴🆕 **Advanced Prospecting System**  
+- AI-driven seller signals detection
+- Predictive listing algorithms for identifying potential sellers
+- Geographic farming tools with automated touchpoints
+- Seller nurture programs with intelligent follow-up scheduling
+
+🔴🆕 **Mobile-First Agent Experience**  
+- Full end-to-end mobile workflows with no desktop required
+- Quick-add buyer requirements with instant matching
+- One-tap e-brochure generation and distribution
+- Field data capture with offline sync capabilities
+- Real-time sales meeting dashboards and updates
+
+🔴🆕 **Open Home & Inspection Management**  
+- Digital check-in and attendee registration system
+- Automated pre and post-inspection communications
+- Buyer feedback collection and sentiment analysis
+- Heat mapping of property interest areas
+- Inspection scheduling optimization based on attendee data
+
+🔴🆕 **Advanced Auction Management**  
+- Real-time auction dashboard for tracking bidders
+- Digital bidding registration and verification
+- Auctioneer companion app with bidder insights
+- Post-auction analytics and performance metrics
+- Virtual auction streaming with remote bidding support
+
+🟡🆕 **Agency Growth Analytics**  
+- Market share tracking by suburb and property type
+- Agent performance benchmarking against industry standards
+- Pipeline health indicators with early warning signals
+- Time-to-sell and price-to-guide ratio tracking
+- Win/loss analysis with competitive intelligence
+
+🟡🆕 **Integrated Communications Hub**  
+- Unified messaging center across all channels
+- SMS response automation with AI follow-up
+- Omnichannel communication history in single timeline view
+- Response time analytics and service level tracking
+- Call recording integration with transcript analysis
+
+🟡🆕 **Agent Performance Gamification**  
+- Achievement-based milestone system
+- Team leaderboards with customizable KPIs
+- Skill development tracking and certification
+- Incentive program management
+- Performance insights with AI-driven improvement tips
+
+🟡🆕 **Client Relationship Health Monitoring**  
+- Sentiment analysis across all communications
+- Relationship strength scoring
+- Early warning system for at-risk relationships
+- Customer satisfaction measurement (NPS integration)
+- Milestone-based client journeys with automated celebrations
+
+🧠🆕 **Smart Data Quality Management**  
+- Automated data cleansing and deduplication
+- Contact information verification and enrichment
+- Engagement scoring for database health assessment
+- Database segmentation based on quality metrics
+- Opportunity scoring for dormant contacts
+
+🧠🆕 **Training & Onboarding Acceleration**  
+- Personalized agent learning paths
+- Interactive CRM tutorials and guided workflows
+- Performance simulation scenarios
+- Knowledge testing and verification
+- Usage pattern analysis for training optimization
+
+### Implementation Strategy
+
+These features will be evaluated for inclusion in future releases based on:
+
+1. Market demand and competitive analysis
+2. Technical feasibility and integration complexity
+3. Regulatory requirements and compliance considerations
+4. Potential ROI and value-add for subscribers
+5. Alignment with core platform capabilities and strategic direction
+
+---
+
+## **📚 Additional Recommended Laravel Packages for 2024**
+
+### Authentication & Security (2024 Updated)
+- [Laravel Sanctum](https://github.com/laravel/sanctum) - Modern API authentication (recommended over Passport)
+- [Laravel Fortify](https://github.com/laravel/fortify) - Authentication backend without UI
+- [Spatie/Laravel-Health](https://github.com/spatie/laravel-health) - Application health monitoring
+- [Laravel Security Checker](https://github.com/enlightn/security-checker) - Security vulnerability scanning
+
+### Multi-Tenancy & Branding (2024 Leaders)
+- [Stancl/Tenancy](https://github.com/stancl/tenancy) - The most robust multi-tenancy solution
+- [Spatie/Laravel-Settings](https://github.com/spatie/laravel-settings) - Application settings with multi-tenant support
+- [Laravel Tenancy](https://github.com/archtechx/tenancy) - Alternative modern tenancy package
+- [Spatie/Laravel-SchemalessAttributes](https://github.com/spatie/laravel-schemaless-attributes) - Dynamic tenant customization
+
+### Media & File Handling (Latest)
+- [Spatie/Laravel-MediaLibrary](https://github.com/spatie/laravel-medialibrary) - The gold standard for media management
+- [Laravel Image Optimizer](https://github.com/spatie/laravel-image-optimizer) - Automatic image optimization
+- [Livewire File Uploads](https://livewire.laravel.com/docs/uploads) - Modern file uploads with Livewire v3
+- [Spatie/Laravel-Pdf](https://github.com/spatie/laravel-pdf) - PDF generation and manipulation
+
+### AI & Modern Features
+- [OpenAI PHP Client](https://github.com/openai-php/client) - Latest OpenAI integration
+- [OpenAI Laravel](https://github.com/openai-php/laravel) - Laravel wrapper for OpenAI
+- [Laravel Pennant](https://github.com/laravel/pennant) - Feature flags (Laravel 10+)
+- [Spatie/Laravel-Ray](https://github.com/spatie/laravel-ray) - Modern debugging tool
+
+### UI & Admin Panels (2024 Leaders)
+- [Filament](https://filamentphp.com/) - The most modern admin panel for Laravel
+- [Laravel Nova](https://nova.laravel.com/) - Official Laravel admin panel
+- [Livewire v3](https://livewire.laravel.com/) - Latest version with performance improvements
+- [Alpine.js v3.14+](https://alpinejs.dev/) - Latest JavaScript framework for interactivity
+
+### Testing & Quality (Current Best)
+- [Pest PHP](https://pestphp.com/) - Modern testing framework for PHP
+- [Laravel Dusk](https://github.com/laravel/dusk) - Browser testing
+- [Spatie/Laravel-Data](https://github.com/spatie/laravel-data) - Data transfer objects with validation
+- [PHPStan](https://github.com/phpstan/phpstan) - Static analysis
+
+### Performance & Monitoring (2024)
+- [Laravel Horizon](https://github.com/laravel/horizon) - Queue monitoring
+- [Laravel Telescope](https://github.com/laravel/telescope) - Debug assistant
+- [Spatie/Laravel-Backup](https://github.com/spatie/laravel-backup) - Database and file backups
+- [Laravel Octane](https://github.com/laravel/octane) - High-performance application server
+
+### APIs & Integration (Latest)
+- [Laravel Sanctum](https://github.com/laravel/sanctum) - API authentication
+- [Lighthouse GraphQL](https://github.com/nuwave/lighthouse) - GraphQL server
+- [Spatie/Laravel-Query-Builder](https://github.com/spatie/laravel-query-builder) - API query building
+- [Scramble](https://github.com/dedoc/scramble) - Auto API documentation generation
+
+### Workflow & Automation (Current)
+- [Spatie/Laravel-Model-States](https://github.com/spatie/laravel-model-states) - State machines
+- [Laravel Workflow](https://github.com/zerodahero/laravel-workflow) - Business process automation
+- [Spatie/Laravel-Webhook-Client](https://github.com/spatie/laravel-webhook-client) - Webhook processing
+- [Laravel Event Sourcing](https://github.com/spatie/laravel-event-sourcing) - Event sourcing pattern
+
+### Payments & Billing (2024 Current)
+- [Laravel Cashier Stripe](https://github.com/laravel/cashier-stripe) - Stripe integration
+- [Laravel Cashier Paddle](https://github.com/laravel/cashier-paddle) - Paddle integration
+- [Laravel Invoice](https://github.com/laraveldaily/laravel-invoices) - PDF invoice generation
+- [Xero Laravel](https://github.com/webfox/laravel-xero-oauth2) - Modern Xero integration

@@ -12,27 +12,25 @@ Features have been prioritized based on:
 4. **Risk Assessment**: Potential challenges and mitigation strategies
 5. **MVP Requirements**: Features essential for minimum viable product
 
-## Phase 1: CRM Extension (Sprint 1)
+## Phase 1: Foundation (Sprints 1-3)
 
-Building upon the existing Wave foundation, these features extend the current implementation:
+These core features form the essential foundation of the platform and should be implemented first:
 
-### ✅ Already Implemented via Wave Kit
-- **Multi-Tenant Architecture** - Wave's team structure provides foundation
-- **OAuth2 + JWT Authentication** - Complete authentication system in place
-- **Role-based Access & Impersonation** - Spatie permissions fully configured
-- **User Management System** - Registration, profiles, team management
-- **Admin Panel** - Filament 3.2 with comprehensive resources
-- **Dynamic Forms** - Wave's form builder system ready for extension
+### Core Platform
+- 🔴🆕 **Single-Tenant Architecture** - Brand-level CRM segmentation
+- 📘✅ **OAuth2 + Passport/Sanctum** - Modern, secure token auth flows
+- 📘✅ **Role-based Access & Impersonation** - Switching between roles
+- 🔄🔴 **Custom Roles & Permissions Matrix** - Granular control of access
 
-### 🔄 Wave Extensions Needed
-- **CRM User Model Extension** - Extend Wave User for CRM contacts
-- **CRM-Specific Permissions** - Add real estate agent, broker, admin roles
-- **Team Structure Enhancement** - Adapt Wave teams for CRM organizations
+### User Management
+- 🔴🆕 **Self-Service Auto Signup & Guided Onboarding** - User registration and setup
+- 🔴🆕 **Team Collaboration Tools** - @Mentions, notes, file sharing, tagging
+- 🔴🆕 **Custom Fields + Dynamic Forms** - For leads, deals, properties, users
 
-### 🆕 New CRM Models Required
-- **Property Management Models** - Property, PropertyType, PropertyStatus
-- **Lead Management Models** - Lead, LeadSource, LeadStatus
-- **Deal Management Models** - Deal, DealStage, Commission
+### Core Property Features
+- 🔄🔴 **Member-Uploaded Listings** - Users upload/manage inventory with validation
+- 🔄🔴 **Project, Stage & Lot Management** - Structure with data entry forms
+- ✅ **Custom Tags & Categories** - Property categorization (SMSF, FIRB, etc.)
 
 ## Phase 2: Core CRM & Sales (Sprints 4-5)
 
