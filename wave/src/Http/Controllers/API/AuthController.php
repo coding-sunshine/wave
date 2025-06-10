@@ -17,7 +17,8 @@ class AuthController extends Controller implements HasMiddleware
     public static function middleware(): array
     {
         return [
-            new Middleware('auth:api', except: ['login', 'token', 'register']),
+            new Middleware('auth:api', except: ['login', 'token', 'register', 'refresh']),
+            new Middleware('jwt.refresh', only: ['refresh']),
         ];
     }
 
@@ -80,7 +81,7 @@ class AuthController extends Controller implements HasMiddleware
      */
     public function refresh()
     {
-        return $this->respondWithToken(auth()->refresh());
+        return $this->respondWithToken(auth('api')->refresh());
     }
 
     /**
