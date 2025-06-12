@@ -46,10 +46,10 @@ This documentation covers all frontend technologies, UI frameworks, and build to
 
 ### ✅ Build & Development
 
-| Tool | Version | Description | Status | Documentation |
-|------|---------|-------------|--------|---------------|
-| **Axios** | 1.8.2 | Promise-based HTTP client for API calls | ✅ IMPLEMENTED | [HTTP Client](./http_client.md) |
-| **Laravel Mix** | - | Asset compilation (legacy, replaced by Vite) | ❌ REPLACED | Superseded by Vite |
+| Tool             | Version | Description | Status | Documentation |
+|------------------|---------|-------------|--------|---------------|
+| **Axios**        | 1.8.2 | Promise-based HTTP client for API calls | ✅ IMPLEMENTED | [HTTP Client](./http_client.md) |
+| **Laravel Vite** | - | Asset compilation | ✅ IMPLEMENTED | Superseded by Vite |
 
 ## Technology Stack Architecture
 
